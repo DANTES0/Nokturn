@@ -8,7 +8,11 @@ export default {
       laptop: '1024px',
       desktop: '1280px',
     },
-    extend: {},
+    extend: {
+      boxShadow: {
+        container: '0 0 4px 2px rgba(0,0,0,0.25)',
+      },
+    },
   },
   plugins: [],
   darkMode: 'selector',
