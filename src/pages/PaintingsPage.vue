@@ -1,6 +1,5 @@
 <script setup lang="ts"></script>
 <template>
-  <div></div>
+  <div>Работы</div>
 </template>
-
 <style scoped></style>

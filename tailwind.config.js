@@ -13,3 +13,5 @@ export default {
   plugins: [],
   darkMode: 'selector',
 }
+
+// 24px, 48px

@@ -1,6 +1,5 @@
 <script setup lang="ts"></script>
 <template>
-  <div></div>
+  <div>Аукционы</div>
 </template>
-
 <style scoped></style>
