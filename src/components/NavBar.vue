@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import MyButton from '@/UX/MyButton.vue'
 import { RouterLink } from 'vue-router'
+import IconPlus from '@/components/icons/IconPlus.vue'
+import IconBell from './icons/IconBell.vue'
+import IconMail from './icons/IconMail.vue'
+import IconUser from './icons/IconUser.vue'
+
+const icons = [IconPlus, IconBell, IconMail]
 </script>
 <template>
   <div class="w-[90%] items-center h-[48px] border-b border-[#7A7A7A] flex justify-between">
@@ -14,11 +21,15 @@ import { RouterLink } from 'vue-router'
       <RouterLink to="/artists">Художники</RouterLink>
       <RouterLink to="/paintings">Работы</RouterLink>
     </nav>
-    <div>
-      <button>Кнопка</button>
-      <button>Кнопка</button>
-      <button>Кнопка</button>
-      <button>Кнопка</button>
+    <div class="flex gap-6">
+      <MyButton v-for="(icon, index) in icons" :key="index">
+        <component :is="icon" />
+      </MyButton>
+      <button
+        class="w-[32px] h-[32px] border-2 border-black rounded-tl-lg rounded-br-lg flex items-center justify-center"
+      >
+        <IconUser />
+      </button>
     </div>
   </div>
 </template>
