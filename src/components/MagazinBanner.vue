@@ -58,6 +58,7 @@ import IconRightArrow from '@/components/icons/IconRightArrow.vue'
   margin-top: 25px;
   background: url('../assets/images/test1.jpg');
   background-size: 100% auto;
+  background-repeat: no-repeat;
   border-top-left-radius: 16px;
   border-bottom-left-radius: 16px;
   color: white;
@@ -79,6 +80,7 @@ import IconRightArrow from '@/components/icons/IconRightArrow.vue'
   border-top-right-radius: 16px;
   background: url('../assets/images/test2.jpg');
   background-size: 100% auto;
+  background-repeat: no-repeat;
   color: white;
   display: flex;
   justify-content: space-between;
