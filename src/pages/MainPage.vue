@@ -54,7 +54,7 @@ import { RouterLink } from 'vue-router'
     </div>
 
     <div
-      class="w-[90%] h-[400px] bg-white mt-[30px] shadow-container rounded-[32px] relative max-h-[80vh] flex items-center justify-between mb-[100px]"
+      class="w-[90%] h-[400px] bg-white mt-[30px] shadow-container rounded-[32px] relative max-h-[80vh] flex items-center justify-between"
     >
       <div
         class="w-12 h-12 bg-[#F5F5F5] rounded-full ml-[30px] flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
@@ -70,7 +70,67 @@ import { RouterLink } from 'vue-router'
         <IconRightArrow />
       </div>
     </div>
+    <div class="mt-[30px] mb-[30px] flex w-[90%] justify-between">
+      <label class="text-[24px]"> Торги физического творчества </label>
+
+      <RouterLink class="font-light flex items-center justify-center" to="/auctions">
+        Посмотреть все торги</RouterLink
+      >
+    </div>
+    <div class="flex flex-wrap w-[90%] justify-center gap-x-14 gap-y-8">
+      <AuctionCard v-for="i in 8" :key="i" />
+    </div>
+    <div class="mt-[30px] mb-[30px] flex w-[90%] justify-between">
+      <label class="text-[24px]"> Работы не для продажи </label>
+
+      <RouterLink class="font-light flex items-center justify-center" to="/auctions">
+        Посмотреть все работы</RouterLink
+      >
+    </div>
+
+    <div class="gallery">
+      <img src="../assets/images/test4.jpg" />
+      <img src="../assets/images/test1.jpg" />
+      <img src="../assets/images/test2.jpg" />
+      <img src="../assets/images/test5.jpg" />
+      <img src="../assets/images/test1.jpg" />
+      <img src="../assets/images/test2.jpg" />
+      <img src="../assets/images/test3.png" />
+      <img src="../assets/images/test1.jpg" />
+      <img src="../assets/images/test2.jpg" />
+      <img src="../assets/images/test3.png" />
+      <img src="../assets/images/test6.jpg" />
+      <img src="../assets/images/test2.jpg" />
+      <img src="../assets/images/test3.png" />
+      <img src="../assets/images/test4.jpg" />
+      <img src="../assets/images/test2.jpg" />
+      <img src="../assets/images/test3.png" />
+      <img src="../assets/images/test6.jpg" />
+      <img src="../assets/images/test2.jpg" />
+      <img src="../assets/images/test5.jpg" />
+      <img src="../assets/images/test1.jpg" />
+      <img src="../assets/images/test6.jpg" />
+      <img src="../assets/images/test3.png" />
+      <img src="../assets/images/test1.jpg" />
+      <img src="../assets/images/test2.jpg" />
+      <img src="../assets/images/test5.jpg" />
+      <img src="../assets/images/test1.jpg" />
+      <img src="../assets/images/test2.jpg" />
+    </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.gallery {
+  width: min(100%, 90%);
+  margin: 0 auto;
+  columns: 4 200px;
+  column-gap: 1em;
+}
+
+.gallery img {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+}
+</style>
