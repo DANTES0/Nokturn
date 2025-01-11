@@ -9,37 +9,65 @@ import { RouterLink } from 'vue-router'
 
 import 'vue3-carousel/carousel.css'
 import { Carousel, Slide } from 'vue3-carousel'
-import { onMounted, ref } from 'vue'
-const visibleCards = ref(3)
-
-const updateVisibleCards = () => {
-  console.log(carouselConfig.value)
-  if (window.innerWidth <= 1024) {
-    carouselConfig.value.itemsToShow = 1
-  } else if (window.innerWidth < 1450) {
-    carouselConfig.value.itemsToShow = 2
-  } else {
-    carouselConfig.value.itemsToShow = 3
-  }
-}
-
-onMounted(() => {
-  updateVisibleCards()
-  window.addEventListener('resize', updateVisibleCards)
-})
+import { ref } from 'vue'
 
 const carouselConfig = ref({
-  itemsToShow: visibleCards.value,
-  gap: 28,
+  gap: 16,
   wrapAround: true,
   height: 340,
+  breakpointMode: 'viewport',
+  breakpoints: {
+    830: {
+      itemsToShow: 1,
+      snapAlign: 'start',
+    },
+    1040: {
+      itemsToShow: 2,
+      snapAlign: 'start',
+    },
+    1536: {
+      itemsToShow: 3,
+      snapAlign: 'start',
+    },
+  },
+})
+
+const carouselAuctionConfig = ref({
+  gap: 10,
+  wrapAround: true,
+  height: 380,
+  breakpointMode: 'viewport',
+  breakpoints: {
+    0: {
+      itemsToShow: 1,
+      snapAlign: 'start',
+    },
+    830: {
+      itemsToShow: 2,
+      snapAlign: 'start',
+    },
+    1240: {
+      itemsToShow: 3,
+      snapAlign: 'start',
+    },
+    1640: {
+      itemsToShow: 4,
+      snapAlign: 'start',
+    },
+  },
 })
 
 const carouselRef = ref()
 const currentSlide = ref(0)
 
+const carouselAuctionRef = ref()
+const currentAuctionSlide = ref(0)
+
 const next = () => carouselRef.value.next()
 const prev = () => carouselRef.value.prev()
+
+const nextAuctionCard = () => carouselAuctionRef.value.next()
+const prevAuctionCard = () => carouselAuctionRef.value.prev()
 </script>
 <template>
   <div class="flex items-center flex-col w-full max-w-[1728px]">
@@ -56,14 +84,24 @@ const prev = () => carouselRef.value.prev()
       class="w-[90%] h-[400px] bg-white mt-[30px] shadow-container rounded-[32px] relative max-h-[80vh] flex items-center justify-between"
     >
       <div
+        @click="prevAuctionCard"
         class="w-12 h-12 bg-[#F5F5F5] rounded-full ml-[30px] flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
       >
         <IconLeftArrow />
       </div>
-      <div class="flex items-center justify-center gap-12 w-[80%]">
-        <AuctionCard v-for="i in 4" :key="i" />
+      <div class="items-center justify-center gap-12 w-[80%]">
+        <Carousel
+          v-bind="carouselAuctionConfig"
+          v-model="currentAuctionSlide"
+          ref="carouselAuctionRef"
+        >
+          <Slide v-for="slide in 6" :key="slide">
+            <AuctionCard class="max-h-[340px]" />
+          </Slide>
+        </Carousel>
       </div>
       <div
+        @click="nextAuctionCard"
         class="w-12 h-12 bg-[#F5F5F5] rounded-full mr-[30px] flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
       >
         <IconRightArrow />
