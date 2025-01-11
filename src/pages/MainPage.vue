@@ -6,6 +6,40 @@ import IconRightArrow from '@/components/icons/IconRightArrow.vue'
 import MagazinBanner from '@/components/MagazinBanner.vue'
 
 import { RouterLink } from 'vue-router'
+
+import 'vue3-carousel/carousel.css'
+import { Carousel, Slide } from 'vue3-carousel'
+import { onMounted, ref } from 'vue'
+const visibleCards = ref(3)
+
+const updateVisibleCards = () => {
+  console.log(carouselConfig.value)
+  if (window.innerWidth <= 1024) {
+    carouselConfig.value.itemsToShow = 1
+  } else if (window.innerWidth < 1450) {
+    carouselConfig.value.itemsToShow = 2
+  } else {
+    carouselConfig.value.itemsToShow = 3
+  }
+}
+
+onMounted(() => {
+  updateVisibleCards()
+  window.addEventListener('resize', updateVisibleCards)
+})
+
+const carouselConfig = ref({
+  itemsToShow: visibleCards.value,
+  gap: 28,
+  wrapAround: true,
+  height: 340,
+})
+
+const carouselRef = ref()
+const currentSlide = ref(0)
+
+const next = () => carouselRef.value.next()
+const prev = () => carouselRef.value.prev()
 </script>
 <template>
   <div class="flex items-center flex-col w-full max-w-[1728px]">
@@ -54,18 +88,24 @@ import { RouterLink } from 'vue-router'
     </div>
 
     <div
-      class="w-[90%] h-[400px] bg-white mt-[30px] shadow-container rounded-[32px] relative max-h-[80vh] flex items-center justify-between overflow-hidden"
+      class="w-[90%] h-[400px] bg-white mt-[30px] shadow-container rounded-[32px] relative max-h-[80vh] flex items-center justify-between"
     >
       <div
+        @click="prev"
         class="w-12 h-12 bg-[#F5F5F5] rounded-full ml-[30px] flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
       >
         <IconLeftArrow />
       </div>
-      <div class="flex-1 flex items-center justify-center gap-8 w-[80%]">
-        <ArtistMainPageCard v-for="i in 3" :key="i" />
+      <div class="items-center justify-center w-[85%]">
+        <Carousel ref="carouselRef" v-model="currentSlide" v-bind="carouselConfig">
+          <Slide v-for="slide in 10" :key="slide">
+            <ArtistMainPageCard class="max-h-[300px]"
+          /></Slide>
+        </Carousel>
       </div>
 
       <div
+        @click="next"
         class="w-12 h-12 bg-[#F5F5F5] rounded-full mr-[30px] flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
       >
         <IconRightArrow />
