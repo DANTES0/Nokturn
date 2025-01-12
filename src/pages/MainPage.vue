@@ -10,6 +10,23 @@ import { RouterLink } from 'vue-router'
 import 'vue3-carousel/carousel.css'
 import { Carousel, Slide } from 'vue3-carousel'
 import { ref } from 'vue'
+import PaintsCard from '@/components/PaintsCard.vue'
+
+//ВРМЕНННО ДО СЕРВЕРА
+import test1 from '../assets/images/test1.jpg'
+import test2 from '../assets/images/test2.jpg'
+import test3 from '../assets/images/test3.png'
+import test4 from '../assets/images/test4.jpg'
+import test5 from '../assets/images/test5.jpg'
+import test6 from '../assets/images/test6.jpg'
+
+const tempArrayImages = [test1, test2, test3, test4, test5, test6]
+
+const randomImage = () => {
+  const randomIndex = Math.floor(Math.random() * tempArrayImages.length)
+  return tempArrayImages[randomIndex]
+}
+//КОНЕЦ ВРЕМЕННО ДО СЕРВЕРА
 
 const carouselConfig = ref({
   gap: 16,
@@ -168,33 +185,7 @@ const prevAuctionCard = () => carouselAuctionRef.value.prev()
     </div>
 
     <div class="gallery">
-      <img src="../assets/images/test4.jpg" />
-      <img src="../assets/images/test1.jpg" />
-      <img src="../assets/images/test2.jpg" />
-      <img src="../assets/images/test5.jpg" />
-      <img src="../assets/images/test1.jpg" />
-      <img src="../assets/images/test2.jpg" />
-      <img src="../assets/images/test3.png" />
-      <img src="../assets/images/test1.jpg" />
-      <img src="../assets/images/test2.jpg" />
-      <img src="../assets/images/test3.png" />
-      <img src="../assets/images/test6.jpg" />
-      <img src="../assets/images/test2.jpg" />
-      <img src="../assets/images/test3.png" />
-      <img src="../assets/images/test4.jpg" />
-      <img src="../assets/images/test2.jpg" />
-      <img src="../assets/images/test3.png" />
-      <img src="../assets/images/test6.jpg" />
-      <img src="../assets/images/test2.jpg" />
-      <img src="../assets/images/test5.jpg" />
-      <img src="../assets/images/test1.jpg" />
-      <img src="../assets/images/test6.jpg" />
-      <img src="../assets/images/test3.png" />
-      <img src="../assets/images/test1.jpg" />
-      <img src="../assets/images/test2.jpg" />
-      <img src="../assets/images/test5.jpg" />
-      <img src="../assets/images/test1.jpg" />
-      <img src="../assets/images/test2.jpg" />
+      <PaintsCard v-for="i in 20" :key="i" :photo="randomImage()" />
     </div>
   </div>
 </template>
@@ -207,10 +198,10 @@ const prevAuctionCard = () => carouselAuctionRef.value.prev()
   column-gap: 1em;
 }
 
-.gallery img {
+/* .gallery img {
   display: block;
   width: 100%;
   margin-bottom: 8px;
   border-radius: 8px;
-}
+} */
 </style>
