@@ -146,7 +146,7 @@
         <div class="flex mb-[10px] w-[95%] items-end justify-between">
           <img class="w-14 h-14 rounded-full" src="../assets/images/test6.jpg" />
           <input
-            class="w-[75%] border-b border-black h-[30px] text-[14px] pl-2 outline-none"
+            class="w-[75%] border-b border-black h-[30px] text-[14px] pl-2 outline-none mr-[20px] ml-[20px]"
             type="text"
             placeholder="Написать сообщение"
           />
