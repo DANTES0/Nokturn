@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import MyButton from '@/UX/MyButton.vue'
 import { RouterLink } from 'vue-router'
-import IconPlus from '@/components/icons/IconPlus.vue'
+import IconPlus from './icons/IconPlus.vue'
 import IconBell from './icons/IconBell.vue'
 import IconMail from './icons/IconMail.vue'
 import IconUser from './icons/IconUser.vue'
