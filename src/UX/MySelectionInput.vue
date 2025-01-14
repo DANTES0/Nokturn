@@ -15,6 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
 const searchText = ref(props.model || '')
 const activeDropDown = ref(false)
 const items = ['Физическое искусство', 'Цифровое искусство']
+
 const selectedItem = (item: string) => {
   activeDropDown.value = false
   searchText.value = item
@@ -38,21 +39,22 @@ onUnmounted(() => {
 
 <template>
   <div class="w-full relative">
-    <input
-      @click.stop="activeDropDown = !activeDropDown"
-      v-model="searchText"
-      type="text"
-      class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] pr-[60px]"
-      :placeholder="props.placeholder"
-    />
-    <div class="absolute top-[-14px] left-[20px] bg-[#FAFAFA] px-2 font-light">
-      {{ props.title }}
+    <div @click.stop="activeDropDown = !activeDropDown">
+      <input
+        v-model="searchText"
+        type="text"
+        class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] pr-[60px]"
+        :placeholder="props.placeholder"
+      />
+      <div class="absolute top-[-14px] left-[20px] bg-[#FAFAFA] px-2 font-light">
+        {{ props.title }}
+      </div>
+      <div class="absolute top-[8px] right-[50px]">|</div>
+      <IcoDownArrow class="absolute top-[8px] right-[13px]" />
     </div>
-    <div class="absolute top-[8px] right-[50px]">|</div>
-    <IcoDownArrow class="absolute top-[8px] right-[13px]" />
     <div
       v-if="activeDropDown"
-      class="absolute w-full shadow-card mt-2 rounded-lg px-[20px] py-[10px] dropdown-container"
+      class="absolute w-full shadow-card mt-2 rounded-lg px-[20px] py-[10px] dropdown-container bg-[#FAFAFA] z-10"
     >
       <div
         @click="selectedItem(items[0])"
@@ -60,7 +62,7 @@ onUnmounted(() => {
       >
         {{ items[0] }}
       </div>
-      <hr class="my-[10px]" />
+      <hr class="my-[4px]" />
       <div
         @click="selectedItem(items[1])"
         class="hover:bg-[#ececec] rounded-lg pl-[10px] py-[2px] cursor-pointer"

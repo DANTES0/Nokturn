@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AuctionCard from '@/components/AuctionCard.vue'
+import MyCheckBox from '@/UX/MyCheckBox.vue'
 import MyInput from '@/UX/MyInput.vue'
 import MySelectionInput from '@/UX/MySelectionInput.vue'
 </script>
@@ -12,6 +13,17 @@ import MySelectionInput from '@/UX/MySelectionInput.vue'
         <label class="text-[20px] mt-[20px]">Фильтры</label>
         <MyInput title="Поиск" placeholder="Арбуз" class="mt-[30px]" />
         <MySelectionInput title="Категория" placeholder="Физическое искусство" class="mt-[30px]" />
+        <div class="mt-[20px]">Начальная цена</div>
+        <div class="flex gap-5">
+          <MyInput title="От" placeholder="100" class="mt-[20px]" />
+          <MyInput title="До" placeholder="10000" class="mt-[20px]" />
+        </div>
+        <div class="mt-[20px]">Текущая цена</div>
+        <div class="flex gap-5">
+          <MyInput title="От" placeholder="100" class="mt-[20px]" />
+          <MyInput title="До" placeholder="10000" class="mt-[20px]" />
+        </div>
+        <MyCheckBox class="w-6 h-6" />
       </div>
     </div>
     <div
