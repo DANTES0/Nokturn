@@ -1,18 +1,24 @@
 <script setup lang="ts">
 import AuctionCard from '@/components/AuctionCard.vue'
+import MyInput from '@/UX/MyInput.vue'
+import MySelectionInput from '@/UX/MySelectionInput.vue'
 </script>
 <template>
   <div class="flex justify-between w-full gap-[30px] px-[30px]">
     <div
-      class="w-[25%] max-w-[350px] h-[90vh] bg-[#FAFAFA] mt-[30px] shadow-container rounded-[32px] mb-[30px] sticky top-[30px]"
+      class="w-[25%] max-w-[350px] h-[90vh] bg-[#FAFAFA] mt-[30px] shadow-container rounded-[32px] mb-[30px] sticky top-[30px] flex flex-col"
     >
-      Аукционы
+      <div class="flex flex-col w-full px-[30px] flex-1">
+        <label class="text-[20px] mt-[20px]">Фильтры</label>
+        <MyInput title="Поиск" placeholder="Арбуз" class="mt-[30px]" />
+        <MySelectionInput title="Категория" placeholder="Физическое искусство" class="mt-[30px]" />
+      </div>
     </div>
     <div
       class="w-full flex-1 bg-[#FAFAFA] mt-[30px] shadow-container rounded-[32px] relative flex mb-[30px]"
     >
       <div class="flex flex-wrap py-[30px] gap-8 items-center justify-center">
-        <AuctionCard v-for="i in 20" :key="i" />
+        <AuctionCard v-for="i in 20" :key="i" class="shadow-card rounded-lg" />
       </div>
     </div>
   </div>
