@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AuctionCard from '@/components/AuctionCard.vue'
+import MyButton from '@/UX/MyButton.vue'
 
 import MyCheckBox from '@/UX/MyCheckBox.vue'
 import MyInput from '@/UX/MyInput.vue'
@@ -34,11 +35,7 @@ import MySelectionInput from '@/UX/MySelectionInput.vue'
           <MyInput title="Высота" placeholder="10000" class="mt-[14px]" />
         </div>
         <div class="w-full flex items-center justify-center mt-auto mb-[30px]">
-          <button
-            class="border border-black rounded-tl-[8px] rounded-br-[8px] ] h-[36px] shadow-cardImage max-w-[150px] px-[30px]"
-          >
-            Применить
-          </button>
+          <MyButton title="Применить" />
         </div>
       </div>
     </div>
