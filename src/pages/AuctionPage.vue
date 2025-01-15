@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AuctionCard from '@/components/AuctionCard.vue'
+
 import MyCheckBox from '@/UX/MyCheckBox.vue'
 import MyInput from '@/UX/MyInput.vue'
 import MySelectionInput from '@/UX/MySelectionInput.vue'
@@ -15,15 +16,30 @@ import MySelectionInput from '@/UX/MySelectionInput.vue'
         <MySelectionInput title="Категория" placeholder="Физическое искусство" class="mt-[30px]" />
         <div class="mt-[20px]">Начальная цена</div>
         <div class="flex gap-5">
-          <MyInput title="От" placeholder="100" class="mt-[20px]" />
-          <MyInput title="До" placeholder="10000" class="mt-[20px]" />
+          <MyInput title="От" placeholder="100" class="mt-[14px]" />
+          <MyInput title="До" placeholder="10000" class="mt-[14px]" />
         </div>
-        <div class="mt-[20px]">Текущая цена</div>
+        <div class="mt-[10px]">Текущая цена</div>
         <div class="flex gap-5">
-          <MyInput title="От" placeholder="100" class="mt-[20px]" />
-          <MyInput title="До" placeholder="10000" class="mt-[20px]" />
+          <MyInput title="От" placeholder="100" class="mt-[14px]" />
+          <MyInput title="До" placeholder="10000" class="mt-[14px]" />
         </div>
-        <MyCheckBox class="w-6 h-6" />
+        <div class="flex mt-[20px] gap-7">
+          <MyCheckBox class="w-6 h-6" />
+          <label class="">Показывать текущие</label>
+        </div>
+        <div class="mt-[10px]">Размер картины</div>
+        <div class="flex gap-5">
+          <MyInput title="Длина" placeholder="100" class="mt-[14px]" />
+          <MyInput title="Высота" placeholder="10000" class="mt-[14px]" />
+        </div>
+        <div class="w-full flex items-center justify-center mt-auto mb-[30px]">
+          <button
+            class="border border-black rounded-tl-[8px] rounded-br-[8px] ] h-[36px] shadow-cardImage max-w-[150px] px-[30px]"
+          >
+            Применить
+          </button>
+        </div>
       </div>
     </div>
     <div
