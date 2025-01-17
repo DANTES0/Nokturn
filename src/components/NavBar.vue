@@ -16,7 +16,7 @@ const isProfileRoute = computed(() => route.path === '/profile')
 <template>
   <div
     :class="[
-      'w-[100%] px-24 items-center h-[48px] border-b border-[#7A7A7A] flex justify-between',
+      'w-full px-24 items-center h-[48px] border-b border-[#7A7A7A] flex justify-between',
       { 'absolute top-0 bg-[rgba(0,0,0,0.35)] text-white': isProfileRoute },
     ]"
   >

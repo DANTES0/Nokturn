@@ -9,6 +9,7 @@ interface Props {
   username?: string
   photoName?: string
   userPhoto?: string
+  styleCard?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -17,6 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
   username: 'Даниил',
   photoName: 'Осенний лист',
   userPhoto: testUserPhoto,
+  styleCard: 'standart',
 })
 
 const active = ref(false)
@@ -40,7 +42,16 @@ const active = ref(false)
         </div>
       </div>
     </div>
-    <img class="rounded-lg block w-full mb-2" :src="props.photo" />
+    <img
+      v-if="styleCard === 'standart'"
+      class="rounded-lg block w-full mb-2 object-cover"
+      :src="props.photo"
+    />
+    <img
+      v-if="styleCard === 'profile'"
+      class="rounded-lg block w-[200px] h-[200px] mb-2 object-cover"
+      :src="props.photo"
+    />
   </div>
 </template>
 

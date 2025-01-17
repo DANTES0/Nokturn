@@ -1,4 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import AuctionCard from '@/components/AuctionCard.vue'
+import PaintsCard from '@/components/PaintsCard.vue'
+</script>
 
 <template>
   <div class="w-full h-[34vh] relative -z-10">
@@ -21,6 +24,18 @@
     <div
       class="bg-white w-full flex-1 h-[180px] shadow-container rounded-2xl mt-8 mr-[96px] relative"
     ></div>
+  </div>
+  <div class="w-full px-24">
+    <div class="text-[20px] mt-[20px]">Выставленные лоты</div>
+    <div class="flex flex-wrap gap-12 items-center justify-center mt-[20px]">
+      <AuctionCard class="" v-for="i in 8" :key="i" />
+    </div>
+    <div class="text-[20px] mt-[20px]">Работы для демонстрации</div>
+    <div class="flex flex-wrap gap-12 items-center justify-center mt-[20px]">
+      <div v-for="i in 8" :key="i" class="w-[200px]">
+        <PaintsCard styleCard="profile" width="w-[300px]" height="h-[300px]" class="" />
+      </div>
+    </div>
   </div>
 </template>
 
