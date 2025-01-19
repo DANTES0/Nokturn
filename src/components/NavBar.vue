@@ -42,14 +42,14 @@ const isProfileRoute = computed(() => route.path === '/profile')
       <MyButton
         v-for="(icon, index) in icons"
         :key="index"
-        :class="{ 'border-[#CCCCCC]': isProfileRoute }"
+        :class="{ '!border-[#CCCCCC]': isProfileRoute }"
       >
         <component :is="icon" />
       </MyButton>
       <RouterLink to="/profile"
         ><button
           class="w-[32px] h-[32px] border-2 border-black rounded-tl-lg rounded-br-lg flex items-center justify-center"
-          :class="{ 'border-[#CCCCCC]': isProfileRoute }"
+          :class="{ '!border-[#CCCCCC]': isProfileRoute }"
         >
           <IconUser /></button
       ></RouterLink>
