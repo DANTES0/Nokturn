@@ -34,11 +34,11 @@ const active = ref(false)
       class="w-full h-full absolute bottom-0 transition-all duration-500 gradient rounded-lg flex items-end"
       :class="{ 'opacity-100': active, 'opacity-0': !active }"
     >
-      <div class="flex mb-3 ml-[20px]">
-        <img class="w-16 h-16 rounded-full" :src="props.userPhoto" />
-        <div class="text-white flex flex-col justify-around ml-[20px]">
-          <label class="text-[24px] font-medium">{{ props.username }}</label>
-          <label class="text-[18px] font-light">{{ props.photoName }}</label>
+      <div class="flex mb-3 items-center w-full justify-center">
+        <img class="w-[25%] rounded-full aspect-square h-full" :src="props.userPhoto" />
+        <div class="text-white flex flex-col justify-around ml-[16px]">
+          <label class="font-medium">{{ props.username }}</label>
+          <label class="font-light">{{ props.photoName }}</label>
         </div>
       </div>
     </div>
@@ -49,7 +49,7 @@ const active = ref(false)
     />
     <img
       v-if="styleCard === 'profile'"
-      class="rounded-lg block w-[200px] h-[200px] mb-2 object-cover"
+      class="rounded-lg block h-full aspect-square mb-2 object-cover im"
       :src="props.photo"
     />
   </div>
@@ -58,5 +58,11 @@ const active = ref(false)
 <style scoped>
 .gradient {
   background: linear-gradient(rgba(106, 106, 106, 0) 0%, rgba(0, 0, 0, 1) 90%);
+}
+.im {
+  width: clamp(300px, 350px, 400px);
+}
+.tx {
+  font-size: clamp(16px, 20px, 24px);
 }
 </style>

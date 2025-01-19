@@ -31,12 +31,22 @@ import PaintsCard from '@/components/PaintsCard.vue'
       <AuctionCard class="" v-for="i in 8" :key="i" />
     </div>
     <div class="text-[20px] mt-[20px]">Работы для демонстрации</div>
-    <div class="flex flex-wrap gap-12 items-center justify-center mt-[20px]">
-      <div v-for="i in 8" :key="i" class="w-[200px]">
-        <PaintsCard styleCard="profile" width="w-[300px]" height="h-[300px]" class="" />
+    <div class="gap-3 work">
+      <div v-for="i in 8" :key="i" class="paint-card">
+        <PaintsCard styleCard="profile" class="" />
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.work {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2em;
+}
+
+.paint-card {
+  width: 100%;
+}
+</style>
