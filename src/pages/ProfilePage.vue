@@ -17,7 +17,7 @@ import AddCard from '@/components/ProfilePageComponents/AddCard.vue'
     />
   </div>
 
-  <div class="w-[95%] flex gap-8">
+  <div class="w-[90%] flex gap-8">
     <div
       class="bg-white w-[25%] max-w-[350px] h-[180px] shadow-container rounded-2xl mt-8 ml-[330px] relative"
     >
@@ -51,7 +51,7 @@ import AddCard from '@/components/ProfilePageComponents/AddCard.vue'
       простой дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."
     </div>
   </div>
-  <div class="w-full px-24">
+  <div class="w-[90%]">
     <div class="text-[20px] mt-[20px]">Выставленные лоты</div>
     <div class="mt-[20px] auc-card">
       <AddCard title="Добавить лот" />
@@ -75,9 +75,10 @@ import AddCard from '@/components/ProfilePageComponents/AddCard.vue'
 }
 .auc-card {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   row-gap: 2em;
-  column-gap: 5em;
+  column-gap: 2em;
+  justify-items: center;
 }
 
 .paint-card {

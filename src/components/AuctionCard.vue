@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-  <RouterLink to="/lot">
+  <RouterLink class="w-[260px]" to="/lot">
     <div class="bg-white shadow-card w-[260px] h-[340px] rounded-lg hover:scale-105 cursor-pointer">
       <div class="flex flex-col justify-center items-center">
         <div

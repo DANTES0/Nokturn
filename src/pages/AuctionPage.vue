@@ -40,12 +40,18 @@ import MySelectionInput from '@/UX/MySelectionInput.vue'
       </div>
     </div>
     <div
-      class="w-full flex-1 bg-[#FAFAFA] mt-[30px] shadow-container rounded-[32px] relative flex mb-[30px]"
+      class="w-full bg-[#FAFAFA] mt-[30px] shadow-container rounded-[32px] relative mb-[30px] auc-card py-[30px] px-[30px]"
     >
-      <div class="flex flex-wrap py-[30px] gap-8 items-center justify-center">
-        <AuctionCard v-for="i in 20" :key="i" class="shadow-card rounded-lg" />
-      </div>
+      <AuctionCard v-for="i in 20" :key="i" class="shadow-card rounded-lg" />
     </div>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.auc-card {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  row-gap: 2em;
+  column-gap: 1em;
+  justify-items: center;
+}
+</style>
