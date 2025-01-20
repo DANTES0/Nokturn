@@ -5,6 +5,7 @@ import IconStarOutline from '@/components/icons/IconStarOutline.vue'
 import IconTg from '@/components/icons/IconTg.vue'
 import IconVk from '@/components/icons/IconVk.vue'
 import PaintsCard from '@/components/PaintsCard.vue'
+import AddCard from '@/components/ProfilePageComponents/AddCard.vue'
 </script>
 
 <template>
@@ -53,10 +54,12 @@ import PaintsCard from '@/components/PaintsCard.vue'
   <div class="w-full px-24">
     <div class="text-[20px] mt-[20px]">Выставленные лоты</div>
     <div class="mt-[20px] auc-card">
+      <AddCard title="Добавить лот" />
       <AuctionCard class="" v-for="i in 8" :key="i" />
     </div>
     <div class="text-[20px] mt-[20px]">Работы для демонстрации</div>
     <div class="gap-3 work mt-[20px]">
+      <AddCard title="Добавить работу" card="work" />
       <div v-for="i in 8" :key="i" class="paint-card">
         <PaintsCard styleCard="profile" class="" />
       </div>

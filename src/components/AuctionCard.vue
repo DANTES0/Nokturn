@@ -4,7 +4,7 @@ import { RouterLink } from 'vue-router'
 
 <template>
   <RouterLink to="/lot">
-    <div class="bg-white shadow-card w-[260px] h-[340px] rounded-lg hover:scale-110 cursor-pointer">
+    <div class="bg-white shadow-card w-[260px] h-[340px] rounded-lg hover:scale-105 cursor-pointer">
       <div class="flex flex-col justify-center items-center">
         <div
           class="w-[200px] h-[200px] bg-white shadow-cardImage mt-[10px] flex items-center justify-center"
