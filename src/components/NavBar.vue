@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import MyButton from '@/UX/MyIconButton.vue'
 import { RouterLink, useRoute } from 'vue-router'
 import IconPlus from './icons/IconPlus.vue'
 import IconBell from './icons/IconBell.vue'
 import IconMail from './icons/IconMail.vue'
 import IconUser from './icons/IconUser.vue'
 import { computed } from 'vue'
-
-const icons = [IconPlus, IconBell, IconMail]
 
 const route = useRoute()
 
@@ -38,20 +35,45 @@ const isProfileRoute = computed(() => route.path === '/profile')
         >Работы</RouterLink
       >
     </nav>
-    <div class="flex gap-6">
-      <MyButton
-        v-for="(icon, index) in icons"
-        :key="index"
+    <div class="flex gap-6 items-end">
+      <button
+        class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg rounded-bl-lg flex items-center justify-center hover:scale-105"
         :class="{ '!border-[#CCCCCC]': isProfileRoute }"
       >
-        <component :is="icon" />
-      </MyButton>
+        <IconPlus />
+      </button>
+
+      <button
+        class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg rounded-bl-lg flex items-center justify-center hover:scale-105 relative"
+        :class="{ '!border-[#CCCCCC]': isProfileRoute }"
+      >
+        <div
+          class="w-[12px] h-[12px] bg-red-600 border border-black absolute rounded-full top-[-6px] right-[-6px]"
+        ></div>
+        <IconBell />
+      </button>
+      <button
+        class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg rounded-bl-lg flex items-center justify-center hover:scale-105 relative"
+        :class="{ '!border-[#CCCCCC]': isProfileRoute }"
+      >
+        <div
+          class="w-[14px] h-[14px] border border-black bg-white absolute top-[-6px] right-[-8px] flex items-center justify-center rounded-tr-[4px] rounded-bl-[4px]"
+        >
+          <div class="text-[9px] font-bold">22</div>
+        </div>
+        <IconMail />
+      </button>
       <RouterLink to="/profile"
         ><button
-          class="w-[32px] h-[32px] border-2 border-black rounded-tl-lg rounded-br-lg flex items-center justify-center"
+          class="w-[40px] h-[40px] border-2 border-black rounded-tl-lg rounded-br-lg flex items-center justify-center"
           :class="{ '!border-[#CCCCCC]': isProfileRoute }"
         >
-          <IconUser /></button
+          <!-- <IconUser /> -->
+          <img
+            src="../assets/images/test3.png"
+            class="rounded-tl-lg rounded-br-lg"
+            alt=""
+          /></button
       ></RouterLink>
     </div>
   </div>
