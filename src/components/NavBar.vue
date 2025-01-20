@@ -59,7 +59,7 @@ const isProfileRoute = computed(() => route.path === '/profile')
         <div
           class="w-[14px] h-[14px] border border-black bg-white absolute top-[-6px] right-[-8px] flex items-center justify-center rounded-tr-[4px] rounded-bl-[4px]"
         >
-          <div class="text-[9px] font-bold">22</div>
+          <div class="text-[9px] font-bold text-black">22</div>
         </div>
         <IconMail />
       </button>
@@ -71,7 +71,7 @@ const isProfileRoute = computed(() => route.path === '/profile')
           <!-- <IconUser /> -->
           <img
             src="../assets/images/test3.png"
-            class="rounded-tl-lg rounded-br-lg"
+            class="rounded-tl-md rounded-br-lg h-full object-cover"
             alt=""
           /></button
       ></RouterLink>
