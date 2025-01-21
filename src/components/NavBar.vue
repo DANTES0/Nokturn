@@ -3,14 +3,20 @@ import { RouterLink, useRoute } from 'vue-router'
 import IconPlus from './icons/IconPlus.vue'
 import IconBell from './icons/IconBell.vue'
 import IconMail from './icons/IconMail.vue'
-import IconUser from './icons/IconUser.vue'
-import { computed } from 'vue'
+
+import { ref, computed } from 'vue'
+import ModalProfile from './NavBarComponents/ModalProfile.vue'
+
+const activeProfileModal = ref(false)
 
 const route = useRoute()
 
 const isProfileRoute = computed(() => route.path === '/profile')
 </script>
 <template>
+  <Transition name="slide-down" appear>
+    <ModalProfile v-if="activeProfileModal" :onClose="() => (activeProfileModal = false)" />
+  </Transition>
   <div
     :class="[
       'w-full px-24 items-center h-[48px] border-b border-[#7A7A7A] flex justify-between',
@@ -63,18 +69,19 @@ const isProfileRoute = computed(() => route.path === '/profile')
         </div>
         <IconMail />
       </button>
-      <RouterLink to="/profile"
-        ><button
-          class="w-[40px] h-[40px] border-2 border-black rounded-tl-lg rounded-br-lg flex items-center justify-center"
-          :class="{ '!border-[#CCCCCC]': isProfileRoute }"
-        >
-          <!-- <IconUser /> -->
-          <img
-            src="../assets/images/test3.png"
-            class="rounded-tl-md rounded-br-lg h-full object-cover"
-            alt=""
-          /></button
-      ></RouterLink>
+
+      <button
+        @click="activeProfileModal = !activeProfileModal"
+        class="w-[40px] h-[40px] border-2 border-black rounded-tl-lg rounded-br-lg flex items-center justify-center"
+        :class="{ '!border-[#CCCCCC]': isProfileRoute }"
+      >
+        <!-- <IconUser /> -->
+        <img
+          src="../assets/images/test3.png"
+          class="rounded-tl-md rounded-br-lg h-full object-cover"
+          alt=""
+        />
+      </button>
     </div>
   </div>
 </template>
@@ -108,5 +115,59 @@ nav a.router-link-exact-active::after {
     width: 100%;
     transform: translateX(-50%);
   }
+}
+
+/* .slide-right-enter-active,
+.slide-right-leave-active {
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.slide-right-enter-from {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.slide-right-enter-to {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.slide-right-leave-from {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.slide-right-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+} */
+
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.slide-down-enter-from {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.slide-down-enter-to {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.slide-down-leave-from {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.slide-down-leave-to {
+  transform: translateY(-100%);
+  opacity: 0;
 }
 </style>
