@@ -2,7 +2,7 @@
 
 <template>
   <div
-    class="w-full h-[320px] shadow-card rounded-3xl hover:scale-110 relative flex flex-col items-center max-w-[400px] ml-[20px] mr-[20px]"
+    class="w-full h-[320px] shadow-card rounded-3xl hover:scale-105 relative flex flex-col items-center max-w-[400px] ml-[20px] mr-[20px]"
   >
     <div class="w-full h-[55%] bg-black flex rounded-tl-2xl rounded-tr-2xl bro">
       <img class="object-cover w-full flex-1" src="../assets/images/test1.jpg" />
