@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import IcoDownArrow from '@/components/icons/IcoDownArrow.vue'
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
 interface Props {
   title: string
   placeholder: string
@@ -35,6 +36,8 @@ onMounted(() => {
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
 })
+
+const route = useRoute()
 </script>
 
 <template>
@@ -46,7 +49,10 @@ onUnmounted(() => {
         class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] pr-[60px]"
         :placeholder="props.placeholder"
       />
-      <div class="absolute top-[-14px] left-[20px] bg-[#FAFAFA] px-2 font-light">
+      <div
+        class="absolute top-[-14px] left-[20px] bg-[#FAFAFA] px-2 font-light"
+        :class="{ ['!bg-white']: route.path === '/addLot' }"
+      >
         {{ props.title }}
       </div>
       <div class="absolute top-[8px] right-[50px]">|</div>
