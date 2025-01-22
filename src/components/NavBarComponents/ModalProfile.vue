@@ -20,7 +20,11 @@ defineProps({
         </li></RouterLink
       >
       <hr />
-      <li class="pl-1 flex items-center gap-1"><IconGear class="w-[16px]" />Настройки профиля</li>
+      <RouterLink to="/profileSettings" @click="onClose"
+        ><li class="pl-1 flex items-center gap-1">
+          <IconGear class="w-[16px]" />Настройки профиля
+        </li></RouterLink
+      >
       <hr />
       <li class="pl-1 flex items-center gap-1"><IconLogout class="w-[16px]" /> Выход</li>
     </ul>
