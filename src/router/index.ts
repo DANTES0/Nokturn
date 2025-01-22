@@ -39,6 +39,11 @@ const router = createRouter({
       name: 'AddPaintingPage',
       component: () => import('@/pages/AddPaintingPage.vue'),
     },
+    {
+      path: '/addLot',
+      name: 'AddAuctionLotPage',
+      component: () => import('@/pages/AddAuctionLotPage.vue'),
+    },
   ],
 })
 

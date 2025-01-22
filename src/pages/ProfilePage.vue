@@ -54,7 +54,7 @@ import AddCard from '@/components/ProfilePageComponents/AddCard.vue'
   <div class="w-[90%]">
     <div class="text-[20px] mt-[20px]">Выставленные лоты</div>
     <div class="mt-[20px] auc-card">
-      <AddCard title="Добавить лот" />
+      <RouterLink to="/addLot"><AddCard title="Добавить лот" /></RouterLink>
       <AuctionCard class="" v-for="i in 8" :key="i" />
     </div>
     <div class="text-[20px] mt-[20px]">Работы для демонстрации</div>
