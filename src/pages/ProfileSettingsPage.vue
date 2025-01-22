@@ -7,7 +7,7 @@ const active = ref(false)
 </script>
 
 <template>
-  <div class="w-[90%] bg-white shadow-container rounded-2xl h-[200px] p-[20px] mt-[30px]">
+  <div class="w-[90%] bg-white shadow-container rounded-2xl p-[20px] mt-[30px]">
     <div
       class="w-full h-[34vh] relative cursor-pointer"
       @mouseover="() => (active = true)"
