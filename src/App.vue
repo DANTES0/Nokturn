@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
 import NavBar from './components/NavBar.vue'
+
+const route = useRoute()
 </script>
 
 <template>
   <div class="flex items-center justify-center flex-col">
-    <NavBar></NavBar>
+    <NavBar v-if="route.path !== '/register' && route.path != '/auth'"></NavBar>
     <!-- <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink> -->
     <RouterView />
@@ -23,7 +25,12 @@ import NavBar from './components/NavBar.vue'
    -->
 </template>
 
-<style scoped>
+<style>
+body {
+  background-image: url('/src/assets/images/bgAuth.jpeg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
 /* nav a.router-link-exact-active {
   color: var(--color-text);
 }

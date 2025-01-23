@@ -54,6 +54,11 @@ const router = createRouter({
       name: 'ChatPage',
       component: () => import('@/pages/ChatPage.vue'),
     },
+    {
+      path: '/register',
+      name: 'RegisterPage',
+      component: () => import('@/pages/RegisterPage.vue'),
+    },
   ],
 })
 
