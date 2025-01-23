@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import IconCamera from '@/components/icons/IconCamera.vue'
+import MyButton from '@/UX/MyButton.vue'
+import MyCheckBox from '@/UX/MyCheckBox.vue'
 import MyInput from '@/UX/MyInput.vue'
 import { ref } from 'vue'
 
@@ -7,7 +9,7 @@ const active = ref(false)
 </script>
 
 <template>
-  <div class="w-[90%] bg-white shadow-container rounded-2xl p-[20px] mt-[30px]">
+  <div class="w-[90%] bg-white shadow-container rounded-2xl p-[20px] mt-[30px] mb-[40px]">
     <div
       class="w-full h-[34vh] relative cursor-pointer"
       @mouseover="() => (active = true)"
@@ -50,6 +52,38 @@ const active = ref(false)
           <MyInput title="Ссылка на telegram" placeholder="https://t.me/*" />
         </div>
       </div>
+    </div>
+    <div class="w-full mt-[20px] flex gap-4">
+      <div class="bg-white shadow-card w-full max-w-[800px] rounded-lg p-[20px]">
+        <div class="text-[20px]">О вас</div>
+        <textarea
+          class="border border-black rounded-br-lg rounded-tl-lg w-full min-h-[180px] p-[10px] mt-[10px]"
+        ></textarea>
+      </div>
+      <div class="w-full bg-white shadow-card rounded-lg flex-1 p-[20px] flex flex-col gap-3">
+        <div class="text-[20px]">Дополнительная информация</div>
+        <div class="flex gap-3">
+          <MyCheckBox />
+          <div>Отображать только имя?</div>
+        </div>
+        <div class="flex flex-col gap">
+          <div class="flex gap-3">
+            <div>Специальная информация</div>
+            <div
+              class="w-5 h-5 text-center border border-black rounded-tr-md rounded-bl-md items-center flex justify-center text-[#999999] font-light"
+            >
+              ?
+            </div>
+          </div>
+          <textarea
+            class="border border-black rounded-br-lg rounded-tl-lg w-full min-h-[100px] p-[10px] mt-[10px]"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="w-full mt-[20px] flex justify-between">
+      <MyButton title="Сохранить изменения" />
+      <MyButton title="Перейти в профиль" />
     </div>
   </div>
 </template>
