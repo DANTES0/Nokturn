@@ -58,17 +58,19 @@ const isProfileRoute = computed(() => route.path === '/profile')
         ></div>
         <IconBell />
       </button>
-      <button
-        class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg rounded-bl-lg flex items-center justify-center hover:scale-105 relative"
-        :class="{ '!border-[#CCCCCC]': isProfileRoute }"
-      >
-        <div
-          class="w-[14px] h-[14px] border border-black bg-white absolute top-[-6px] right-[-8px] flex items-center justify-center rounded-tr-[4px] rounded-bl-[4px]"
+      <RouterLink to="/chat">
+        <button
+          class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg rounded-bl-lg flex items-center justify-center hover:scale-105 relative"
+          :class="{ '!border-[#CCCCCC]': isProfileRoute }"
         >
-          <div class="text-[9px] font-bold text-black">22</div>
-        </div>
-        <IconMail />
-      </button>
+          <div
+            class="w-[14px] h-[14px] border border-black bg-white absolute top-[-6px] right-[-8px] flex items-center justify-center rounded-tr-[4px] rounded-bl-[4px]"
+          >
+            <div class="text-[9px] font-bold text-black">22</div>
+          </div>
+          <IconMail />
+        </button>
+      </RouterLink>
 
       <button
         @click="activeProfileModal = !activeProfileModal"
