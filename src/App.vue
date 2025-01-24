@@ -26,8 +26,6 @@ const route = useRoute()
 </template>
 
 <style>
-body {
-}
 /* nav a.router-link-exact-active {
   color: var(--color-text);
 }
