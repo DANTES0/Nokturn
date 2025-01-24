@@ -10,12 +10,14 @@ const props = withDefaults(defineProps<Props>(), {
 })
 </script>
 <template>
-  <div class="ml-[10px] text-[14px]">{{ props.title }}</div>
-  <input
-    type="text"
-    class="border border-black rounded-tl-lg rounded-br-lg w-[80%] h-8 text-[16px] pl-4"
-    :placeholder="props.placeholder"
-  />
+  <div>
+    <div class="ml-[10px] text-[14px] mb-[8px]">{{ props.title }}</div>
+    <input
+      type="text"
+      class="border border-black rounded-tl-lg rounded-br-lg w-[80%] h-8 text-[16px] pl-4"
+      :placeholder="props.placeholder"
+    />
+  </div>
 </template>
 
 <style scoped></style>
