@@ -27,9 +27,6 @@ const route = useRoute()
 
 <style>
 body {
-  background-image: url('/src/assets/images/bgAuth.jpeg');
-  background-repeat: no-repeat;
-  background-size: 100%;
 }
 /* nav a.router-link-exact-active {
   color: var(--color-text);

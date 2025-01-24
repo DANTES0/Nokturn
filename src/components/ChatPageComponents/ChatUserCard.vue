@@ -18,9 +18,7 @@
         <div class="font-medium text-[1.2vw]">Петриков Кирилл</div>
         <div class="font-extralight text-[0.8vw]">10:23</div>
       </div>
-      <div
-        class="w-full text-[1vw] pr-[40px] text-ellipsis overflow-hidden whitespace-nowrap max-w-[34vw] text-end"
-      >
+      <div class="w-full text-[1vw] pr-[40px] line-clamp-1">
         Текст со специальной информацией Текст со специальной информациейТекст со специальной
         информацией Текст со специальной информацией
       </div>
