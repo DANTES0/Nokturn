@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
   <button
-    class="border border-black rounded-tl-[8px] rounded-br-[8px] h-[36px] shadow-cardImage px-[30px] hover:bg-[#EEEEEE] active:shadow-none active:bg-[#E0E0E0]"
+    class="text-[1vw] border border-black rounded-tl-[8px] rounded-br-[8px] shadow-cardImage px-[30px] py-[4px] hover:bg-[#EEEEEE] active:shadow-none active:bg-[#E0E0E0] bg-white"
   >
     {{ props.title }}
   </button>

@@ -1,25 +1,26 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="">
-    <input
-      class="border border-black absolute -z-10 opacity-0 custom-checkbox w-6 h-6"
-      type="checkbox"
-      name="checkbox"
-      id="checkbox"
-    />
-    <label for="checkbox"></label>
-  </div>
+  <input
+    class="border border-black absolute -z-10 opacity-0 custom-checkbox w-[1.6vw] aspect-square"
+    type="checkbox"
+    name="checkbox"
+    id="checkbox"
+  />
+  <label for="checkbox"></label>
 </template>
 
 <style scoped>
 .custom-checkbox + label {
   display: inline-flex;
   cursor: pointer;
-  width: 24px;
-  height: 24px;
+  width: 1.6vw;
+  aspect-ratio: 1/1;
   align-items: center;
   user-select: none;
+  background-color: white;
+  border-top-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 .custom-checkbox + label::before {
   content: '';

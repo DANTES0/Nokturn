@@ -25,7 +25,12 @@ import MySecondInput from '@/UX/MySecondInput.vue'
       <div class="flex gap-6 items-center">
         <MyButton title="Зарегистрировать" />
         <div class="w-[150px] text-[0.6vw]">
-          У вас уже есть аккаунт? Нажмите здесь, чтобы войти в учетную запись.
+          У вас уже есть аккаунт?
+          <RouterLink to="/auth"
+            ><span class="underline hover:text-[#888888] cursor-pointer"
+              >Нажмите здесь</span
+            ></RouterLink
+          >, чтобы войти в учетную запись
         </div>
       </div>
     </div>
@@ -39,6 +44,6 @@ import MySecondInput from '@/UX/MySecondInput.vue'
 .registerImage {
   background-image: url('../assets/images/bgAuth.jpeg');
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
 }
 </style>
