@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterView, useRoute } from 'vue-router'
 import NavBar from './components/NavBar.vue'
+import MobileNavBar from './components/MobileNavBar.vue'
 
 const route = useRoute()
 </script>
@@ -8,6 +9,7 @@ const route = useRoute()
 <template>
   <div class="flex items-center justify-center flex-col">
     <NavBar v-if="route.path !== '/register' && route.path != '/auth'"></NavBar>
+    <MobileNavBar />
     <!-- <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink> -->
     <RouterView />
