@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { RouterView, useRoute } from 'vue-router'
 import NavBar from './components/NavBar.vue'
-
+import MobileNavBar from './components/MobileNavBar.vue'
+import { useScreenWidth } from './assets/scripts/ScriptWindowSize'
 const route = useRoute()
+const isMobile = useScreenWidth(800)
 </script>
 
 <template>
   <div class="flex items-center justify-center flex-col">
-    <NavBar v-if="route.path !== '/register' && route.path != '/auth'"></NavBar>
+    <NavBar v-if="!isMobile && route.path !== '/register' && route.path !== '/auth'"></NavBar>
+    <MobileNavBar v-if="route.path !== '/register' && route.path !== '/auth' && isMobile" />
     <!-- <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink> -->
     <RouterView />

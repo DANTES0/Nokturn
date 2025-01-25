@@ -21,13 +21,13 @@ const randomImage = () => {
 </script>
 <template>
   <div class="w-[90%] mt-[30px]">
-    <div class="relative mr-auto">
+    <div class="relative mr-auto w-full max-w-[400px]">
       <input
-        class="border border-black w-[400px] h-[30px] rounded-bl-lg rounded-tr-lg pl-4 pr-[40px]"
+        class="border border-black w-full h-[30px] rounded-bl-lg rounded-tr-lg pl-4 pr-[40px] max-w-[400px]"
         type="text"
         placeholder="Поиск"
       />
-      <IconSearch class="absolute left-[360px] top-[4px]" />
+      <IconSearch class="absolute right-[8px] top-[4px]" />
     </div>
   </div>
   <div class="gallery !mt-[20px]">
