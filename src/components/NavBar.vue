@@ -19,7 +19,7 @@ const isProfileRoute = computed(() => route.path === '/profile')
   </Transition>
   <div
     :class="[
-      'w-full px-24 items-center h-[48px] border-b border-[#7A7A7A] flex justify-between',
+      'w-full laptop:px-24 mobile:px-4 items-center h-[48px] border-b border-[#7A7A7A] flex justify-between',
       { 'absolute top-0 bg-[rgba(0,0,0,0.35)] text-white': isProfileRoute },
     ]"
   >
@@ -29,7 +29,7 @@ const isProfileRoute = computed(() => route.path === '/profile')
       :class="{ 'hover:text-[#DDDDDD]': isProfileRoute }"
       >Ноктюрн</RouterLink
     >
-    <nav class="mr-auto mt-auto ml-[100px] flex gap-7 text-[18px]">
+    <nav class="mr-auto mt-auto laptop:ml-[100px] mobile:ml-8 flex gap-7 text-[18px]">
       <RouterLink :class="{ 'hover:!text-[#DDDDDD]': isProfileRoute }" to="/">Главная</RouterLink>
       <RouterLink :class="{ 'hover:!text-[#DDDDDD]': isProfileRoute }" to="/auctions"
         >Аукционы</RouterLink

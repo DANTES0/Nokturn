@@ -25,7 +25,7 @@ const toggleDropMenu = () => {
       'w-full px-[10px] items-center h-[48px] border-b border-[#7A7A7A] flex justify-between relative',
     ]"
   >
-    <div class="font-[LeviBrushRus]">Ноктюрн</div>
+    <div class="font-[LeviBrushRus] text-[20px] flex h-full items-end">Ноктюрн</div>
     <div class="flex gap-6 items-center">
       <button
         class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg rounded-bl-lg flex items-center justify-center hover:scale-105"
@@ -111,10 +111,48 @@ const toggleDropMenu = () => {
       <RouterLink to="/paintings"><div class="ml-[10px] mt-[4px]">Работы</div></RouterLink>
       <hr />
     </div>
-    <!-- Контент меню -->
+  </div>
+  <div
+    class="w-full bottom-0 left-0 fixed bg-white h-[50px] border-t border-black z-50 rounded-tl-2xl rounded-tr-2xl mob"
+  >
+    <nav class="mt-auto flex text-[18px] justify-center px-[10px] items-center h-full gap-5">
+      <RouterLink to="/" class="nav-link">Главная</RouterLink>
+      <RouterLink to="/auctions" class="nav-link">Аукционы</RouterLink>
+      <RouterLink to="/artists" class="nav-link">Художники</RouterLink>
+      <RouterLink to="/paintings">Работы</RouterLink>
+    </nav>
   </div>
 </template>
 
 <style scoped>
-/* Стили бургер-меню */
+nav > *:hover {
+  color: #4c4c4c;
+}
+
+nav a.router-link-exact-active {
+  position: relative;
+}
+
+nav a.router-link-exact-active::after {
+  position: absolute;
+  content: '';
+  width: 0;
+  height: 2px;
+  background-color: black;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: growFromCenter 0.5s ease forwards;
+}
+
+@keyframes growFromCenter {
+  0% {
+    width: 0;
+    transform: translateX(-50%);
+  }
+  100% {
+    width: 100%;
+    transform: translateX(-50%);
+  }
+}
 </style>
