@@ -109,7 +109,6 @@ const toggleDropMenu = () => {
       <RouterLink to="/artists"><div class="ml-[10px] mt-[4px]">Художники</div></RouterLink>
       <hr />
       <RouterLink to="/paintings"><div class="ml-[10px] mt-[4px]">Работы</div></RouterLink>
-      <hr />
     </div>
   </div>
   <div

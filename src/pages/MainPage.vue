@@ -91,18 +91,21 @@ const prevAuctionCard = () => carouselAuctionRef.value.prev()
     <MagazinBanner />
 
     <div class="mt-[30px] flex w-[90%] justify-between">
-      <label class="text-[24px]"> Ближайшие торги </label>
+      <label class="laptop:text-[24px] text-[18px]"> Ближайшие торги </label>
 
-      <RouterLink class="font-light flex items-center justify-center" to="/auctions">
+      <RouterLink
+        class="font-light flex items-center justify-center laptop:text-[16px] text-[12px]"
+        to="/auctions"
+      >
         Посмотреть все торги</RouterLink
       >
     </div>
     <div
-      class="w-[90%] h-[400px] bg-white mt-[30px] shadow-container rounded-[32px] relative max-h-[80vh] flex items-center justify-between"
+      class="laptop:w-[90%] w-full h-[400px] bg-white mt-[30px] shadow-container rounded-[32px] relative max-h-[80vh] flex items-center justify-between"
     >
       <div
         @click="prevAuctionCard"
-        class="w-12 h-12 bg-[#F5F5F5] rounded-full ml-[30px] flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
+        class="laptop:w-12 laptop:h-12 w-6 h-6 bg-[#F5F5F5] rounded-full laptop:ml-[30px] ml-4 flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
       >
         <IconLeftArrow />
       </div>
@@ -119,15 +122,18 @@ const prevAuctionCard = () => carouselAuctionRef.value.prev()
       </div>
       <div
         @click="nextAuctionCard"
-        class="w-12 h-12 bg-[#F5F5F5] rounded-full mr-[30px] flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
+        class="laptop:w-12 laptop:h-12 w-6 h-6 bg-[#F5F5F5] rounded-full mr-[30px] flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
       >
         <IconRightArrow />
       </div>
     </div>
     <div class="mt-[30px] mb-[30px] flex w-[90%] justify-between">
-      <label class="text-[24px]"> Торги физического творчества </label>
+      <label class="laptop:text-[24px] text-[18px]">Физическое творчество </label>
 
-      <RouterLink class="font-light flex items-center justify-center" to="/auctions">
+      <RouterLink
+        class="font-light flex items-center justify-center laptop:text-[16px] text-[12px]"
+        to="/auctions"
+      >
         Посмотреть все торги</RouterLink
       >
     </div>
@@ -135,23 +141,28 @@ const prevAuctionCard = () => carouselAuctionRef.value.prev()
       <AuctionCard v-for="i in 8" :key="i" />
     </div>
     <div class="mt-[30px] flex w-[90%] justify-between">
-      <label class="text-[24px]"> Художники </label>
+      <label class="laptop:text-[24px] text-[18px]"> Художники </label>
 
-      <RouterLink class="font-light flex items-center justify-center" to="/artists">
+      <RouterLink
+        class="font-light flex items-center justify-center laptop:text-[16px] text-[12px]"
+        to="/artists"
+      >
         Посмотреть всех художников</RouterLink
       >
     </div>
 
     <div
-      class="w-[90%] h-[400px] bg-white mt-[30px] shadow-container rounded-[32px] relative max-h-[80vh] flex items-center justify-between"
+      class="laptop:w-[90%] w-full h-[400px] bg-white mt-[30px] shadow-container rounded-[32px] relative max-h-[80vh] flex items-center justify-between"
     >
       <div
         @click="prev"
-        class="w-12 h-12 bg-[#F5F5F5] rounded-full ml-[30px] flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
+        class="laptop:w-12 laptop:h-12 w-6 h-6 bg-[#F5F5F5] rounded-full laptop:ml-[30px] ml-4 flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
       >
         <IconLeftArrow />
       </div>
-      <div class="items-center justify-center desktop:w-[85%] laptop:w-[70%] mobile:w-[50%]">
+      <div
+        class="items-center justify-center desktop:w-[85%] laptop:w-[70%] mobile:w-[50%] w-[80%]"
+      >
         <Carousel ref="carouselRef" v-model="currentSlide" v-bind="carouselConfig">
           <Slide v-for="slide in 10" :key="slide">
             <ArtistMainPageCard class="max-h-[300px]"
@@ -161,15 +172,18 @@ const prevAuctionCard = () => carouselAuctionRef.value.prev()
 
       <div
         @click="next"
-        class="w-12 h-12 bg-[#F5F5F5] rounded-full mr-[30px] flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
+        class="laptop:w-12 laptop:h-12 w-6 h-6 bg-[#F5F5F5] rounded-full laptop:mr-[30px] mr-4 flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
       >
         <IconRightArrow />
       </div>
     </div>
     <div class="mt-[30px] mb-[30px] flex w-[90%] justify-between">
-      <label class="text-[24px]"> Торги физического творчества </label>
+      <label class="laptop:text-[24px] text-[18px]">Физическое творчество </label>
 
-      <RouterLink class="font-light flex items-center justify-center" to="/auctions">
+      <RouterLink
+        class="font-light flex items-center justify-center laptop:text-[16px] text-[12px]"
+        to="/auctions"
+      >
         Посмотреть все торги</RouterLink
       >
     </div>
@@ -177,9 +191,12 @@ const prevAuctionCard = () => carouselAuctionRef.value.prev()
       <AuctionCard v-for="i in 8" :key="i" />
     </div>
     <div class="mt-[30px] mb-[30px] flex w-[90%] justify-between">
-      <label class="text-[24px]"> Работы не для продажи </label>
+      <label class="laptop:text-[24px] text-[18px]"> Работы не для продажи </label>
 
-      <RouterLink class="font-light flex items-center justify-center" to="/auctions">
+      <RouterLink
+        class="font-light flex items-center justify-center laptop:text-[16px] text-[12px]"
+        to="/auctions"
+      >
         Посмотреть все работы</RouterLink
       >
     </div>
