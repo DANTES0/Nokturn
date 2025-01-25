@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { useScreenWidth } from '@/assets/scripts/ScriptWindowSize'
 import IconLeftArrow from '@/components/icons/IconLeftArrow.vue'
 import IconRightArrow from '@/components/icons/IconRightArrow.vue'
-const isMobile = useScreenWidth(800)
 </script>
 
 <template>
@@ -38,7 +36,7 @@ const isMobile = useScreenWidth(800)
       </div>
     </div>
     <div
-      class="trapezoid2 laptop:mr-[30px] laptop:mt-[25px] laptop:rounded-tl-2xl laptop:rounded-bl-2xl"
+      class="trapezoid2 laptop:mr-[30px] laptop:mt-[25px] laptop:rounded-tr-2xl laptop:rounded-br-2xl"
     >
       <div
         class="laptop:w-[300px] laptop:h-[100px] w-[100px] h-[30px] laptop:mr-[30px] mt-[30px] relative flex items-center justify-center mr-[2vw]"
