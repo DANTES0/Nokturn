@@ -10,7 +10,7 @@
       <img class="object-cover w-1/3 flex-1" src="../assets/images/test1.jpg" />
     </div>
     <img
-      class="absolute laptop:w-[100px] laptop:h-[100px] w-20 h-20 rounded-full bg-transparent shadow-cardImage top-[35%] object-cover"
+      class="absolute laptop:w-22 laptop:h-22 w-20 h-20 rounded-full bg-transparent shadow-cardImage top-[35%] object-cover"
       src="../assets/images/test3.png"
     />
     <div class="mt-[40px] w-full flex flex-col gap-2">
