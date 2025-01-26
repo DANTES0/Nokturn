@@ -105,10 +105,10 @@ onBeforeUnmount(() => {
           </div>
           <Transition name="dropdown" appear>
             <div class="flex flex-col justify-center gap-2" v-if="isProfileDropdown">
-              <div class="ml-[10px] flex gap-2 items-center mt-[6px]">
+              <RouterLink to="/profile" class="ml-[10px] flex gap-2 items-center mt-[6px]">
                 <IconUser />
                 <div>Профиль</div>
-              </div>
+              </RouterLink>
               <div class="ml-[10px] flex gap-2 items-center">
                 <IconMail />
                 <div>Сообщения</div>
@@ -125,22 +125,34 @@ onBeforeUnmount(() => {
           </Transition>
         </div>
         <div class="w-full h-[1px] bg-black mt-[4px]"></div>
-        <RouterLink to="/" class="flex gap-2 items-center ml-2 mt-4">
+        <RouterLink to="/" class="flex gap-2 items-center ml-2 mt-4" @click="isMenuOpen = false">
           <IconHome />
           <div class="">Главная</div>
         </RouterLink>
         <hr class="mt-2" />
-        <RouterLink to="/auctions" class="flex items-center gap-2 ml-2 mt-2">
+        <RouterLink
+          to="/auctions"
+          class="flex items-center gap-2 ml-2 mt-2"
+          @click="isMenuOpen = false"
+        >
           <IconAuc />
           <div class="">Аукционы</div>
         </RouterLink>
         <hr class="mt-2" />
-        <RouterLink to="/artists" class="flex gap-2 items-center ml-2 mt-2">
+        <RouterLink
+          to="/artists"
+          class="flex gap-2 items-center ml-2 mt-2"
+          @click="isMenuOpen = false"
+        >
           <IconArtists />
           <div class="">Художники</div>
         </RouterLink>
         <hr class="mt-2" />
-        <RouterLink to="/paintings" class="flex gap-2 items-center ml-2 mt-2 mb-2">
+        <RouterLink
+          to="/paintings"
+          class="flex gap-2 items-center ml-2 mt-2 mb-2"
+          @click="isMenuOpen = false"
+        >
           <IconPainter />
           <div class="">Работы</div>
         </RouterLink>
