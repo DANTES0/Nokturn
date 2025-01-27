@@ -160,9 +160,7 @@ const prevAuctionCard = () => carouselAuctionRef.value.prev()
       >
         <IconLeftArrow />
       </div>
-      <div
-        class="items-center justify-center desktop:w-[85%] laptop:w-[70%] mobile:w-[50%] w-[80%]"
-      >
+      <div class="items-center justify-center desktop:w-[85%] laptop:w-[85%] w-[80%]">
         <Carousel ref="carouselRef" v-model="currentSlide" v-bind="carouselConfig">
           <Slide v-for="slide in 10" :key="slide">
             <ArtistMainPageCard class="max-h-[300px]"
