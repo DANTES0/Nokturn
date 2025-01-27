@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useScreenWidth } from '@/assets/scripts/ScriptWindowSize'
 import AuctionCard from '@/components/AuctionCard.vue'
 import IconChat from '@/components/icons/IconChat.vue'
 import IconStarOutline from '@/components/icons/IconStarOutline.vue'
@@ -6,23 +7,29 @@ import IconTg from '@/components/icons/IconTg.vue'
 import IconVk from '@/components/icons/IconVk.vue'
 import PaintsCard from '@/components/PaintsCard.vue'
 import AddCard from '@/components/ProfilePageComponents/AddCard.vue'
+
+const isMobile = useScreenWidth(1024)
 </script>
 
 <template>
   <div class="w-full h-[34vh] relative -z-10">
     <img class="h-full w-full object-cover" src="../assets/images/test1.jpg" />
     <img
-      class="absolute w-48 h-48 rounded-full bottom-[-90px] left-[96px] shadow-cardImage"
+      class="absolute w-48 h-48 rounded-full bottom-[-90px] laptop:left-[96px] left-[104px] shadow-cardImage"
       src="../assets/images/test3.png"
     />
   </div>
 
-  <div class="w-[90%] flex gap-8">
+  <div class="w-[90%] flex gap-8 laptop:flex-row flex-col">
     <div
-      class="bg-white w-[25%] max-w-[350px] h-[180px] shadow-container rounded-2xl mt-8 ml-[330px] relative"
+      class="bg-white laptop:w-[25%] laptop:max-w-[350px] w-full h-[180px] shadow-container rounded-2xl laptop:mt-8 mt-[120px] laptop:ml-[300px] relative"
     >
-      <div class="w-6 h-6 bg-white shadow-container rounded-full left-[-36px] absolute"></div>
       <div
+        v-if="!isMobile"
+        class="w-6 h-6 bg-white shadow-container rounded-full left-[-36px] absolute"
+      ></div>
+      <div
+        v-if="!isMobile"
         class="w-4 h-4 bg-white shadow-container rounded-full left-[-64px] top-[-8px] absolute"
       ></div>
       <IconChat class="absolute top-2 right-[10px]" />
@@ -43,7 +50,7 @@ import AddCard from '@/components/ProfilePageComponents/AddCard.vue'
       </div>
     </div>
     <div
-      class="bg-white w-full flex-1 h-[180px] shadow-container rounded-2xl mt-8 relative p-[20px] text-justify description-text"
+      class="bg-white w-full flex-1 h-[180px] shadow-container rounded-2xl laptop:mt-8 relative p-[20px] text-justify description-text overflow-y-scroll laptop:text-[14px] desktop:text-[18px]"
     >
       Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться.
       Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение
@@ -85,7 +92,7 @@ import AddCard from '@/components/ProfilePageComponents/AddCard.vue'
   width: 100%;
 }
 
-.description-text {
-  font-size: clamp(6px, 1vw + 1px, 18px);
-}
+/* .description-text {
+  font-size: clamp(6px, 2vw + 1px, 18px);
+} */
 </style>

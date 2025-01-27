@@ -6,7 +6,7 @@ export default {
     screens: {
       mobile: '640px',
       laptop: '1024px',
-      desktop: '1280px',
+      desktop: '1920px',
     },
     extend: {
       boxShadow: {
