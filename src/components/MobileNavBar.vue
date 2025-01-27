@@ -109,14 +109,14 @@ onBeforeUnmount(() => {
                 <IconUser />
                 <div>Профиль</div>
               </RouterLink>
-              <div class="ml-[10px] flex gap-2 items-center">
+              <RouterLink to="/chat" class="ml-[10px] flex gap-2 items-center">
                 <IconMail />
                 <div>Сообщения</div>
-              </div>
-              <div class="ml-[10px] flex gap-2 items-center">
+              </RouterLink>
+              <RouterLink to="/profileSettings" class="ml-[10px] flex gap-2 items-center">
                 <IconGear />
                 <div>Настройки</div>
-              </div>
+              </RouterLink>
               <div class="ml-[10px] flex gap-2 items-center">
                 <IconLogout />
                 <div>Выход</div>
