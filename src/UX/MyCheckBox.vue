@@ -14,7 +14,7 @@
 .custom-checkbox + label {
   display: inline-flex;
   cursor: pointer;
-  width: 1.6vw;
+  width: 24px;
   aspect-ratio: 1/1;
   align-items: center;
   user-select: none;

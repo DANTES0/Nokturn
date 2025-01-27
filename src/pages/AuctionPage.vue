@@ -1,19 +1,47 @@
 <script setup lang="ts">
+import { useScreenWidth } from '@/assets/scripts/ScriptWindowSize'
 import AuctionCard from '@/components/AuctionCard.vue'
+import IconLeftArrow from '@/components/icons/IconLeftArrow.vue'
+import IconRightArrow from '@/components/icons/IconRightArrow.vue'
 import MyButton from '@/UX/MyButton.vue'
 
 import MyCheckBox from '@/UX/MyCheckBox.vue'
 import MyInput from '@/UX/MyInput.vue'
 import MySelectionInput from '@/UX/MySelectionInput.vue'
+import { ref } from 'vue'
+
+const isMobile = useScreenWidth(1480)
+
+const activeButtonFilter = ref(false)
 </script>
 <template>
   <div class="flex justify-between w-full gap-[30px] px-[30px]">
     <div
-      class="w-[25%] max-w-[350px] h-[90vh] bg-[#FAFAFA] mt-[30px] shadow-container rounded-[32px] mb-[30px] sticky top-[30px] flex flex-col"
+      v-if="isMobile && !activeButtonFilter"
+      @click="activeButtonFilter = !activeButtonFilter"
+      class="flex items-center justify-center bg-white w-12 h-12 rounded-tr-2xl rounded-br-2xl shadow-container fixed z-40 left-0 top-16"
+    >
+      <IconRightArrow />
+    </div>
+    <div
+      v-if="activeButtonFilter || !isMobile"
+      class="max-w-[350px] bg-[#FAFAFA] mt-[30px] shadow-container rounded-[32px] mb-[30px] top-[30px] flex flex-col overflow-y-scroll"
+      :class="[
+        { 'fixed w-full z-10  h-[75vh] left-0': isMobile },
+        { 'sticky w-[25%] h-[90vh]': !isMobile },
+      ]"
     >
       <div class="flex flex-col w-full px-[30px] flex-1">
-        <label class="text-[20px] mt-[20px]">Фильтры</label>
-        <MyInput title="Поиск" placeholder="Арбуз" class="mt-[30px]" />
+        <div class="flex items-center mt-[20px] justify-between">
+          <label class="text-[20px]">Фильтры</label>
+          <div
+            v-if="isMobile"
+            class="bg-[#FAFAFA] w-10 h-10 rounded-full shadow-container absolute right-3 flex items-center justify-center"
+          >
+            <IconLeftArrow class="w-8 h-8" @click="activeButtonFilter = false" />
+          </div>
+        </div>
+        <MyInput title="Поиск" placeholder="Арбуз" class="mt-[16px]" />
         <MySelectionInput title="Категория" placeholder="Физическое искусство" class="mt-[30px]" />
         <div class="mt-[20px]">Начальная цена</div>
         <div class="flex gap-5">
@@ -25,7 +53,7 @@ import MySelectionInput from '@/UX/MySelectionInput.vue'
           <MyInput title="От" placeholder="100" class="mt-[14px]" />
           <MyInput title="До" placeholder="10000" class="mt-[14px]" />
         </div>
-        <div class="flex mt-[20px] gap-7">
+        <div class="flex mt-[20px] gap-7 w-full">
           <MyCheckBox class="w-6 h-6" />
           <label class="">Показывать текущие</label>
         </div>

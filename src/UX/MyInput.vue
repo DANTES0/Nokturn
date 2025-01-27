@@ -18,7 +18,7 @@ const route = useRoute()
   <div class="w-full relative">
     <input
       type="text"
-      class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px]"
+      class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] focus:outline-black focus:outline focus:outline-1"
       :placeholder="props.placeholder"
     />
     <div
