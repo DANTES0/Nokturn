@@ -3,6 +3,8 @@ import ChatMessenger from '@/components/ChatPageComponents/ChatMessenger.vue'
 import ChatUserCard from '@/components/ChatPageComponents/ChatUserCard.vue'
 import IconPaperClip from '@/components/icons/IconPaperClip.vue'
 import MyButton from '@/UX/MyButton.vue'
+
+//Ничего не делал 28.01.2025
 </script>
 
 <template>
