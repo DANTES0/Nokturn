@@ -4,6 +4,7 @@ import MyButton from '@/UX/MyButton.vue'
 import MyCheckBox from '@/UX/MyCheckBox.vue'
 import MySecondInput from '@/UX/MySecondInput.vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 async function fetchData() {
   const objectData = {
@@ -17,19 +18,30 @@ async function fetchData() {
     console.log('Не все данные')
     return
   }
-  await fetch('http://localhost:3000/api/auth/register', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(objectData),
-  })
+  try {
+    const response = await fetch('http://localhost:3000/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(objectData),
+    })
+
+    if (response.ok) {
+      console.log('Запрос выполнен успешно, пользователь зарегистрирован')
+      router.push('/auth')
+    }
+  } catch (error) {
+    console.error('Error', error)
+  }
 }
 
 const emailModel = ref('')
 const loginModel = ref('')
 const passwordModel = ref('')
 const birthdayModel = ref('')
+
+const router = useRouter()
 </script>
 
 <template>
