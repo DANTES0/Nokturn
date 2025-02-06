@@ -1,4 +1,20 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue'
+
+// const props = defineProps({
+//   modelValue: { default: false, type: Boolean },
+// })
+
+// const checkboxModel = ref(props.modelValue || false)
+
+const checkboxModel = ref(false)
+
+const emit = defineEmits(['update:modelValue'])
+
+const onChange = (event: Event) => {
+  emit('update:modelValue', (event.target as HTMLInputElement).checked)
+}
+</script>
 
 <template>
   <input
@@ -6,6 +22,8 @@
     type="checkbox"
     name="checkbox"
     id="checkbox"
+    :checked="checkboxModel"
+    @change="onChange"
   />
   <label for="checkbox"></label>
 </template>

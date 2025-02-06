@@ -14,6 +14,7 @@ const vkLinkModel = ref(null)
 const tgLinkModel = ref(null)
 const descriptionModel = ref(null)
 const specialInfoModel = ref(null)
+const checkboxModel = ref(false)
 </script>
 
 <template>
@@ -72,7 +73,7 @@ const specialInfoModel = ref(null)
       <div class="w-full bg-white shadow-card rounded-lg flex-1 p-[20px] flex flex-col gap-3">
         <div class="text-[20px]">Дополнительная информация</div>
         <div class="flex gap-3">
-          <MyCheckBox />
+          <MyCheckBox v-model="checkboxModel" />
           <div>Отображать только имя?</div>
         </div>
         <div class="flex flex-col gap">
@@ -105,6 +106,7 @@ const specialInfoModel = ref(null)
               tgLinkModel,
               descriptionModel,
               specialInfoModel,
+              checkboxModel,
             )
           }
         "
