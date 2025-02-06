@@ -7,8 +7,13 @@ import IconTg from '@/components/icons/IconTg.vue'
 import IconVk from '@/components/icons/IconVk.vue'
 import PaintsCard from '@/components/PaintsCard.vue'
 import AddCard from '@/components/ProfilePageComponents/AddCard.vue'
+import formatDate from '@/assets/scripts/formatDate'
+import { useUserStore } from '@/stores/userStore'
+import { computed } from 'vue'
 
 const isMobile = useScreenWidth(1024)
+const userStore = useUserStore()
+const user = computed(() => userStore.user)
 </script>
 
 <template>
@@ -34,9 +39,11 @@ const isMobile = useScreenWidth(1024)
       ></div>
       <IconChat class="absolute top-2 right-[10px]" />
       <div class="w-full h-full flex flex-col p-[20px] justify-between">
-        <div class="text-[24px]">Имя Фамилия</div>
+        <div class="text-[24px]">{{ user?.firstname }}</div>
         <div class="text-[18px] font-light">Художник</div>
-        <div class="font-extralight">Дата регистрации: 01.01.2024</div>
+        <div class="font-extralight">
+          Дата регистрации: {{ formatDate(user?.birthday_date ?? '00.00.0000') }}
+        </div>
         <div class="flex justify-between">
           <div class="flex gap-2">
             <IconTg />

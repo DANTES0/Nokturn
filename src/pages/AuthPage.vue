@@ -6,7 +6,6 @@ import MySecondInput from '@/UX/MySecondInput.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
-
 async function fetchData() {
   try {
     const response = await fetch('http://localhost:3000/api/auth/login', {
@@ -22,7 +21,9 @@ async function fetchData() {
     if (response.ok) {
       const data = await response.json()
       localStorage.setItem('token', data.token)
-      getCurrentUser(data.token, router)
+
+      router.push('/')
+      getCurrentUser(data.token)
     }
   } catch (error) {
     console.error('Error', error)
