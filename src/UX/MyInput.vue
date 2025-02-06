@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 interface Props {
@@ -12,11 +13,22 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const route = useRoute()
+
+const inputModel = ref('')
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: string): void
+}>()
+
+watch(inputModel, (newValue) => {
+  emit('update:modelValue', newValue)
+})
 </script>
 
 <template>
   <div class="w-full relative">
     <input
+      v-model="inputModel"
       type="text"
       class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] focus:outline-black focus:outline focus:outline-1"
       :placeholder="props.placeholder"
