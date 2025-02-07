@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { RouterView, useRoute, useRouter } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
 import NavBar from './components/NavBar.vue'
 import MobileNavBar from './components/MobileNavBar.vue'
 import { useScreenWidth } from './assets/scripts/ScriptWindowSize'
 import { onMounted } from 'vue'
-import getCurrentUser from './assets/scripts/middlewareAuth'
 import { useUserStore } from './stores/userStore'
 const route = useRoute()
-const router = useRouter()
 const isMobile = useScreenWidth(800)
 const userStore = useUserStore()
 onMounted(async () => {
