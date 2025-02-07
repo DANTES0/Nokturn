@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useFileInput } from '@/assets/scripts/useFileInput'
 import IconCamera from '@/components/icons/IconCamera.vue'
 import MyButton from '@/UX/MyButton.vue'
 import MyCheckBox from '@/UX/MyCheckBox.vue'
@@ -15,12 +16,16 @@ const tgLinkModel = ref(null)
 const descriptionModel = ref(null)
 const specialInfoModel = ref(null)
 const checkboxModel = ref(false)
+
+const headerFileInput = useFileInput()
+const profileFileInput = useFileInput()
 </script>
 
 <template>
   <div class="w-[90%] bg-white shadow-container rounded-2xl p-[20px] mt-[30px] mb-[40px]">
     <div
       class="w-full h-[34vh] relative cursor-pointer"
+      @click="() => $refs.fileInput.click()"
       @mouseover="() => (active = true)"
       @mouseleave="() => (active = false)"
     >
@@ -31,24 +36,64 @@ const checkboxModel = ref(false)
         <div class="w-full flex justify-between">
           <div class="text-white font-medium text-[20px] mb-[20px] ml-[20px]">Шапка профиля</div>
           <div class="text-white flex gap-4 items-center absolute w-full justify-center">
-            <div class="text-[20px]">Добавить изображение</div>
+            <div v-if="headerFileInput.selectedImage.value" class="text-[20px]">
+              Изменить изображение
+            </div>
+            <div v-else class="text-[20px]">Добавить изображение</div>
             <IconCamera class="w-[32px] h-[32px]" />
           </div>
         </div>
       </div>
-      <img src="../assets/images/bgProfile.jpg" class="w-full h-full object-cover rounded-2xl" />
+      <img
+        v-if="headerFileInput.selectedImage.value"
+        :src="headerFileInput.selectedImage.value"
+        class="w-full h-full object-cover rounded-2xl shadow-cardImage"
+      />
+      <img
+        v-else
+        src="../assets/images/bgProfile.jpg"
+        class="w-full h-full object-cover rounded-2xl"
+      />
+      <input
+        type="file"
+        accept="image/*"
+        ref="fileInput"
+        class="hidden"
+        @change="headerFileInput.handleFileChange"
+      />
     </div>
     <div class="w-full mt-[20px] flex gap-4">
       <div
         class="bg-white shadow-card rounded-lg w-full max-w-[250px] flex flex-col items-center gap-4 p-[20px]"
       >
         <div class="text-[20px]">Фото профиля</div>
+
         <div
-          class="w-[80%] aspect-square bg-[#FAFAFA] shadow-cardImage rounded-full flex flex-col items-center justify-center"
+          @click="
+            () => {
+              $refs.profilePhotoFileInput.click()
+            }
+          "
+          class="w-[80%] aspect-square bg-[#FAFAFA] shadow-cardImage rounded-full flex flex-col items-center justify-center cursor-pointer"
         >
-          <IconCamera class="w-[32px] h-[32px]" />
-          <div>Добавить фото</div>
+          <img
+            v-if="profileFileInput.selectedImage.value"
+            :src="profileFileInput.selectedImage.value"
+            alt="Selected"
+            class="w-full aspect-square shadow-cardImage rounded-full object-cover"
+          />
+          <div v-else class="w-full flex items-center justify-center flex-col">
+            <IconCamera class="w-[32px] h-[32px]" />
+            <div>Добавить фото</div>
+          </div>
         </div>
+        <input
+          type="file"
+          accept="image/*"
+          ref="profilePhotoFileInput"
+          class="hidden"
+          @change="profileFileInput.handleFileChange"
+        />
       </div>
       <div class="w-full bg-white shadow-card rounded-lg p-[20px]">
         <div class="text-[20px]">Личная информация</div>

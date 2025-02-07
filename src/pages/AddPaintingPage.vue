@@ -1,20 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import IconCamera from '@/components/icons/IconCamera.vue'
 import MyButton from '@/UX/MyButton.vue'
+import { useFileInput } from '@/assets/scripts/useFileInput'
 
-const selectedImage = ref<string | null>(null)
+const { selectedImage, handleFileChange } = useFileInput()
+// const selectedImage = ref<string | null>(null)
 
-const handleFileChange = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  if (target.files && target.files[0]) {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      selectedImage.value = e.target?.result as string
-    }
-    reader.readAsDataURL(target.files[0])
-  }
-}
+// const handleFileChange = (event: Event) => {
+//   const target = event.target as HTMLInputElement
+//   if (target.files && target.files[0]) {
+//     const reader = new FileReader()
+//     reader.onload = (e) => {
+//       selectedImage.value = e.target?.result as string
+//     }
+//     reader.readAsDataURL(target.files[0])
+//   }
+// }
 </script>
 
 <template>
