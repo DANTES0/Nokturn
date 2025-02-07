@@ -10,7 +10,9 @@ import AddCard from '@/components/ProfilePageComponents/AddCard.vue'
 import formatDate from '@/assets/scripts/formatDate'
 import { useUserStore } from '@/stores/userStore'
 import { computed } from 'vue'
-
+import { config } from '@/assets/scripts/config'
+import headerImage from '../assets/images/bgProfile.jpg'
+import profileImage from '../assets/images/test2.jpg'
 const isMobile = useScreenWidth(1024)
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
@@ -18,10 +20,13 @@ const user = computed(() => userStore.user)
 
 <template>
   <div class="w-full h-[34vh] relative -z-10">
-    <img class="h-full w-full object-cover" src="../assets/images/test1.jpg" />
     <img
-      class="absolute w-48 h-48 rounded-full bottom-[-90px] laptop:left-[96px] left-[104px] shadow-cardImage"
-      src="../assets/images/test3.png"
+      class="h-full w-full object-cover"
+      :src="user?.profile_header_photo ? config.url + user?.profile_header_photo : headerImage"
+    />
+    <img
+      class="absolute w-48 h-48 rounded-full bottom-[-90px] laptop:left-[96px] left-[104px] shadow-cardImage object-cover"
+      :src="user?.profile_photo ? config.url + user?.profile_photo : profileImage"
     />
   </div>
 
@@ -40,7 +45,7 @@ const user = computed(() => userStore.user)
       <IconChat class="absolute top-2 right-[10px]" />
       <div class="w-full h-full flex flex-col p-[20px] justify-between">
         <div class="text-[24px]">{{ user?.firstname }}</div>
-        <div class="text-[18px] font-light">Художник</div>
+        <div class="text-[18px] font-light">{{ user?.special_info }}</div>
         <div class="font-extralight">
           Дата регистрации: {{ formatDate(user?.birthday_date ?? '00.00.0000') }}
         </div>
@@ -51,7 +56,7 @@ const user = computed(() => userStore.user)
           </div>
           <div class="flex">
             <IconStarOutline />
-            <span>4.5/5</span>
+            <span>{{ user?.rating }}/5</span>
           </div>
         </div>
       </div>
@@ -59,10 +64,7 @@ const user = computed(() => userStore.user)
     <div
       class="bg-white w-full flex-1 h-[180px] shadow-container rounded-2xl laptop:mt-8 relative p-[20px] text-justify description-text overflow-y-scroll laptop:text-[14px] desktop:text-[18px]"
     >
-      Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться.
-      Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение
-      шаблона, а также реальное распределение букв и пробелов в абзацах, которое не получается при
-      простой дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.."
+      {{ user?.description }}
     </div>
   </div>
   <div class="w-[90%]">

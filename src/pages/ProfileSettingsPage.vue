@@ -1,24 +1,67 @@
 <script setup lang="ts">
+import { config } from '@/assets/scripts/config'
 import { useFileInput } from '@/assets/scripts/useFileInput'
 import IconCamera from '@/components/icons/IconCamera.vue'
+import { useUserStore } from '@/stores/userStore'
 import MyButton from '@/UX/MyButton.vue'
 import MyCheckBox from '@/UX/MyCheckBox.vue'
 import MyInput from '@/UX/MyInput.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+
+const userStore = useUserStore()
+const user = computed(() => userStore.user)
 
 const active = ref(false)
-const firstnameModel = ref(null)
-const lastnameModel = ref(null)
-const mailModel = ref(null)
-const birthdayModel = ref(null)
-const vkLinkModel = ref(null)
-const tgLinkModel = ref(null)
-const descriptionModel = ref(null)
-const specialInfoModel = ref(null)
-const checkboxModel = ref(false)
+const firstnameModel = ref('')
+const lastnameModel = ref('')
+const mailModel = ref('')
+const birthdayModel = ref('')
+const vkLinkModel = ref('')
+const tgLinkModel = ref('')
+const descriptionModel = ref('')
+const specialInfoModel = ref('')
+const checkboxModel = ref('')
 
 const headerFileInput = useFileInput()
 const profileFileInput = useFileInput()
+
+async function UpdateUser() {
+  const formData = new FormData()
+
+  formData.append('firstname', firstnameModel.value)
+  formData.append('lastname', lastnameModel.value)
+  formData.append('mail', mailModel.value)
+  formData.append('birthday_date', new Date(birthdayModel.value).toISOString())
+  formData.append('vk_link', vkLinkModel.value)
+  formData.append('tg_link', tgLinkModel.value)
+  formData.append('description', descriptionModel.value)
+  formData.append('name_visible', checkboxModel.value)
+  formData.append('special_info', specialInfoModel.value)
+
+  if (headerFileInput.selectedFile.value) {
+    formData.append('profile_header_photo', headerFileInput.selectedFile.value)
+  }
+  if (profileFileInput.selectedFile.value) {
+    formData.append('profile_photo', profileFileInput.selectedFile.value)
+  }
+
+  try {
+    const response = await fetch(`${config.url}/api/users/${user.value?.id}`, {
+      method: 'PUT',
+      body: formData,
+    })
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error('Ошибка обновления профиля:', errorText)
+      throw new Error(`Ошибка: ${errorText}`)
+    }
+
+    console.log('Профиль успешно обновлен', await response.json())
+  } catch (error) {
+    console.error('Ошибка при обновлении профиля:', error)
+  }
+}
 </script>
 
 <template>
@@ -138,24 +181,7 @@ const profileFileInput = useFileInput()
       </div>
     </div>
     <div class="w-full mt-[20px] flex justify-between">
-      <MyButton
-        title="Сохранить изменения"
-        @click="
-          () => {
-            console.log(
-              firstnameModel,
-              lastnameModel,
-              mailModel,
-              birthdayModel,
-              vkLinkModel,
-              tgLinkModel,
-              descriptionModel,
-              specialInfoModel,
-              checkboxModel,
-            )
-          }
-        "
-      />
+      <MyButton title="Сохранить изменения" @click="UpdateUser" />
       <MyButton title="Перейти в профиль" />
     </div>
   </div>

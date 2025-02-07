@@ -3,14 +3,17 @@ import { RouterLink, useRoute } from 'vue-router'
 import IconPlus from './icons/IconPlus.vue'
 import IconBell from './icons/IconBell.vue'
 import IconMail from './icons/IconMail.vue'
-
+import profileImage from '../assets/images/test2.jpg'
 import { ref, computed } from 'vue'
 import ModalProfile from './NavBarComponents/ModalProfile.vue'
+import { useUserStore } from '@/stores/userStore'
+import { config } from '@/assets/scripts/config'
 
 const activeProfileModal = ref(false)
 
 const route = useRoute()
-
+const userStore = useUserStore()
+const user = computed(() => userStore.user)
 const isProfileRoute = computed(() => route.path === '/profile')
 </script>
 <template>
@@ -79,7 +82,7 @@ const isProfileRoute = computed(() => route.path === '/profile')
       >
         <!-- <IconUser /> -->
         <img
-          src="../assets/images/test3.png"
+          :src="user?.profile_photo ? config.url + user.profile_photo : profileImage"
           class="rounded-tl-md rounded-br-lg h-full object-cover"
           alt=""
         />
