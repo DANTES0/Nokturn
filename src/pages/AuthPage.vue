@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import getCurrentUser from '@/assets/scripts/middlewareAuth'
 import WelcomCard from '@/components/WelcomCard.vue'
+import { useUserStore } from '@/stores/userStore'
 import MyButton from '@/UX/MyButton.vue'
 import MySecondInput from '@/UX/MySecondInput.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
+const userStore = useUserStore()
 async function fetchData() {
   try {
     const response = await fetch('http://localhost:3000/api/auth/login', {
@@ -21,9 +23,8 @@ async function fetchData() {
     if (response.ok) {
       const data = await response.json()
       localStorage.setItem('token', data.token)
-
+      await userStore.fetchUser()
       router.push('/')
-      getCurrentUser(data.token)
     }
   } catch (error) {
     console.error('Error', error)

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, useRoute } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import IconPlus from './icons/IconPlus.vue'
 import IconBell from './icons/IconBell.vue'
 import IconMail from './icons/IconMail.vue'
@@ -12,13 +12,23 @@ import { config } from '@/assets/scripts/config'
 const activeProfileModal = ref(false)
 
 const route = useRoute()
+const router = useRouter()
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
 const isProfileRoute = computed(() => route.path === '/profile')
+
+function logout() {
+  userStore.logout()
+  router.push('/auth')
+}
 </script>
 <template>
   <Transition name="slide-down" appear>
-    <ModalProfile v-if="activeProfileModal" :onClose="() => (activeProfileModal = false)" />
+    <ModalProfile
+      v-if="activeProfileModal"
+      :onLogout="logout"
+      :onClose="() => (activeProfileModal = false)"
+    />
   </Transition>
   <div
     :class="[

@@ -1,3 +1,4 @@
+import getCurrentUser from '@/assets/scripts/middlewareAuth'
 import { defineStore } from 'pinia'
 
 interface User {
@@ -22,11 +23,31 @@ export const useUserStore = defineStore('user', {
     user: null as User | null,
   }),
   actions: {
-    setUser(userData: { id: string; firstname: string; mail: string; birthday_date: string }) {
+    async fetchUser() {
+      const token = localStorage.getItem('token')
+      if (!token) return
+
+      try {
+        const user = await getCurrentUser(token)
+        if (user) {
+          this.user = user // Обновляем состояние
+        } else {
+          this.logout()
+        }
+      } catch (error) {
+        console.error('Ошибка загрузки пользователя:', error)
+        this.logout()
+      }
+    },
+    setUser(userData: Partial<User>) {
       this.user = { ...this.user, ...userData } as User
     },
     clearUser() {
       this.user = null
+    },
+    logout() {
+      this.clearUser()
+      localStorage.removeItem('token')
     },
   },
 })

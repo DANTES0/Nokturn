@@ -11,18 +11,7 @@ const router = useRouter()
 const isMobile = useScreenWidth(800)
 const userStore = useUserStore()
 onMounted(async () => {
-  const token = localStorage.getItem('token')
-
-  if (token) {
-    const user = await getCurrentUser(token)
-    if (user) {
-      userStore.setUser(user)
-    } else {
-      router.push('/auth')
-    }
-  } else {
-    router.push('/auth')
-  }
+  userStore.fetchUser()
 })
 </script>
 

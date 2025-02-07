@@ -8,6 +8,10 @@ defineProps({
     type: Function,
     required: true,
   },
+  onLogout: {
+    type: Function,
+    required: true,
+  },
 })
 </script>
 
@@ -26,7 +30,9 @@ defineProps({
         </li></RouterLink
       >
       <hr />
-      <li class="pl-1 flex items-center gap-1"><IconLogout class="w-[16px]" /> Выход</li>
+      <li @click="onLogout()" class="pl-1 flex items-center gap-1">
+        <IconLogout class="w-[16px]" /> Выход
+      </li>
     </ul>
   </div>
 </template>
