@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import getCurrentUser from '@/assets/scripts/middlewareAuth'
 import WelcomCard from '@/components/WelcomCard.vue'
 import { useUserStore } from '@/stores/userStore'
 import MyButton from '@/UX/MyButton.vue'
@@ -25,11 +24,22 @@ async function fetchData() {
       localStorage.setItem('token', data.token)
       await userStore.fetchUser()
       router.push('/')
+    } else {
+      console.log(errorMail.value)
+      if (!emailModel.value) {
+        errorMail.value = true
+      }
+      if (!passwordModel.value) {
+        errorPassword.value = true
+      }
     }
   } catch (error) {
     console.error('Error', error)
   }
 }
+
+const errorMail = ref(false)
+const errorPassword = ref(false)
 
 const emailModel = ref('')
 const passwordModel = ref('')
@@ -40,8 +50,21 @@ const passwordModel = ref('')
     <WelcomCard />
     <div class="bg-[rgba(255,255,255,0.8)] h-[60vh] w-[35vw] flex flex-col p-[30px] gap-6">
       <div class="w-full text-center font-medium text-[20px]">Вход</div>
-      <MySecondInput placeholder="example@mail.ru" title="Email" v-model="emailModel" />
-      <MySecondInput placeholder="Пароль" title="Пароль" v-model="passwordModel" />
+      <MySecondInput
+        :required-error="errorMail"
+        error-text="Введите почту"
+        placeholder="example@mail.ru"
+        title="Email"
+        v-model="emailModel"
+      />
+      <MySecondInput
+        :required-error="errorPassword"
+        error-text="Введите пароль"
+        typeInput="password"
+        placeholder="Пароль"
+        title="Пароль"
+        v-model="passwordModel"
+      />
       <div class="flex gap-6 items-center mt-auto w-full justify-center">
         <MyButton title="Войти" @click="fetchData" />
         <div class="w-[180px] text-[0.6vw]">
