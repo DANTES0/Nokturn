@@ -33,7 +33,7 @@ const onChange = (event: Event) => {
   display: inline-flex;
   cursor: pointer;
   width: 24px;
-  aspect-ratio: 1/1;
+  height: 24px;
   align-items: center;
   user-select: none;
   background-color: white;

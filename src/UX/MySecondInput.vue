@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Поиск',
   typeInput: 'text',
   requiredError: true,
-  errorText: 'Введите данные',
+  errorText: '',
 })
 
 const inputModel = ref('')
@@ -31,12 +31,13 @@ watch(inputModel, (newValue) => {
   <div>
     <div class="ml-[10px] text-[14px] mb-[8px] flex" :class="{ ['text-red-700']: requiredError }">
       {{ !requiredError ? props.title : props.errorText }}
+      <div v-if="errorText" class="ml-1">*</div>
     </div>
     <input
       v-model="inputModel"
       :type="typeInput"
       :class="{ ['!border-red-400 focus:!outline-red-400']: requiredError }"
-      class="border border-black rounded-tl-lg rounded-br-lg w-full py-[4px] text-[1vw] pl-4 focus:outline-black focus:outline focus:outline-1"
+      class="border border-black rounded-tl-lg rounded-br-lg w-full py-[4px] text-[14px] pl-4 focus:outline-black focus:outline focus:outline-1"
       :placeholder="props.placeholder"
     />
   </div>

@@ -69,61 +69,69 @@ const router = useRouter()
 
 <template>
   <div class="registerImage w-screen h-screen flex justify-center items-center">
-    <WelcomCard />
-    <div
-      class="bg-[rgba(255,255,255,0.8)] h-[90vh] w-[35vw] flex flex-col p-[30px] justify-between"
-    >
-      <div class="w-full text-center font-medium text-[20px]">Регистрация</div>
-      <MySecondInput
-        :required-error="errorMail"
-        error-text="Введите почту"
-        placeholder="example@mail.ru"
-        title="Email"
-        v-model="emailModel"
-      />
-      <MySecondInput
-        :required-error="errorLogin"
-        error-text="Введите имя пользователя"
-        placeholder="Имя/Псевдноним"
-        title="Имя/Псевдноним"
-        v-model="loginModel"
-      />
-      <MySecondInput
-        type-input="password"
-        :required-error="errorPassword"
-        error-text="Введите пароль"
-        placeholder="Пароль"
-        title="Пароль"
-        v-model="passwordModel"
-      />
-      <MySecondInput
-        type-input="password"
-        :required-error="errorRepeatPassword"
-        error-text="Пароли должны совпадать"
-        placeholder="Повторите пароль"
-        title="Повторите пароль"
-      />
-      <MySecondInput
-        :required-error="errorBirthday"
-        error-text="Введите дату рождения"
-        placeholder="11-11-1111"
-        title="Введите вашу дату рождения"
-        v-model="birthdayModel"
-      />
+    <div class="flex items-center justify-center w-full">
+      <WelcomCard />
+      <div
+        class="bg-[rgba(255,255,255,0.8)] h-[90vh] mobile:w-[35vw] w-[90vw] flex flex-col p-[30px] justify-between"
+      >
+        <div class="w-full text-center font-medium text-[20px]">Регистрация</div>
+        <MySecondInput
+          :required-error="errorMail"
+          error-text="Введите почту"
+          placeholder="example@mail.ru"
+          title="Email"
+          v-model="emailModel"
+        />
+        <MySecondInput
+          :required-error="errorLogin"
+          error-text="Введите имя пользователя"
+          placeholder="Имя/Псевдноним"
+          title="Имя/Псевдноним"
+          v-model="loginModel"
+        />
+        <MySecondInput
+          type-input="password"
+          :required-error="errorPassword"
+          error-text="Введите пароль"
+          placeholder="Пароль"
+          title="Пароль"
+          v-model="passwordModel"
+        />
+        <MySecondInput
+          type-input="password"
+          :required-error="errorRepeatPassword"
+          error-text="Пароли должны совпадать"
+          placeholder="Повторите пароль"
+          title="Повторите пароль"
+        />
+        <MySecondInput
+          :required-error="errorBirthday"
+          error-text="Введите дату рождения"
+          placeholder="11-11-1111"
+          title="Введите вашу дату рождения"
+          v-model="birthdayModel"
+        />
 
-      <div class="flex gap-4 mt-[14px]">
-        <MyCheckBox />
-        <div class="text-[1vw]">Подтвердите условие участия в аукционах</div>
-      </div>
-      <div class="flex gap-6 items-center">
-        <MyButton @click="fetchData" title="Зарегистрировать" />
-        <div class="w-[150px] text-[0.6vw]">
-          У вас уже есть аккаунт?
-          <RouterLink to="/auth"
-            ><span class="underline hover:text-[#888888] cursor-pointer"
-              >Нажмите здесь</span
-            ></RouterLink
-          >, чтобы войти в учетную запись
+        <div class="flex gap-4 mt-[14px] items-center">
+          <MyCheckBox />
+          <div class="laptop:text-[12px] mobile:text-[10px] text-[14px]">
+            Подтвердите условие участия в аукционах
+          </div>
+        </div>
+        <div class="flex gap-2 items-center flex-col">
+          <MyButton
+            @click="fetchData"
+            title="Зарегистрировать"
+            class="w-[80%] mobile:text-[14px] laptop:text-[16px]"
+          />
+          <div class="w-[80%] text-[10px] text-center">
+            У вас уже есть аккаунт?
+            <RouterLink to="/auth"
+              ><span class="underline hover:text-[#888888] cursor-pointer"
+                >Нажмите здесь</span
+              ></RouterLink
+            >, чтобы войти в учетную запись
+          </div>
         </div>
       </div>
     </div>

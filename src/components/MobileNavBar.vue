@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import IconMail from './icons/IconMail.vue'
 import IconGear from './icons/IconGear.vue'
 import IconLogout from './icons/IconLogout.vue'
@@ -10,9 +10,19 @@ import IconHome from './icons/IconHome.vue'
 import IconAuc from './icons/IconAuc.vue'
 import IconPainter from './icons/IconPainter.vue'
 import IconArtists from './icons/IconArtists.vue'
-
+import profileImage from '@/assets/images/test2.jpg'
+import { useUserStore } from '@/stores/userStore'
+import { config } from '@/scripts/config'
+import { useRouter } from 'vue-router'
 const isMenuOpen = ref(false)
 const isProfileDropdown = ref(false)
+const userStore = useUserStore()
+const user = computed(() => userStore.user)
+const router = useRouter()
+function logout() {
+  userStore.logout()
+  router.push('/auth')
+}
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
@@ -93,7 +103,7 @@ onBeforeUnmount(() => {
             >
               <!-- <IconUser /> -->
               <img
-                src="../assets/images/test3.png"
+                :src="user?.profile_photo ? config.url + user.profile_photo : profileImage"
                 class="rounded-tl-md rounded-br-lg h-full object-cover"
                 alt=""
               />
@@ -117,7 +127,7 @@ onBeforeUnmount(() => {
                 <IconGear />
                 <div>Настройки</div>
               </RouterLink>
-              <div class="ml-[10px] flex gap-2 items-center">
+              <div @click="logout" class="ml-[10px] flex gap-2 items-center">
                 <IconLogout />
                 <div>Выход</div>
               </div>
