@@ -7,7 +7,7 @@ import profileImage from '../assets/images/test2.jpg'
 import { ref, computed } from 'vue'
 import ModalProfile from './NavBarComponents/ModalProfile.vue'
 import { useUserStore } from '@/stores/userStore'
-import { config } from '@/assets/scripts/config'
+import { config } from '@/scripts/config'
 
 const activeProfileModal = ref(false)
 

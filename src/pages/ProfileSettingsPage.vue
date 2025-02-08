@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { config } from '@/assets/scripts/config'
-import { useFileInput } from '@/assets/scripts/useFileInput'
+import { config } from '@/scripts/config'
+import { useFileInput } from '@/scripts/useFileInput'
 import IconCamera from '@/components/icons/IconCamera.vue'
 import { useUserStore } from '@/stores/userStore'
 import MyButton from '@/UX/MyButton.vue'

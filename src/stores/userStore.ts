@@ -1,4 +1,4 @@
-import getCurrentUser from '@/assets/scripts/middlewareAuth'
+import getCurrentUser from '@/scripts/middlewareAuth'
 import { defineStore } from 'pinia'
 
 interface User {
@@ -30,7 +30,7 @@ export const useUserStore = defineStore('user', {
       try {
         const user = await getCurrentUser(token)
         if (user) {
-          this.user = user // Обновляем состояние
+          this.user = user
         } else {
           this.logout()
         }

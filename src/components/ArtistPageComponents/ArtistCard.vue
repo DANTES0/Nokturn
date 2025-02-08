@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useScreenWidth } from '@/assets/scripts/ScriptWindowSize'
+import { useScreenWidth } from '@/scripts/ScriptWindowSize'
 import { onMounted, ref, watch } from 'vue'
 
 const isMobile = useScreenWidth(1300)

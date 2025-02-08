@@ -2,7 +2,7 @@
 import { RouterView, useRoute } from 'vue-router'
 import NavBar from './components/NavBar.vue'
 import MobileNavBar from './components/MobileNavBar.vue'
-import { useScreenWidth } from './assets/scripts/ScriptWindowSize'
+import { useScreenWidth } from './scripts/ScriptWindowSize'
 import { onMounted } from 'vue'
 import { useUserStore } from './stores/userStore'
 const route = useRoute()

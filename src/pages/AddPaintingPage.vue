@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IconCamera from '@/components/icons/IconCamera.vue'
 import MyButton from '@/UX/MyButton.vue'
-import { useFileInput } from '@/assets/scripts/useFileInput'
+import { useFileInput } from '@/scripts/useFileInput'
 
 const { selectedImage, handleFileChange } = useFileInput()
 // const selectedImage = ref<string | null>(null)

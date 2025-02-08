@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useScreenWidth } from '@/assets/scripts/ScriptWindowSize'
+import { useScreenWidth } from '@/scripts/ScriptWindowSize'
 import AuctionCard from '@/components/AuctionCard.vue'
 import IconLeftArrow from '@/components/icons/IconLeftArrow.vue'
 import IconRightArrow from '@/components/icons/IconRightArrow.vue'
