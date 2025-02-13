@@ -4,14 +4,13 @@ import AuctionCard from '@/components/AuctionCard.vue'
 import IconLeftArrow from '@/components/icons/IconLeftArrow.vue'
 import IconRightArrow from '@/components/icons/IconRightArrow.vue'
 import MagazinBanner from '@/components/MagazinBanner.vue'
-
 import { RouterLink } from 'vue-router'
 
 import 'vue3-carousel/carousel.css'
 import { Carousel, Slide } from 'vue3-carousel'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import PaintsCard from '@/components/PaintsCard.vue'
-
+import { config } from '@/scripts/config'
 //ВРМЕНННО ДО СЕРВЕРА
 import test1 from '../assets/images/test1.jpg'
 import test2 from '../assets/images/test2.jpg'
@@ -19,6 +18,9 @@ import test3 from '../assets/images/test3.png'
 import test4 from '../assets/images/test4.jpg'
 import test5 from '../assets/images/test5.jpg'
 import test6 from '../assets/images/test6.jpg'
+import getUserById from '@/scripts/getUser'
+import type { AuctionCardData } from '@/types/AuctionCardtype'
+import formatDate from '@/scripts/formatDate'
 
 const tempArrayImages = [test1, test2, test3, test4, test5, test6]
 
@@ -27,6 +29,19 @@ const randomImage = () => {
   return tempArrayImages[randomIndex]
 }
 //КОНЕЦ ВРЕМЕННО ДО СЕРВЕРА
+
+async function getCategoryLot(category: string) {
+  const response = await fetch(`${config.url}/api/lot/filters?category=${category}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (response.ok) {
+    return await response.json()
+  }
+}
 
 const carouselConfig = ref({
   gap: 16,
@@ -85,6 +100,47 @@ const prev = () => carouselRef.value.prev()
 
 const nextAuctionCard = () => carouselAuctionRef.value.next()
 const prevAuctionCard = () => carouselAuctionRef.value.prev()
+
+const auctionDigitalCards = ref<AuctionCardData[]>([])
+const auctionPhysCards = ref<AuctionCardData[]>([])
+
+onMounted(async () => {
+  const digitalData = await getCategoryLot('Цифровое искусство')
+  const PhysData = await getCategoryLot('Физическое искусство')
+
+  const auctionDigitalData = await Promise.all(
+    digitalData.map(async (item) => {
+      const user = await getUserById(item.userId)
+      return {
+        title: item.name,
+        image: item.image,
+        author: user?.firstname || 'Неизвестный автор',
+        category: item.category,
+        size: item.size,
+        startingBet: item.starting_bet,
+        beginDate: item.begin_time_date,
+      }
+    }),
+  )
+  const auctionPhysData = await Promise.all(
+    PhysData.map(async (item) => {
+      const user = await getUserById(item.userId)
+      return {
+        title: item.name,
+        image: item.image,
+        author: user?.firstname || 'Неизвестный автор',
+        category: item.category,
+        size: item.size,
+        startingBet: item.starting_bet,
+        beginDate: item.begin_time_date,
+      }
+    }),
+  )
+
+  auctionDigitalCards.value = auctionDigitalData
+  auctionPhysCards.value = auctionPhysData
+  console.log(auctionDigitalCards.value)
+})
 </script>
 <template>
   <div class="flex items-center flex-col w-full max-w-[1728px]">
@@ -128,7 +184,7 @@ const prevAuctionCard = () => carouselAuctionRef.value.prev()
       </div>
     </div>
     <div class="mt-[30px] mb-[30px] flex w-[90%] justify-between">
-      <label class="laptop:text-[24px] text-[18px]">Физическое творчество </label>
+      <label class="laptop:text-[24px] text-[18px]">Цифровое творчество </label>
 
       <RouterLink
         class="font-light flex items-center justify-center laptop:text-[16px] text-[12px]"
@@ -138,7 +194,18 @@ const prevAuctionCard = () => carouselAuctionRef.value.prev()
       >
     </div>
     <div class="flex flex-wrap w-[90%] justify-center gap-x-14 gap-y-8">
-      <AuctionCard v-for="i in 8" :key="i" />
+      <AuctionCard
+        @click="() => console.log(item)"
+        v-for="(item, index) in auctionDigitalCards"
+        :key="index"
+        :title="item.title"
+        :image="item.image"
+        :author="item.author"
+        :category="item.category"
+        :size="item.size"
+        :starting-bet="item.startingBet.toString()"
+        :begin-date="formatDate(item.beginDate)"
+      />
     </div>
     <div class="mt-[30px] flex w-[90%] justify-between">
       <label class="laptop:text-[24px] text-[18px]"> Художники </label>
@@ -186,7 +253,17 @@ const prevAuctionCard = () => carouselAuctionRef.value.prev()
       >
     </div>
     <div class="flex flex-wrap w-[90%] justify-center gap-x-14 gap-y-8">
-      <AuctionCard v-for="i in 8" :key="i" />
+      <AuctionCard
+        v-for="(item, index) in auctionPhysCards"
+        :key="index"
+        :title="item.title"
+        :image="item.image"
+        :author="item.author"
+        :category="item.category"
+        :size="item.size"
+        :starting-bet="item.startingBet.toString()"
+        :begin-date="formatDate(item.beginDate)"
+      />
     </div>
     <div class="mt-[30px] mb-[30px] flex w-[90%] justify-between">
       <label class="laptop:text-[24px] text-[18px]"> Работы не для продажи </label>

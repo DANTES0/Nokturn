@@ -1,5 +1,29 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import testImage from '@/assets/images/test1.jpg'
+import { config } from '@/scripts/config'
+
+interface Props {
+  title: string
+  image: string
+  author: string
+  tags?: string
+  category: string
+  size: string
+  startingBet: string
+  beginDate: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  title: 'Название картины',
+  image: testImage,
+  author: 'Имя Фамилия',
+  tags: '',
+  category: 'Категория',
+  size: '4000x2000',
+  startingBet: '5000',
+  beginDate: '10.02.2024',
+})
 </script>
 
 <template>
@@ -11,23 +35,23 @@ import { RouterLink } from 'vue-router'
         >
           <img
             class="w-[170px] h-[170px] object-cover rounded-sm pointer-events-none"
-            src="../assets/images/test1.jpg"
+            :src="config.url + image"
           />
         </div>
         <div class="flex flex-col mt-2 w-[200px] gap-[2px]">
-          <span class="font-semibold font-[InterItalic]">Название картины</span>
-          <span class="font-light font-[InterItalic]">Имя Фамилия</span>
+          <span class="font-semibold font-[InterItalic]">{{ props.title }}</span>
+          <span class="font-light font-[InterItalic]">{{ props.author }}</span>
           <div class="flex text-[10px] gap-2">
-            <div class="font-extralight">Цифровой арт</div>
-            <div class="font-extralight">4000x2000</div>
+            <div class="font-extralight">{{ props.category }}</div>
+            <div class="font-extralight">{{ props.size }}</div>
           </div>
           <div class="flex">
             <span class="font-extralight">Начальная цена:</span>
-            <span class="ml-4">5000₽</span>
+            <span class="ml-4">{{ props.startingBet }}₽</span>
           </div>
           <div class="flex text-[14px]">
             <span class="font-extralight">Начало торгов:</span>
-            <span class="font-light ml-4">10.02.2024</span>
+            <span class="font-light ml-4">{{ props.beginDate }}</span>
           </div>
         </div>
       </div>
