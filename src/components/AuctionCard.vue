@@ -7,6 +7,7 @@ interface Props {
   title: string
   image: string
   author: string
+  lastname?: string
   tags?: string
   category: string
   size: string
@@ -40,7 +41,7 @@ const props = withDefaults(defineProps<Props>(), {
         </div>
         <div class="flex flex-col mt-2 w-[200px] gap-[2px]">
           <span class="font-semibold font-[InterItalic]">{{ props.title }}</span>
-          <span class="font-light font-[InterItalic]">{{ props.author }}</span>
+          <span class="font-light font-[InterItalic]">{{ props.author }} {{ props.lastname }}</span>
           <div class="flex text-[10px] gap-2">
             <div class="font-extralight">{{ props.category }}</div>
             <div class="font-extralight">{{ props.size }}</div>

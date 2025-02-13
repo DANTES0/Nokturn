@@ -9,13 +9,28 @@ import PaintsCard from '@/components/PaintsCard.vue'
 import AddCard from '@/components/ProfilePageComponents/AddCard.vue'
 import formatDate from '@/scripts/formatDate'
 import { useUserStore } from '@/stores/userStore'
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { config } from '@/scripts/config'
 import headerImage from '../assets/images/bgProfile.jpg'
 import profileImage from '../assets/images/test2.jpg'
+import getAuctionCards from '@/scripts/getAuctionCard'
+import type { lotType } from '@/types/lotType'
 const isMobile = useScreenWidth(1024)
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
+
+const dataCardAuction = ref<lotType[]>([])
+
+watch(
+  () => user.value?.id,
+  async (newUserId) => {
+    if (newUserId) {
+      dataCardAuction.value = await getAuctionCards({ userId: newUserId })
+      console.log(dataCardAuction.value)
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
@@ -44,7 +59,7 @@ const user = computed(() => userStore.user)
       ></div>
       <IconChat class="absolute top-2 right-[10px]" />
       <div class="w-full h-full flex flex-col p-[20px] justify-between">
-        <div class="text-[24px]">{{ user?.firstname }}</div>
+        <div class="text-[24px]">{{ user?.firstname }} {{ user?.lastname }}</div>
         <div class="text-[18px] font-light">{{ user?.special_info }}</div>
         <div class="font-extralight">
           Дата регистрации: {{ formatDate(user?.birthday_date ?? '00.00.0000') }}
@@ -71,7 +86,19 @@ const user = computed(() => userStore.user)
     <div class="text-[20px] mt-[20px]">Выставленные лоты</div>
     <div class="mt-[20px] auc-card">
       <RouterLink to="/addLot"><AddCard title="Добавить лот" /></RouterLink>
-      <AuctionCard class="" v-for="i in 8" :key="i" />
+      <AuctionCard
+        class=""
+        v-for="(item, index) in dataCardAuction"
+        :key="index"
+        :title="item.name"
+        :image="item.image"
+        :author="item.firstname || ''"
+        :lastname="item.lastname"
+        :category="item.category"
+        :size="item.size"
+        :starting-bet="item.starting_bet.toString()"
+        :begin-date="formatDate(item.begin_time_date)"
+      />
     </div>
     <div class="text-[20px] mt-[20px]">Работы для демонстрации</div>
     <div class="gap-3 work mt-[20px]">

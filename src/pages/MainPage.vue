@@ -21,6 +21,7 @@ import test6 from '../assets/images/test6.jpg'
 import getUserById from '@/scripts/getUser'
 import type { AuctionCardData } from '@/types/AuctionCardtype'
 import formatDate from '@/scripts/formatDate'
+import type { lotType } from '@/types/lotType'
 
 const tempArrayImages = [test1, test2, test3, test4, test5, test6]
 
@@ -109,7 +110,7 @@ onMounted(async () => {
   const PhysData = await getCategoryLot('Физическое искусство')
 
   const auctionDigitalData = await Promise.all(
-    digitalData.map(async (item) => {
+    digitalData.map(async (item: lotType) => {
       const user = await getUserById(item.userId)
       return {
         title: item.name,
@@ -123,7 +124,7 @@ onMounted(async () => {
     }),
   )
   const auctionPhysData = await Promise.all(
-    PhysData.map(async (item) => {
+    PhysData.map(async (item: lotType) => {
       const user = await getUserById(item.userId)
       return {
         title: item.name,
