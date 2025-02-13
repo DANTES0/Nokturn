@@ -10,7 +10,6 @@ import 'vue3-carousel/carousel.css'
 import { Carousel, Slide } from 'vue3-carousel'
 import { onMounted, ref } from 'vue'
 import PaintsCard from '@/components/PaintsCard.vue'
-import { config } from '@/scripts/config'
 //ВРМЕНННО ДО СЕРВЕРА
 import test1 from '../assets/images/test1.jpg'
 import test2 from '../assets/images/test2.jpg'
@@ -18,10 +17,9 @@ import test3 from '../assets/images/test3.png'
 import test4 from '../assets/images/test4.jpg'
 import test5 from '../assets/images/test5.jpg'
 import test6 from '../assets/images/test6.jpg'
-import getUserById from '@/scripts/getUser'
-import type { AuctionCardData } from '@/types/AuctionCardtype'
 import formatDate from '@/scripts/formatDate'
 import type { lotType } from '@/types/lotType'
+import getAuctionCards from '@/scripts/getAuctionCard'
 
 const tempArrayImages = [test1, test2, test3, test4, test5, test6]
 
@@ -30,20 +28,6 @@ const randomImage = () => {
   return tempArrayImages[randomIndex]
 }
 //КОНЕЦ ВРЕМЕННО ДО СЕРВЕРА
-
-async function getCategoryLot(category: string) {
-  const response = await fetch(`${config.url}/api/lot/filters?category=${category}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-
-  if (response.ok) {
-    return await response.json()
-  }
-}
-
 const carouselConfig = ref({
   gap: 16,
   wrapAround: true,
@@ -102,45 +86,12 @@ const prev = () => carouselRef.value.prev()
 const nextAuctionCard = () => carouselAuctionRef.value.next()
 const prevAuctionCard = () => carouselAuctionRef.value.prev()
 
-const auctionDigitalCards = ref<AuctionCardData[]>([])
-const auctionPhysCards = ref<AuctionCardData[]>([])
+const auctionDigitalCards = ref<lotType[]>([])
+const auctionPhysCards = ref<lotType[]>([])
 
 onMounted(async () => {
-  const digitalData = await getCategoryLot('Цифровое искусство')
-  const PhysData = await getCategoryLot('Физическое искусство')
-
-  const auctionDigitalData = await Promise.all(
-    digitalData.map(async (item: lotType) => {
-      const user = await getUserById(item.userId)
-      return {
-        title: item.name,
-        image: item.image,
-        author: user?.firstname || 'Неизвестный автор',
-        category: item.category,
-        size: item.size,
-        startingBet: item.starting_bet,
-        beginDate: item.begin_time_date,
-      }
-    }),
-  )
-  const auctionPhysData = await Promise.all(
-    PhysData.map(async (item: lotType) => {
-      const user = await getUserById(item.userId)
-      return {
-        title: item.name,
-        image: item.image,
-        author: user?.firstname || 'Неизвестный автор',
-        category: item.category,
-        size: item.size,
-        startingBet: item.starting_bet,
-        beginDate: item.begin_time_date,
-      }
-    }),
-  )
-
-  auctionDigitalCards.value = auctionDigitalData
-  auctionPhysCards.value = auctionPhysData
-  console.log(auctionDigitalCards.value)
+  auctionDigitalCards.value = await getAuctionCards({ category: 'Цифровое искусство' })
+  auctionPhysCards.value = await getAuctionCards({ category: 'Физическое искусство' })
 })
 </script>
 <template>
@@ -199,13 +150,13 @@ onMounted(async () => {
         @click="() => console.log(item)"
         v-for="(item, index) in auctionDigitalCards"
         :key="index"
-        :title="item.title"
+        :title="item.name"
         :image="item.image"
-        :author="item.author"
+        :author="item.firstname || ''"
         :category="item.category"
         :size="item.size"
-        :starting-bet="item.startingBet.toString()"
-        :begin-date="formatDate(item.beginDate)"
+        :starting-bet="item.starting_bet.toString()"
+        :begin-date="formatDate(item.begin_time_date)"
       />
     </div>
     <div class="mt-[30px] flex w-[90%] justify-between">
@@ -257,13 +208,13 @@ onMounted(async () => {
       <AuctionCard
         v-for="(item, index) in auctionPhysCards"
         :key="index"
-        :title="item.title"
+        :title="item.name"
         :image="item.image"
-        :author="item.author"
+        :author="item.firstname || ''"
         :category="item.category"
         :size="item.size"
-        :starting-bet="item.startingBet.toString()"
-        :begin-date="formatDate(item.beginDate)"
+        :starting-bet="item.starting_bet.toString()"
+        :begin-date="formatDate(item.begin_time_date)"
       />
     </div>
     <div class="mt-[30px] mb-[30px] flex w-[90%] justify-between">
