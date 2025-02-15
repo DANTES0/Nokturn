@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import ArtistCard from '@/components/ArtistPageComponents/ArtistCard.vue'
 import IconSearch from '@/components/icons/IconSearch.vue'
-//Коммит для гита, ничего не было сделано за 16.01.2025
 </script>
 <template>
   <div class="w-[90%] mt-[30px]">
