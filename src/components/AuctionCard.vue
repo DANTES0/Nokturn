@@ -2,8 +2,10 @@
 import { RouterLink } from 'vue-router'
 import testImage from '@/assets/images/test1.jpg'
 import { config } from '@/scripts/config'
+import { computed } from 'vue'
 
 interface Props {
+  id: number
   title: string
   image: string
   author: string
@@ -16,6 +18,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  id: 0,
   title: 'Название картины',
   image: testImage,
   author: 'Имя Фамилия',
@@ -25,10 +28,11 @@ const props = withDefaults(defineProps<Props>(), {
   startingBet: '5000',
   beginDate: '10.02.2024',
 })
+const path = computed(() => `/lot/${props.id}`)
 </script>
 
 <template>
-  <RouterLink class="w-[260px]" to="/lot">
+  <RouterLink class="w-[260px]" :to="path">
     <div class="bg-white shadow-card w-[260px] h-[340px] rounded-lg hover:scale-105 cursor-pointer">
       <div class="flex flex-col justify-center items-center">
         <div

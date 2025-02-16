@@ -147,9 +147,9 @@ onMounted(async () => {
     </div>
     <div class="flex flex-wrap w-[90%] justify-center gap-x-14 gap-y-8">
       <AuctionCard
-        @click="() => console.log(item)"
-        v-for="(item, index) in auctionDigitalCards"
-        :key="index"
+        v-for="item in auctionDigitalCards"
+        :key="item.id"
+        :id="item.id"
         :title="item.name"
         :image="item.image"
         :author="item.firstname || ''"
@@ -206,8 +206,9 @@ onMounted(async () => {
     </div>
     <div class="flex flex-wrap w-[90%] justify-center gap-x-14 gap-y-8">
       <AuctionCard
-        v-for="(item, index) in auctionPhysCards"
-        :key="index"
+        v-for="item in auctionPhysCards"
+        :key="item.id"
+        :id="item.id"
         :title="item.name"
         :image="item.image"
         :author="item.firstname || ''"

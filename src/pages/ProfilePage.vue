@@ -90,6 +90,7 @@ watch(
         class=""
         v-for="(item, index) in dataCardAuction"
         :key="index"
+        :id="item.id"
         :title="item.name"
         :image="item.image"
         :author="item.firstname || ''"

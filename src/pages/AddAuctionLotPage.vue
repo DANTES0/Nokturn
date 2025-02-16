@@ -33,6 +33,7 @@ async function addLot() {
   formData.append('min_bid_increment', minBidIncrementModel.value)
   formData.append('description', descriptionModel.value)
   formData.append('begin_time_date', new Date(`${beginDateTimeModel.value}:00.000Z`).toISOString())
+  formData.append('end_time_date', new Date(`${EndDateTimeModel.value}:00.000Z`).toISOString())
   formData.append('lot_status', 'inactive')
 
   if (mainImage.selectedFile.value) {
@@ -170,7 +171,7 @@ async function addLot() {
     </div>
     <div class="w-full flex justify-between mt-[30px]">
       <MyButton @click="addLot" title="Выставить лот"></MyButton>
-      <MyButton title="Отменить"></MyButton>
+      <MyButton @click="console.log(categoryModel)" title="Отменить"></MyButton>
     </div>
   </div>
 </template>

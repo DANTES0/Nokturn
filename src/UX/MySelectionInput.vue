@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IcoDownArrow from '@/components/icons/IcoDownArrow.vue'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 interface Props {
   title: string
@@ -21,6 +21,14 @@ const selectedItem = (item: string) => {
   activeDropDown.value = false
   searchText.value = item
 }
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: string): void
+}>()
+
+watch(searchText, (newValue) => {
+  emit('update:modelValue', newValue)
+})
 
 const handleClickOutside = (event: MouseEvent) => {
   const dropdown = document.querySelector('.dropdown-container')

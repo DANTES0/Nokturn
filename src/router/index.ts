@@ -25,7 +25,7 @@ const router = createRouter({
       component: () => import('@/pages/PaintingsPage.vue'),
     },
     {
-      path: '/lot',
+      path: '/lot/:id',
       name: 'AuctionLotPage',
       component: () => import('@/pages/AuctionLotPage.vue'),
     },

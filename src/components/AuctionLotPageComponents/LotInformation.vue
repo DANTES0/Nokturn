@@ -1,4 +1,24 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+interface Props {
+  id?: number
+  title: string
+  lotId: number
+  author: string
+  lastname?: string
+  tags?: string
+  category: string
+  size: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  id: 0,
+  title: 'Название картины',
+  author: 'Имя Фамилия',
+  tags: '',
+  category: 'Категория',
+  size: '4000x2000',
+})
+</script>
 
 <template>
   <div
@@ -6,23 +26,25 @@
   >
     <div class="mt-[20px] ml-[20px]">
       <label class="font-[InterItalic]">Название:</label>
-      <label class="ml-[30px] font-medium font-[InterItalic]">Долина ветвей</label>
+      <label class="ml-[30px] font-medium font-[InterItalic]">{{ props.title }}</label>
     </div>
     <div class="mt-[20px] ml-[20px]">
       <label class="font-[InterItalic]">Номер лота:</label>
-      <label class="ml-[30px]">Лот №123</label>
+      <label class="ml-[30px]">Лот №{{ props.lotId }}</label>
     </div>
     <div class="mt-[20px] ml-[20px]">
       <label class="font-[InterItalic]">Автор:</label>
-      <label class="ml-[30px] border-b border-black font-[InterItalic]">Даниил Даниил</label>
+      <label class="ml-[30px] border-b border-black font-[InterItalic]"
+        >{{ props.author }} {{ props.lastname }}</label
+      >
     </div>
     <div class="mt-[20px] ml-[20px]">
       <label class="font-[InterItalic]">Категория:</label>
-      <label class="ml-[30px] text-[16px]">Физическое искусство</label>
+      <label class="ml-[30px] text-[16px]">{{ props.category }}</label>
     </div>
     <div class="mt-[20px] ml-[20px]">
       <label class="font-[InterItalic]">Размеры:</label>
-      <label class="ml-[30px] text-[16px]">1920 x 1080</label>
+      <label class="ml-[30px] text-[16px]">{{ props.size }}</label>
     </div>
     <div class="mt-[20px] ml-[20px]">
       <label class="font-extralight font-[InterItalic]">живопись</label>
