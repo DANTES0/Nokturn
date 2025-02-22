@@ -25,7 +25,10 @@ export const useUserStore = defineStore('user', {
   actions: {
     async fetchUser() {
       const token = localStorage.getItem('token')
-      if (!token) return
+      if (!token) {
+        this.logout()
+        return
+      }
 
       try {
         const user = await getCurrentUser(token)

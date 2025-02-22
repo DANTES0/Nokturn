@@ -1,3 +1,3 @@
 export const config = {
-  url: 'http://192.168.0.8:3000',
+  url: 'http://localhost:3000',
 }

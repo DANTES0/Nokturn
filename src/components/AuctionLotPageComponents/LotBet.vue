@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import MyButton from '@/UX/MyButton.vue'
+
 function formatDate(isoString: string): string {
   const date = new Date(isoString)
 
@@ -63,11 +65,12 @@ const props = withDefaults(defineProps<Props>(), {
       />
     </div>
     <div class="flex items-center justify-center mt-[20px]">
-      <button
+      <MyButton title="Подтвердить ставку" class="w-[90%]" />
+      <!-- <button
         class="w-[90%] border border-black rounded-tl-lg rounded-br-lg pt-[4px] pb-[4px] shadow-cardImage"
       >
         Подтвердить ставку
-      </button>
+      </button> -->
     </div>
   </div>
 </template>

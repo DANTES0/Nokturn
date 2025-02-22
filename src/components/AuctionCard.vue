@@ -51,7 +51,7 @@ const path = computed(() => `/lot/${props.id}`)
             <div class="font-extralight">{{ props.size }}</div>
           </div>
           <div class="flex">
-            <span class="font-extralight">Начальная цена:</span>
+            <span class="font-extralight text-[14px]">Начальная цена:</span>
             <span class="ml-4">{{ props.startingBet }}₽</span>
           </div>
           <div class="flex text-[14px]">

@@ -47,7 +47,10 @@ onMounted(getLotById)
     class="w-[90%] bg-white mt-[30px] shadow-container rounded-[32px] relative flex mb-[30px] gap-[30px]"
   >
     <div class="ml-[30px] mt-[30px]">
-      <img class="rounded-2xl w-[450px] h-[450px] object-cover" :src="config.url + lotData.image" />
+      <img
+        class="rounded-2xl w-[450px] h-[450px] object-cover shadow-cardImage"
+        :src="config.url + lotData.image"
+      />
       <div class="text-[20px] mt-[20px] font-light">Дополнительные изображения</div>
       <AdditionalImages :additionl-image="lotData.another_images" />
       <div class="text-[20px] mt-[20px] font-light">Описание</div>
