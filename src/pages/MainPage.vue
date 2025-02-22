@@ -30,7 +30,7 @@ const randomImage = () => {
 //КОНЕЦ ВРЕМЕННО ДО СЕРВЕРА
 const carouselConfig = ref({
   gap: 16,
-  wrapAround: true,
+  wrapAround: false,
   height: 340,
   breakpointMode: 'viewport',
   breakpoints: {
@@ -88,10 +88,12 @@ const prevAuctionCard = () => carouselAuctionRef.value.prev()
 
 const auctionDigitalCards = ref<lotType[]>([])
 const auctionPhysCards = ref<lotType[]>([])
+const auctionCurrentCards = ref<lotType[]>([])
 
 onMounted(async () => {
   auctionDigitalCards.value = await getAuctionCards({ category: 'Цифровое искусство' })
   auctionPhysCards.value = await getAuctionCards({ category: 'Физическое искусство' })
+  auctionCurrentCards.value = await getAuctionCards({ lot_status: 'active' })
 })
 </script>
 <template>
@@ -99,7 +101,7 @@ onMounted(async () => {
     <MagazinBanner />
 
     <div class="mt-[30px] flex w-[90%] justify-between">
-      <label class="laptop:text-[24px] text-[18px]"> Ближайшие торги </label>
+      <label class="laptop:text-[24px] text-[18px]"> Активные торги </label>
 
       <RouterLink
         class="font-light flex items-center justify-center laptop:text-[16px] text-[12px]"
@@ -123,8 +125,20 @@ onMounted(async () => {
           v-model="currentAuctionSlide"
           ref="carouselAuctionRef"
         >
-          <Slide v-for="slide in 6" :key="slide">
-            <AuctionCard class="max-h-[340px]" />
+          <Slide v-for="item in auctionCurrentCards" :key="item">
+            <AuctionCard
+              class="max-h-[340px]"
+              :key="item.id"
+              :id="item.id"
+              :title="item.name"
+              :image="item.image"
+              :author="item.firstname || ''"
+              :category="item.category"
+              :size="item.size"
+              :starting-bet="item.starting_bet.toString()"
+              :begin-date="formatDate(item.begin_time_date)"
+              :lot-status="item.lot_status"
+            />
           </Slide>
         </Carousel>
       </div>

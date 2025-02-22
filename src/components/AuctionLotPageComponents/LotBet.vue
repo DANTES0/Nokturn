@@ -1,6 +1,11 @@
 <script setup lang="ts">
+import { config } from '@/scripts/config'
+import { useUserStore } from '@/stores/userStore'
 import MyButton from '@/UX/MyButton.vue'
+// import { io } from 'socket.io-client'
+import { computed, ref } from 'vue'
 
+const modelBet = ref('')
 function formatDate(isoString: string): string {
   const date = new Date(isoString)
 
@@ -28,6 +33,27 @@ const props = withDefaults(defineProps<Props>(), {
   beginDate: '10:30 29.11.2024',
   endDate: '10:30 31.11.2024',
 })
+
+const userStore = useUserStore()
+const user = computed(() => userStore.user)
+
+async function placeBet() {
+  const response = await fetch(`${config.url}/api/lot/placeBet`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      userId: user.value?.id,
+      lotId: props.id,
+      bet: modelBet.value,
+    }),
+  })
+
+  if (!response.ok) {
+    console.error('Ошибка ставки')
+  } else {
+    console.log(response.json())
+  }
+}
 </script>
 
 <template>
@@ -59,13 +85,14 @@ const props = withDefaults(defineProps<Props>(), {
     <div class="mt-[20px] ml-[20px] flex">
       <label class="font-[InterItalic]">Предложить ставку</label>
       <input
+        v-model="modelBet"
         class="ml-[30px] w-[80px] border border-black rounded-bl-xl rounded-tr-xl text-center text-[14px]"
         placeholder="8000"
         type="text"
       />
     </div>
     <div class="flex items-center justify-center mt-[20px]">
-      <MyButton title="Подтвердить ставку" class="w-[90%]" />
+      <MyButton @click="placeBet" title="Подтвердить ставку" class="w-[90%]" />
       <!-- <button
         class="w-[90%] border border-black rounded-tl-lg rounded-br-lg pt-[4px] pb-[4px] shadow-cardImage"
       >

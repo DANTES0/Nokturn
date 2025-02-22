@@ -35,7 +35,10 @@ const active = ref(false)
       :class="{ 'opacity-100': active, 'opacity-0': !active }"
     >
       <div class="flex mb-3 items-center w-full justify-center">
-        <img class="w-[25%] rounded-full aspect-square h-full" :src="props.userPhoto" />
+        <img
+          class="w-[25%] rounded-full aspect-square h-full object-cover"
+          :src="props.userPhoto"
+        />
         <div class="text-white flex flex-col justify-around ml-[16px]">
           <label class="font-medium">{{ props.username }}</label>
           <label class="font-light">{{ props.photoName }}</label>

@@ -30,7 +30,7 @@ watch(inputModel, (newValue) => {
     <input
       v-model="inputModel"
       type="text"
-      class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] focus:outline-black focus:outline focus:outline-1"
+      class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] focus:outline-black focus:outline focus:outline-1 placeholder:text-[14px]"
       :placeholder="props.placeholder"
     />
     <div

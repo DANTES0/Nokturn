@@ -7,13 +7,18 @@ import LotBet from '@/components/AuctionLotPageComponents/LotBet.vue'
 import LotInformation from '@/components/AuctionLotPageComponents/LotInformation.vue'
 import { config } from '@/scripts/config'
 import getUserById from '@/scripts/getUser'
+import { useUserStore } from '@/stores/userStore'
 import type { lotType } from '@/types/lotType'
-import { onMounted, ref } from 'vue'
+import { io } from 'socket.io-client'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-
+const userStore = useUserStore()
+const user = computed(() => userStore.user)
 const route = useRoute()
 const lotData = ref<lotType | null>(null)
 const lotid = route.params.id
+
+const socket = io(config.url, { transports: ['websocket'] })
 
 async function getLotById() {
   try {
@@ -39,7 +44,24 @@ async function getLotById() {
   }
 }
 
-onMounted(getLotById)
+onMounted(() => {
+  getLotById()
+
+  socket.on('newBet', (data) => {
+    if (data.lotId == lotid) {
+      console.log('Новая ставка', data)
+      if (lotData.value) {
+        lotData.value.current_bet = data.bet
+      }
+    }
+  })
+})
+
+onUnmounted(() => {
+  socket.off('newBet')
+  socket.emit('leaveLot', user.value?.id)
+  socket.disconnect()
+})
 </script>
 <template>
   <div
@@ -67,6 +89,7 @@ onMounted(getLotById)
           :lotId="lotData.id"
         />
         <LotBet
+          :id="lotData.id"
           :start-bet="lotData.starting_bet"
           :current-bet="lotData.current_bet"
           :begin-date="lotData.begin_time_date"

@@ -15,6 +15,7 @@ interface Props {
   size: string
   startingBet: string
   beginDate: string
+  lotStatus?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -27,6 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
   size: '4000x2000',
   startingBet: '5000',
   beginDate: '10.02.2024',
+  lotStatus: 'inactive',
 })
 const path = computed(() => `/lot/${props.id}`)
 </script>
@@ -51,7 +53,12 @@ const path = computed(() => `/lot/${props.id}`)
             <div class="font-extralight">{{ props.size }}</div>
           </div>
           <div class="flex">
-            <span class="font-extralight text-[14px]">Начальная цена:</span>
+            <span v-if="props.lotStatus == 'active'" class="font-extralight text-[14px]"
+              >Текущая цена:</span
+            >
+            <span v-if="props.lotStatus == 'inactive'" class="font-extralight text-[14px]"
+              >Начальная цена:</span
+            >
             <span class="ml-4">{{ props.startingBet }}₽</span>
           </div>
           <div class="flex text-[14px]">
