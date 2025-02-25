@@ -97,7 +97,7 @@ onUnmounted(() => {
         />
       </div>
       <div class="text-[20px] mt-[20px] font-light mb-[20px]">История ставок</div>
-      <HistoryBet />
+      <HistoryBet :id="lotData.id" />
       <div class="text-[20px] mt-[20px] font-light mb-[20px]">Комментарии</div>
       <CommentsLot />
     </div>
