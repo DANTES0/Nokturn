@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import testPhoto from '../assets/images/test1.jpg'
 import testUserPhoto from '../assets/images/test3.png'
+import ImageModal from './ImageModal.vue'
 
 interface Props {
   userId?: number
@@ -22,6 +23,12 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const active = ref(false)
+
+const modalRef = ref<InstanceType<typeof ImageModal> | null>(null)
+
+function openImage() {
+  modalRef.value?.open(props.photo)
+}
 </script>
 
 <template>
@@ -29,6 +36,7 @@ const active = ref(false)
     class="w-full relative cursor-pointer"
     @mouseover="() => (active = true)"
     @mouseleave="() => (active = false)"
+    @click="openImage"
   >
     <div
       class="w-full h-full absolute bottom-0 transition-all duration-500 gradient rounded-lg flex items-end"
@@ -56,6 +64,23 @@ const active = ref(false)
       :src="props.photo"
     />
   </div>
+
+  <!-- <div
+    v-if="isModalOpen"
+    class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-80 z-50"
+    @click="closeModal"
+  >
+    <div class="relative max-w-[90%] max-h-[90%] flex items-center justify-center">
+      <img :src="props.photo" class="w-[90%] max-h-[100vh] rounded-lg" />
+    </div>
+    <button
+      class="absolute top-5 right-5 text-white text-3xl font-bold cursor-pointer"
+      @click.stop="closeModal"
+    >
+      ✖
+    </button>
+  </div> -->
+  <ImageModal ref="modalRef" />
 </template>
 
 <style scoped>
