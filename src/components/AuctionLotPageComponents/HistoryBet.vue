@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { config } from '@/scripts/config'
 import getUserById from '@/scripts/getUser'
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import type { HistoryLotBet } from '@/types/HistoryLotBetType'
+import { io } from 'socket.io-client'
 
 interface Props {
   id: number
@@ -11,6 +12,8 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   id: 0,
 })
+
+const socket = io(config.url, { transports: ['websocket'] })
 
 function formatDateTimeIntl(dateString: string) {
   const dateObj = new Date(dateString)
@@ -34,24 +37,33 @@ async function getHistory() {
       throw console.error('Не удалось запросить историю ставок')
     }
 
-    dataHistory.value = await response.json()
-
-    const updatedHistory = await Promise.all(
-      dataHistory.value.map(async (bet) => {
-        const user = await getUserById(bet.userId)
-        console.log(user)
-
-        return { ...bet, userName: user.firstname, date: formatDateTimeIntl(bet.time_date) } // Добавляем userName
-      }),
-    )
-
-    dataHistory.value = updatedHistory
+    dataHistory.value = await formatHistory(await response.json())
   } catch (error) {
     console.error(error)
   }
 }
 
-onMounted(getHistory)
+async function formatHistory(history: HistoryLotBet[]) {
+  return await Promise.all(
+    history.map(async (bet) => {
+      const user = await getUserById(bet.userId)
+      return { ...bet, userName: user.firstname, date: formatDateTimeIntl(bet.time_date) }
+    }),
+  )
+}
+
+onMounted(() => {
+  getHistory()
+
+  socket.on('updateHistory', async (updatedHistory) => {
+    console.log('Пришли новые данные', updatedHistory)
+    dataHistory.value = await formatHistory(updatedHistory)
+  })
+})
+
+onUnmounted(() => {
+  socket.off('updateHistory')
+})
 </script>
 
 <template>
