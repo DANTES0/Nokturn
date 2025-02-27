@@ -5,6 +5,7 @@ import DescriptionLot from '@/components/AuctionLotPageComponents/DescriptionLot
 import HistoryBet from '@/components/AuctionLotPageComponents/HistoryBet.vue'
 import LotBet from '@/components/AuctionLotPageComponents/LotBet.vue'
 import LotInformation from '@/components/AuctionLotPageComponents/LotInformation.vue'
+import ImageModal from '@/components/ImageModal.vue'
 import { config } from '@/scripts/config'
 import getUserById from '@/scripts/getUser'
 import { disconnectSocket, getSocket } from '@/scripts/socket'
@@ -19,9 +20,14 @@ const user = computed(() => userStore.user)
 const route = useRoute()
 const lotData = ref<lotType | null>(null)
 const lotid = route.params.id
-
 // const socket = io(config.url, { transports: ['websocket'] })
 const socket = getSocket()
+const modalRef = ref<InstanceType<typeof ImageModal> | null>(null)
+
+function openImage() {
+  console.log('кликаю', config.url + lotData.value?.image)
+  modalRef.value?.open(config.url + lotData.value?.image)
+}
 async function getLotById() {
   try {
     const response = await fetch(`${config.url}/api/lot/${lotid}`, {
@@ -45,7 +51,6 @@ async function getLotById() {
     throw console.error(error)
   }
 }
-
 onMounted(() => {
   getLotById()
 
@@ -74,6 +79,7 @@ onUnmounted(() => {
       <img
         class="rounded-2xl w-[450px] h-[450px] object-cover shadow-cardImage"
         :src="config.url + lotData.image"
+        @click="openImage"
       />
       <div class="text-[20px] mt-[20px] font-light">Дополнительные изображения</div>
       <AdditionalImages :additionl-image="lotData.another_images" />
@@ -104,6 +110,7 @@ onUnmounted(() => {
       <CommentsLot />
     </div>
   </div>
+  <ImageModal ref="modalRef" />
 </template>
 <style scoped>
 .scrollingbox {
