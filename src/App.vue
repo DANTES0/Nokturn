@@ -3,13 +3,18 @@ import { RouterView, useRoute } from 'vue-router'
 import NavBar from './components/NavBar.vue'
 import MobileNavBar from './components/MobileNavBar.vue'
 import { useScreenWidth } from './scripts/ScriptWindowSize'
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import { useUserStore } from './stores/userStore'
+import { disconnectSocket } from '@/scripts/socket'
 const route = useRoute()
 const isMobile = useScreenWidth(800)
 const userStore = useUserStore()
 onMounted(async () => {
   userStore.fetchUser()
+  window.addEventListener('beforeunload', disconnectSocket)
+})
+onUnmounted(() => {
+  window.removeEventListener('beforeunload', disconnectSocket)
 })
 </script>
 
