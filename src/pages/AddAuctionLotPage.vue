@@ -32,8 +32,8 @@ async function addLot() {
   formData.append('starting_bet', startingBetModel.value)
   formData.append('min_bid_increment', minBidIncrementModel.value)
   formData.append('description', descriptionModel.value)
-  formData.append('begin_time_date', new Date(`${beginDateTimeModel.value}:00.000Z`).toISOString())
-  formData.append('end_time_date', new Date(`${EndDateTimeModel.value}:00.000Z`).toISOString())
+  formData.append('begin_time_date', new Date(`${beginDateTimeModel.value}:00.000`).toISOString())
+  formData.append('end_time_date', new Date(`${EndDateTimeModel.value}:00.000`).toISOString())
   formData.append('lot_status', 'inactive')
 
   if (mainImage.selectedFile.value) {

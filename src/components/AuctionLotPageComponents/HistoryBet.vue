@@ -3,7 +3,9 @@ import { config } from '@/scripts/config'
 import getUserById from '@/scripts/getUser'
 import { onMounted, onUnmounted, ref } from 'vue'
 import type { HistoryLotBet } from '@/types/HistoryLotBetType'
-import { io } from 'socket.io-client'
+import { getSocket } from '@/scripts/socket'
+// import socket from '@/scripts/socket'
+// import { io } from 'socket.io-client'
 
 interface Props {
   id: number
@@ -13,8 +15,8 @@ const props = withDefaults(defineProps<Props>(), {
   id: 0,
 })
 
-const socket = io(config.url, { transports: ['websocket'] })
-
+// const socket = io(config.url, { transports: ['websocket'] })
+const socket = getSocket()
 function formatDateTimeIntl(dateString: string) {
   const dateObj = new Date(dateString)
 

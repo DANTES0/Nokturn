@@ -7,9 +7,11 @@ import LotBet from '@/components/AuctionLotPageComponents/LotBet.vue'
 import LotInformation from '@/components/AuctionLotPageComponents/LotInformation.vue'
 import { config } from '@/scripts/config'
 import getUserById from '@/scripts/getUser'
+import { disconnectSocket, getSocket } from '@/scripts/socket'
+// import socket from '@/scripts/socket'
 import { useUserStore } from '@/stores/userStore'
 import type { lotType } from '@/types/lotType'
-import { io } from 'socket.io-client'
+// import { io } from 'socket.io-client'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 const userStore = useUserStore()
@@ -18,8 +20,8 @@ const route = useRoute()
 const lotData = ref<lotType | null>(null)
 const lotid = route.params.id
 
-const socket = io(config.url, { transports: ['websocket'] })
-
+// const socket = io(config.url, { transports: ['websocket'] })
+const socket = getSocket()
 async function getLotById() {
   try {
     const response = await fetch(`${config.url}/api/lot/${lotid}`, {
@@ -60,7 +62,7 @@ onMounted(() => {
 onUnmounted(() => {
   socket.off('newBet')
   socket.emit('leaveLot', user.value?.id)
-  socket.disconnect()
+  disconnectSocket()
 })
 </script>
 <template>

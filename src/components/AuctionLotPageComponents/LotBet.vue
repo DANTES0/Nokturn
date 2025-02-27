@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { config } from '@/scripts/config'
+import { getSocket } from '@/scripts/socket'
+// import socket from '@/scripts/socket'
 import { useUserStore } from '@/stores/userStore'
 import MyButton from '@/UX/MyButton.vue'
-import { io } from 'socket.io-client'
+// import { io } from 'socket.io-client'
 // import { io } from 'socket.io-client'
 import { computed, ref } from 'vue'
-const socket = io(config.url, { transports: ['websocket'] })
-
+// const socket = io(config.url, { transports: ['websocket'] })
+const socket = getSocket()
 const modelBet = ref('')
 function formatDate(isoString: string): string {
   const date = new Date(isoString)
