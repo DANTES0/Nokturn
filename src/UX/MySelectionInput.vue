@@ -54,7 +54,7 @@ const route = useRoute()
       <input
         v-model="searchText"
         type="text"
-        class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] pr-[60px] focus:outline-black focus:outline focus:outline-1"
+        class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] placeholder:text-[14px] pr-[60px] focus:outline-black focus:outline focus:outline-1"
         :placeholder="props.placeholder"
       />
       <div

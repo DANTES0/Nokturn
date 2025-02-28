@@ -34,7 +34,7 @@ const path = computed(() => `/lot/${props.id}`)
 </script>
 
 <template>
-  <RouterLink class="w-[260px]" :to="path">
+  <RouterLink class="w-[260px] h-[340px]" :to="path">
     <div class="bg-white shadow-card w-[260px] h-[340px] rounded-lg hover:scale-105 cursor-pointer">
       <div class="flex flex-col justify-center items-center">
         <div
@@ -53,7 +53,9 @@ const path = computed(() => `/lot/${props.id}`)
             <div class="font-extralight">{{ props.size }}</div>
           </div>
           <div class="flex">
-            <span v-if="props.lotStatus == 'active'" class="font-extralight text-[14px]"
+            <span
+              v-if="props.lotStatus == 'active' || props.lotStatus == 'completed'"
+              class="font-extralight text-[14px]"
               >Текущая цена:</span
             >
             <span v-if="props.lotStatus == 'inactive'" class="font-extralight text-[14px]"
