@@ -1,20 +1,51 @@
 <script setup lang="ts">
+import { config } from '@/scripts/config'
+import type { CommentType } from '@/types/CommentType'
 import { ref } from 'vue'
 
 const activeMainChildElements = ref(false)
+
+const props = withDefaults(defineProps<CommentType>(), {
+  id: 0,
+  userId: '2213123',
+  lotId: 0,
+  commentsText: 'текст',
+  parentId: 0,
+  timeDateCreated: '123',
+  isDeleted: false,
+})
+
+function formatDateTimeIntl(dateString: string) {
+  const dateObj = new Date(dateString)
+
+  const formattedDate = new Intl.DateTimeFormat('ru-RU').format(dateObj)
+  const formattedTime = dateObj.toLocaleTimeString('ru-RU', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+
+  return { formattedDate: formattedDate.replace(/\./g, '.'), formattedTime }
+}
 </script>
 
 <template>
-  <div class="flex text-[16px] items-center w-full mt-[30px]">
-    <img class="rounded-full h-14 w-14 shadow-cardImage" src="../../../assets/images/test3.png" />
+  <div class="flex text-[16px] items-center w-full mt-[30px]" v-if="!props.parentId">
+    <img
+      class="rounded-full h-14 w-14 shadow-cardImage object-cover"
+      :src="config.url + props.user?.profile_photo"
+    />
     <div class="flex flex-col ml-[20px] gap-2">
       <div class="flex items-center">
-        <div class="font-light">Имя автора</div>
-        <div class="font-light text-[12px] ml-[30px]">30 минут</div>
+        <div class="font-light">{{ props.user?.firstname }} {{ props.user?.lastname }}</div>
+        <div class="font-light text-[12px] ml-[30px]">
+          {{ formatDateTimeIntl(props.timeDateCreated).formattedTime }}
+        </div>
+        <div class="font-light text-[12px] ml-[10px]">
+          {{ formatDateTimeIntl(props.timeDateCreated).formattedDate }}
+        </div>
       </div>
       <div class="text-[14px]">
-        ТЕкст сообщения ТЕкст сообщенияТЕкст сообщения ТЕкст сообщенияТЕкст сообщенияТЕкст сообщения
-        ТЕкст сообщенияТЕкст сообщения ТЕкст сообщения
+        {{ props.commentsText }}
       </div>
       <div class="flex items-center gap-6">
         <div class="font-extralight text-[12px]">Ответить</div>
@@ -26,26 +57,30 @@ const activeMainChildElements = ref(false)
           "
           class="text-[12px] cursor-pointer underline hover:text-[#5f5f5f]"
         >
-          <div v-if="!activeMainChildElements">Показать (2) ответа</div>
-          <div v-if="activeMainChildElements">Скрыть ответы</div>
+          <div v-if="!activeMainChildElements && props.replies?.length != 0">
+            Показать ({{ props.replies?.length }}) ответа
+          </div>
+          <div v-if="activeMainChildElements">скрыть ответы</div>
         </div>
       </div>
     </div>
   </div>
 
-  <div v-if="activeMainChildElements">
-    <div class="flex items-center ml-[40px] mt-2">
-      <img class="rounded-full h-14 w-14 shadow-cardImage" src="../../../assets/images/test1.jpg" />
+  <div v-if="activeMainChildElements && props.replies?.length != 0" class="mt-4">
+    <div class="flex items-center ml-[40px]" v-for="itemChild in props.replies" :key="itemChild.id">
+      <img
+        class="rounded-full h-14 w-14 shadow-cardImage"
+        :src="config.url + itemChild.user?.profile_photo"
+      />
       <div class="flex flex-col ml-[20px] gap-2">
         <div class="flex items-center">
-          <div class="font-light text-[16px]">Имя автора</div>
-          <div class="font-light text-[12px] ml-[30px]">30 минут</div>
+          <div class="font-light text-[16px]">{{ itemChild.user?.firstname }}</div>
+          <div class="font-light text-[12px] ml-[30px]">{{ itemChild.timeDateCreated }}</div>
         </div>
         <div class="text-[14px]">
-          ТЕкст сообщения ТЕкст сообщенияТЕкст сообщения ТЕкст сообщенияТЕкст сообщенияТЕкст
-          сообщения ТЕкст сообщенияТЕкст сообщения ТЕкст сообщения
+          {{ itemChild.commentsText }}
         </div>
-        <div class="font-extralight text-[12px]">Ответить</div>
+        <!-- <div class="font-extralight text-[12px]">Ответить</div> -->
       </div>
     </div>
   </div>

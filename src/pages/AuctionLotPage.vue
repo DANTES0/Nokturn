@@ -107,7 +107,7 @@ onUnmounted(() => {
       <div class="text-[20px] mt-[20px] font-light mb-[20px]">История ставок</div>
       <HistoryBet :id="lotData.id" />
       <div class="text-[20px] mt-[20px] font-light mb-[20px]">Комментарии</div>
-      <CommentsLot />
+      <CommentsLot :id="lotData.id" />
     </div>
   </div>
   <ImageModal ref="modalRef" />
