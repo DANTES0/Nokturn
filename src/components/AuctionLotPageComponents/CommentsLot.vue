@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { config } from '@/scripts/config'
 import MainComments from './CommentsLotComponents/MainComments.vue'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import type { CommentType } from '@/types/CommentType'
+import { useUserStore } from '@/stores/userStore'
 interface Props {
   id: number
 }
@@ -10,7 +11,9 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   id: 0,
 })
-
+const textCommentModel = ref('')
+const userStore = useUserStore()
+const user = computed(() => userStore.user)
 const allComments = ref<CommentType[]>([])
 async function getComments() {
   try {
@@ -20,6 +23,31 @@ async function getComments() {
 
     allComments.value = await response.json()
     console.log(allComments.value)
+  } catch (error) {
+    throw console.error(error)
+  }
+}
+
+async function addComments() {
+  console.log(user.value?.id, props.id, textCommentModel.value)
+  const sendObject = {
+    userId: user.value?.id,
+    lotId: props.id,
+    commentsText: textCommentModel.value,
+  }
+  try {
+    const response = await fetch(`${config.url}/api/comment/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(sendObject),
+    })
+    if (response.ok) {
+      console.log('Запрос на добавление комментария успешно отправился')
+    } else {
+      throw console.error('Ошибка при отпраке комментария')
+    }
   } catch (error) {
     throw console.error(error)
   }
@@ -53,8 +81,10 @@ onMounted(getComments)
         class="w-[75%] border-b border-black h-[30px] text-[14px] pl-2 outline-none mr-[20px] ml-[20px]"
         type="text"
         placeholder="Написать сообщение"
+        v-model="textCommentModel"
       />
       <button
+        @click="addComments"
         class="border border-black rounded-tl-lg rounded-br-lg w-[140px] h-[40px] shadow-cardImage"
       >
         Отправить
