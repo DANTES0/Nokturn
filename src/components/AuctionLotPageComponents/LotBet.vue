@@ -6,7 +6,7 @@ import { useUserStore } from '@/stores/userStore'
 import MyButton from '@/UX/MyButton.vue'
 // import { io } from 'socket.io-client'
 // import { io } from 'socket.io-client'
-import { computed, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 // const socket = io(config.url, { transports: ['websocket'] })
 const socket = getSocket()
 const modelBet = ref('')
@@ -63,6 +63,36 @@ async function placeBet() {
     })
   }
 }
+
+const remainingTime = ref('')
+
+function updateRemainingTime() {
+  const endTime = new Date(props.endDate).getTime()
+  const now = new Date().getTime()
+  const diff = endTime - now
+
+  if (diff <= 0) {
+    remainingTime.value = 'Аукцион завершен'
+    return
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+
+  remainingTime.value = `${days} дн ${hours} ч ${minutes} м`
+}
+
+let timer: number
+
+onMounted(() => {
+  updateRemainingTime()
+  timer = setInterval(updateRemainingTime, 60000)
+})
+
+onUnmounted(() => {
+  clearInterval(timer)
+})
 </script>
 
 <template>
@@ -89,7 +119,7 @@ async function placeBet() {
     </div>
     <div class="mt-[20px] ml-[20px]">
       <label class="font-[InterItalic]">Осталось до конца:</label>
-      <label class="ml-[30px] text-[16px]">07 дн 00 ч 00 м</label>
+      <label class="ml-[30px] text-[16px]">{{ remainingTime }}</label>
     </div>
     <div class="mt-[20px] ml-[20px] flex">
       <label class="font-[InterItalic]">Предложить ставку</label>
