@@ -7,6 +7,7 @@ export interface lotType {
   size: string
   starting_bet: number
   current_bet: number
+  min_bid_increment?: number
   reserve_price: string
   description: string
   lot_status: string
