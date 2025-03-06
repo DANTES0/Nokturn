@@ -10,6 +10,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 // const socket = io(config.url, { transports: ['websocket'] })
 const socket = getSocket()
 const modelBet = ref('')
+const activePopUpWarning = ref(false)
 function formatDate(isoString: string): string {
   const date = new Date(isoString)
 
@@ -28,6 +29,7 @@ interface Props {
   currentBet: number
   beginDate: string
   endDate: string
+  minBidIncrement: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -36,12 +38,21 @@ const props = withDefaults(defineProps<Props>(), {
   currentBet: 1020,
   beginDate: '10:30 29.11.2024',
   endDate: '10:30 31.11.2024',
+  minBidIncrement: 0,
 })
 
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
 
 async function placeBet() {
+  console.log(props.minBidIncrement + Number(props.currentBet))
+  if (Number(modelBet.value) < props.minBidIncrement + Number(props.currentBet)) {
+    activePopUpWarning.value = true
+    setTimeout(() => {
+      activePopUpWarning.value = false
+    }, 3000)
+    return
+  }
   const response = await fetch(`${config.url}/api/lot/placeBet`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -61,11 +72,11 @@ async function placeBet() {
       userId: user.value?.id,
       bet: modelBet.value,
     })
+    modelBet.value = ''
   }
 }
 
 const remainingTime = ref('')
-
 function updateRemainingTime() {
   const endTime = new Date(props.endDate).getTime()
   const now = new Date().getTime()
@@ -103,32 +114,56 @@ onUnmounted(() => {
       <label class="font-[InterItalic]">Начальная ставка:</label>
       <label class="ml-[30px] font-[InterItalic]">{{ props.startBet }}₽</label>
     </div>
-    <div class="mt-[20px] ml-[20px]">
+    <div class="mt-[10px] ml-[20px]">
       <label class="font-[InterItalic]">Текущая ставка:</label>
       <label class="ml-[30px] font-medium">{{ props.currentBet }}₽</label>
     </div>
-    <div class="mt-[20px] ml-[20px] text-[16px]">
+    <div class="mt-[10px] ml-[20px]">
+      <label class="font-[InterItalic] text-[16px]">Шаг торгов:</label>
+      <label class="ml-[30px] font-medium text-[16px]">{{ props.minBidIncrement }}₽</label>
+    </div>
+    <div class="mt-[10px] ml-[20px] text-[16px]">
       <label class="font-[InterItalic] font-light">Дата начала:</label>
       <label class="ml-[30px] font-[InterItalic]">{{ formatDate(props.beginDate) }}</label>
       <!-- <label class="ml-[30px] font-[InterItalic]">29.11.2024</label> -->
     </div>
-    <div class="mt-[20px] ml-[20px] text-[16px]">
+    <div class="mt-[10px] ml-[20px] text-[16px]">
       <label class="font-[InterItalic] font-light">Дата конца:</label>
       <label class="ml-[30px] font-[InterItalic]">{{ formatDate(props.endDate) }}</label>
       <!-- <label class="ml-[30px] font-[InterItalic]">29.11.2024</label> -->
     </div>
-    <div class="mt-[20px] ml-[20px]">
+    <div class="mt-[10px] ml-[20px]">
       <label class="font-[InterItalic]">Осталось до конца:</label>
       <label class="ml-[30px] text-[16px]">{{ remainingTime }}</label>
     </div>
     <div class="mt-[20px] ml-[20px] flex">
       <label class="font-[InterItalic]">Предложить ставку</label>
-      <input
-        v-model="modelBet"
-        class="ml-[30px] w-[80px] border border-black rounded-bl-xl rounded-tr-xl text-center text-[14px]"
-        placeholder="8000"
-        type="text"
-      />
+      <div class="relative">
+        <input
+          v-model="modelBet"
+          class="ml-[30px] w-[80px] h-full border border-black rounded-bl-xl rounded-tr-xl text-center text-[14px]"
+          :placeholder="(Number(props.currentBet) + props.minBidIncrement).toString()"
+          type="text"
+        />
+        <Transition name="popUpWarning">
+          <div
+            v-if="activePopUpWarning"
+            class="absolute w-[300px] h-[40px] bg-white shadow-container top-[-50px] left-[-160px] text-[16px] text-red-700 flex items-center justify-around rounded-2xl"
+          >
+            <div>Минимальная ставка: {{ Number(props.currentBet) + props.minBidIncrement }}</div>
+            <button
+              @click="
+                () => {
+                  activePopUpWarning = false
+                }
+              "
+              class="ml-2 text-gray-600 hover:text-black"
+            >
+              ✖
+            </button>
+          </div>
+        </Transition>
+      </div>
     </div>
     <div class="flex items-center justify-center mt-[20px]">
       <MyButton @click="placeBet" title="Подтвердить ставку" class="w-[90%]" />
@@ -136,4 +171,17 @@ onUnmounted(() => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.popUpWarning-enter-active,
+.popUpWarning-leave-active {
+  transition: opacity 0.2s ease-out;
+}
+
+.popUpWarning-enter-from {
+  opacity: 0;
+}
+
+.popUpWarning-leave-to {
+  opacity: 0;
+}
+</style>

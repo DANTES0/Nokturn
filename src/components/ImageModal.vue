@@ -18,40 +18,44 @@ defineExpose({ open })
 
 <template>
   <Teleport to="body">
-    <Transition name="modal">
+    <div
+      v-if="isOpen"
+      class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-80 z-50"
+      @click="close"
+    >
       <div
-        v-if="isOpen"
-        class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-80 z-50"
-        @click="close"
+        class="relative max-w-[90%] max-h-[90%] flex items-center justify-center modal-content"
+        @click.stop
       >
-        <div
-          class="relative max-w-[90%] max-h-[90%] flex items-center justify-center modal-content"
-          @click.stop
-        >
-          <img :src="photo" class="w-[90%] max-h-[100vh] rounded-lg" />
-        </div>
-        <button
-          class="absolute top-5 right-5 text-white text-3xl font-bold cursor-pointer"
-          @click.stop="close"
-        >
-          ✖
-        </button>
+        <Transition name="image" appear>
+          <img v-if="isOpen" :src="photo" :key="photo" class="w-[90%] max-h-[100vh] rounded-lg" />
+        </Transition>
       </div>
-    </Transition>
+      <button
+        class="absolute top-5 right-5 text-white text-3xl font-bold cursor-pointer"
+        @click.stop="close"
+      >
+        ✖
+      </button>
+    </div>
   </Teleport>
 </template>
 
 <style scoped>
-.modal-enter-active,
-.modal-leave-active {
+.image-enter-active,
+.image-leave-active {
   transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
 }
 
-.modal-enter-from,
-.modal-leave-to {
+.image-enter-from {
   opacity: 0;
-  transform: scale(0.2);
+  transform: scale(0.5);
+}
+
+.image-leave-to {
+  opacity: 0;
+  transform: scale(0.5);
 }
 </style>

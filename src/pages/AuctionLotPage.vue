@@ -102,6 +102,7 @@ onUnmounted(() => {
           :current-bet="lotData.current_bet"
           :begin-date="lotData.begin_time_date"
           :end-date="lotData.end_time_date"
+          :min-bid-increment="lotData.min_bid_increment ?? 0"
         />
       </div>
       <div class="text-[20px] mt-[20px] font-light mb-[20px]">История ставок</div>
