@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AvatarCanvas from '@/components/AvatarCanvas.vue'
 import { config } from '@/scripts/config'
 import type { CommentType } from '@/types/CommentType'
 import { ref } from 'vue'
@@ -39,8 +40,15 @@ function handleReply() {
 <template>
   <div class="flex text-[16px] items-center w-full mt-[30px]" v-if="!props.parentId">
     <img
+      v-if="props.user?.profile_photo"
       class="rounded-full h-14 w-14 shadow-cardImage object-cover"
       :src="config.url + props.user?.profile_photo"
+    />
+    <AvatarCanvas
+      class="shadow-cardImage"
+      :name="props.user?.firstname ?? 'Аноним'"
+      :size="56"
+      v-else
     />
     <div class="flex flex-col ml-[20px] gap-2">
       <div class="flex items-center">
