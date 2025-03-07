@@ -9,18 +9,34 @@ import PaintsCard from '@/components/PaintsCard.vue'
 import AddCard from '@/components/ProfilePageComponents/AddCard.vue'
 import formatDate from '@/scripts/formatDate'
 import { useUserStore } from '@/stores/userStore'
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { config } from '@/scripts/config'
 import headerImage from '../assets/images/bgProfile.jpg'
 import profileImage from '../assets/images/test2.jpg'
 import getAuctionCards from '@/scripts/getAuctionCard'
 import type { lotType } from '@/types/lotType'
+import type { ArtType } from '@/types/ArtTypes'
 const isMobile = useScreenWidth(1024)
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
 
 const dataCardAuction = ref<lotType[]>([])
+const dataArtCards = ref<ArtType[]>([])
+async function getArts() {
+  try {
+    const response = await fetch(`${config.url}/api/art/${user.value?.id}`, {
+      method: 'GET',
+    })
 
+    if (!response.ok) {
+      console.log('Не удалось получить арты')
+    } else {
+      dataArtCards.value = await response.json()
+    }
+  } catch (error) {
+    throw console.log(error)
+  }
+}
 watch(
   () => user.value?.id,
   async (newUserId) => {
@@ -31,6 +47,8 @@ watch(
   },
   { immediate: true },
 )
+
+onMounted(getArts)
 </script>
 
 <template>
@@ -102,10 +120,18 @@ watch(
       />
     </div>
     <div class="text-[20px] mt-[20px]">Работы для демонстрации</div>
-    <div class="gap-3 work mt-[20px]">
+    <div class="gap-3 work mt-[20px] mb-[40px]">
       <RouterLink to="/addPainting"> <AddCard title="Добавить работу" card="work" /></RouterLink>
-      <div v-for="i in 8" :key="i" class="paint-card">
-        <PaintsCard styleCard="profile" class="" />
+      <div v-for="item in dataArtCards" :key="item.id" class="paint-card">
+        <PaintsCard
+          :photo="item.image"
+          :user-id="item.userId"
+          :photo-name="item.name"
+          :user-photo="item.user?.profile_photo"
+          :username="item.user?.firstname"
+          styleCard="profile"
+          class=""
+        />
       </div>
     </div>
   </div>

@@ -2,8 +2,39 @@
 import IconCamera from '@/components/icons/IconCamera.vue'
 import MyButton from '@/UX/MyButton.vue'
 import { useFileInput } from '@/scripts/useFileInput'
+import { useUserStore } from '@/stores/userStore'
+import { computed, ref } from 'vue'
+import { config } from '@/scripts/config'
 
-const { selectedImage, handleFileChange } = useFileInput()
+const artImage = useFileInput()
+const titleModel = ref('')
+const userStore = useUserStore()
+const user = computed(() => userStore.user)
+
+async function addArts() {
+  const formData = new FormData()
+  formData.append('name', titleModel.value)
+  formData.append('userId', user.value?.id ?? '')
+  if (artImage.selectedFile.value) {
+    formData.append('image', artImage.selectedFile.value)
+  }
+
+  try {
+    const response = await fetch(`${config.url}/api/art`, {
+      method: 'POST',
+      body: formData,
+    })
+    if (!response.ok) {
+      console.error('Ошибка загрузки арта', await response.text())
+      throw new Error(`Ошибка ${await response.text()}`)
+    }
+
+    console.log('Арт успешно загружен', await response.json())
+  } catch (error) {
+    throw console.log('Ошибка при загрузке арта', error)
+  }
+}
+
 // const selectedImage = ref<string | null>(null)
 
 // const handleFileChange = (event: Event) => {
@@ -27,8 +58,8 @@ const { selectedImage, handleFileChange } = useFileInput()
       @click="() => $refs.fileInput.click()"
     >
       <img
-        v-if="selectedImage"
-        :src="selectedImage"
+        v-if="artImage.selectedImage.value"
+        :src="artImage.selectedImage.value"
         alt="Selected"
         class="w-full h-full object-cover rounded-2xl"
       />
@@ -43,17 +74,18 @@ const { selectedImage, handleFileChange } = useFileInput()
         accept="image/*"
         class="hidden"
         ref="fileInput"
-        @change="handleFileChange"
+        @change="artImage.handleFileChange"
       />
     </div>
     <div class="text-left w-full mt-[20px] ml-[100px]">Название</div>
     <input
       type="text"
+      v-model="titleModel"
       class="border border-black rounded-tl-lg rounded-br-lg w-[80%] h-8 text-[16px] pl-4 mt-[6px]"
       placeholder="Введите название картины"
     />
     <div class="w-full flex gap-4 mt-[20px]">
-      <MyButton title="Выставить работу" class="w-full flex-1 !p-0"></MyButton>
+      <MyButton @click="addArts" title="Выставить работу" class="w-full flex-1 !p-0"></MyButton>
       <MyButton title="Отменить" class="w-full flex-1 !p-0"></MyButton>
     </div>
   </div>

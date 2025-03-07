@@ -3,9 +3,10 @@ import { ref } from 'vue'
 import testPhoto from '../assets/images/test1.jpg'
 import testUserPhoto from '../assets/images/test3.png'
 import ImageModal from './ImageModal.vue'
+import { config } from '@/scripts/config'
 
 interface Props {
-  userId?: number
+  userId?: string
   photo?: string
   username?: string
   photoName?: string
@@ -14,7 +15,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  userId: 1,
+  userId: '0',
   photo: testPhoto,
   username: 'Даниил',
   photoName: 'Осенний лист',
@@ -27,7 +28,7 @@ const active = ref(false)
 const modalRef = ref<InstanceType<typeof ImageModal> | null>(null)
 
 function openImage() {
-  modalRef.value?.open(props.photo)
+  modalRef.value?.open(config.url + props.photo)
 }
 </script>
 
@@ -45,7 +46,7 @@ function openImage() {
       <div class="flex mb-3 items-center w-full justify-center">
         <img
           class="w-[25%] rounded-full aspect-square h-full object-cover"
-          :src="props.userPhoto"
+          :src="config.url + props.userPhoto"
         />
         <div class="text-white flex flex-col justify-around ml-[16px]">
           <label class="font-medium">{{ props.username }}</label>
@@ -56,12 +57,12 @@ function openImage() {
     <img
       v-if="styleCard === 'standart'"
       class="rounded-lg block w-full mb-2 object-cover"
-      :src="props.photo"
+      :src="config.url + props.photo"
     />
     <img
       v-if="styleCard === 'profile'"
-      class="rounded-lg block h-full aspect-square mb-2 object-cover im"
-      :src="props.photo"
+      class="rounded-lg block h-full aspect-square mb-2 object-cover im shadow-container"
+      :src="config.url + props.photo"
     />
   </div>
 
