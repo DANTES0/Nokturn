@@ -1,22 +1,29 @@
 <script setup lang="ts">
 import IconSearch from '@/components/icons/IconSearch.vue'
-
-//18.01.2025 ничего не делал
-
-import test1 from '../assets/images/test1.jpg'
-import test2 from '../assets/images/test2.jpg'
-import test3 from '../assets/images/test3.png'
-import test4 from '../assets/images/test4.jpg'
-import test5 from '../assets/images/test5.jpg'
-import test6 from '../assets/images/test6.jpg'
 import PaintsCard from '@/components/PaintsCard.vue'
+import type { ArtType } from '@/types/ArtTypes'
+import { onMounted, ref } from 'vue'
+import { config } from '@/scripts/config'
 
-const tempArrayImages = [test1, test2, test3, test4, test5, test6]
+const dataArtCards = ref<ArtType[]>([])
 
-const randomImage = () => {
-  const randomIndex = Math.floor(Math.random() * tempArrayImages.length)
-  return tempArrayImages[randomIndex]
+async function getArts() {
+  try {
+    const response = await fetch(`${config.url}/api/art/`, {
+      method: 'GET',
+    })
+
+    if (!response.ok) {
+      console.log('Не удалось получить арты')
+    } else {
+      dataArtCards.value = await response.json()
+    }
+  } catch (error) {
+    throw console.log(error)
+  }
 }
+
+onMounted(getArts)
 //КОНЕЦ ВРЕМЕННО ДО СЕРВЕРА
 </script>
 <template>
@@ -31,7 +38,15 @@ const randomImage = () => {
     </div>
   </div>
   <div class="gallery !mt-[20px]">
-    <PaintsCard v-for="i in 20" :key="i" :photo="randomImage()" />
+    <PaintsCard
+      v-for="item in dataArtCards"
+      :key="item.id"
+      :photo="item.image"
+      :user-id="item.userId"
+      :photo-name="item.name"
+      :user-photo="item.user?.profile_photo"
+      :username="item.user?.firstname"
+    />
   </div>
 </template>
 <style scoped>

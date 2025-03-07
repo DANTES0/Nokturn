@@ -10,23 +10,12 @@ import 'vue3-carousel/carousel.css'
 import { Carousel, Slide } from 'vue3-carousel'
 import { onMounted, ref } from 'vue'
 import PaintsCard from '@/components/PaintsCard.vue'
-//ВРМЕНННО ДО СЕРВЕРА
-import test1 from '../assets/images/test1.jpg'
-import test2 from '../assets/images/test2.jpg'
-import test3 from '../assets/images/test3.png'
-import test4 from '../assets/images/test4.jpg'
-import test5 from '../assets/images/test5.jpg'
-import test6 from '../assets/images/test6.jpg'
 import formatDate from '@/scripts/formatDate'
 import type { lotType } from '@/types/lotType'
 import getAuctionCards from '@/scripts/getAuctionCard'
+import { config } from '@/scripts/config'
+import type { ArtType } from '@/types/ArtTypes'
 
-const tempArrayImages = [test1, test2, test3, test4, test5, test6]
-
-const randomImage = () => {
-  const randomIndex = Math.floor(Math.random() * tempArrayImages.length)
-  return tempArrayImages[randomIndex]
-}
 //КОНЕЦ ВРЕМЕННО ДО СЕРВЕРА
 const carouselConfig = ref({
   gap: 16,
@@ -89,11 +78,29 @@ const prevAuctionCard = () => carouselAuctionRef.value.prev()
 const auctionDigitalCards = ref<lotType[]>([])
 const auctionPhysCards = ref<lotType[]>([])
 const auctionCurrentCards = ref<lotType[]>([])
+const dataArtCards = ref<ArtType[]>([])
+
+async function getArts() {
+  try {
+    const response = await fetch(`${config.url}/api/art/`, {
+      method: 'GET',
+    })
+
+    if (!response.ok) {
+      console.log('Не удалось получить арты')
+    } else {
+      dataArtCards.value = await response.json()
+    }
+  } catch (error) {
+    throw console.log(error)
+  }
+}
 
 onMounted(async () => {
   auctionDigitalCards.value = await getAuctionCards({ category: 'Цифровое искусство' })
   auctionPhysCards.value = await getAuctionCards({ category: 'Физическое искусство' })
   auctionCurrentCards.value = await getAuctionCards({ lot_status: 'active' })
+  getArts()
 })
 </script>
 <template>
@@ -244,7 +251,15 @@ onMounted(async () => {
     </div>
 
     <div class="gallery">
-      <PaintsCard v-for="i in 20" :key="i" :photo="randomImage()" />
+      <PaintsCard
+        v-for="item in dataArtCards"
+        :key="item.id"
+        :photo="item.image"
+        :user-id="item.userId"
+        :photo-name="item.name"
+        :user-photo="item.user?.profile_photo"
+        :username="item.user?.firstname"
+      />
     </div>
   </div>
 </template>
