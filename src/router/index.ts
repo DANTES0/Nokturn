@@ -30,7 +30,7 @@ const router = createRouter({
       component: () => import('@/pages/AuctionLotPage.vue'),
     },
     {
-      path: '/profile',
+      path: '/profile/:id',
       name: 'ProfilePage',
       component: () => import('@/pages/ProfilePage.vue'),
     },

@@ -15,7 +15,7 @@ const route = useRoute()
 const router = useRouter()
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
-const isProfileRoute = computed(() => route.path === '/profile')
+const isProfileRoute = computed(() => /^\/profile(\/.*)?$/.test(route.path))
 
 function logout() {
   userStore.logout()

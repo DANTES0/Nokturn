@@ -2,6 +2,14 @@
 import IconUser from '@/components/icons/IconUser.vue'
 import IconGear from '@/components/icons/IconGear.vue'
 import IconLogout from '@/components/icons/IconLogout.vue'
+import { useUserStore } from '@/stores/userStore'
+import { computed } from 'vue'
+const userStore = useUserStore()
+const user = userStore.user
+
+const link = computed(() => {
+  return `/profile/${user?.id}`
+})
 
 defineProps({
   onClose: {
@@ -18,7 +26,7 @@ defineProps({
 <template>
   <div class="absolute w-[250px] bg-white right-[96px] top-[54px] shadow-container z-20 rounded-lg">
     <ul class="text-[14px] flex flex-col justify-between px-[20px] py-[10px] gap-1">
-      <RouterLink to="/profile" @click="onClose"
+      <RouterLink :to="link" @click="onClose"
         ><li class="pl-1 flex items-center gap-1">
           <IconUser class="w-[16px]" />Профиль
         </li></RouterLink
