@@ -16,7 +16,7 @@ export interface UserType {
   arts?: [
     {
       id: number
-      photo: string
+      image: string
       name: string
     },
   ]

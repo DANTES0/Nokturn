@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useScreenWidth } from '@/scripts/ScriptWindowSize'
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import AvatarCanvas from '../AvatarCanvas.vue'
 import { config } from '@/scripts/config'
 import PaintsCard from '../PaintsCard.vue'
@@ -37,7 +37,7 @@ watch(isMobile, () => {
     sizeArrayImage.value = 3
   } else sizeArrayImage.value = 5
 })
-
+const linkProfile = computed(() => `/profile/${props.id}`)
 onMounted(() => {
   if (isMobile.value) {
     sizeArrayImage.value = 3
@@ -49,12 +49,15 @@ onMounted(() => {
 <template>
   <div class="bg-white shadow-card p-[30px] rounded-2xl flex w-full">
     <div class="flex items-center mobile:flex-row flex-col">
-      <img
-        v-if="props.photo"
-        class="w-24 h-24 rounded-full shadow-card object-cover"
-        :src="config.url + props.photo"
-      />
-      <AvatarCanvas v-else class="rounded-full shadow-card" :size="96" :name="props.firstname" />
+      <RouterLink :to="linkProfile" class="w-24 h-24" v-if="props.photo">
+        <img
+          class="w-24 h-24 rounded-full shadow-card object-cover"
+          :src="config.url + props.photo"
+        />
+      </RouterLink>
+      <RouterLink :to="linkProfile" class="w-24 h-24" v-else>
+        <AvatarCanvas class="rounded-full shadow-card" :size="96" :name="props.firstname" />
+      </RouterLink>
       <div
         class="flex flex-col mobile:ml-[20px] mobile:max-w-[300px] max-w-[200px] w-[200px] gap-3 mobile:border-r mobile:border-black mobile:pr-[10px]"
       >

@@ -9,24 +9,36 @@ import PaintsCard from '@/components/PaintsCard.vue'
 import AddCard from '@/components/ProfilePageComponents/AddCard.vue'
 import formatDate from '@/scripts/formatDate'
 import { useUserStore } from '@/stores/userStore'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { config } from '@/scripts/config'
 import headerImage from '../assets/images/bgProfile.jpg'
 import profileImage from '../assets/images/test2.jpg'
 import getAuctionCards from '@/scripts/getAuctionCard'
 import type { lotType } from '@/types/lotType'
 import type { ArtType } from '@/types/ArtTypes'
+import { useRoute } from 'vue-router'
+import type { UserType } from '@/types/UserType'
+import AvatarCanvas from '@/components/AvatarCanvas.vue'
+
+const route = useRoute()
 const isMobile = useScreenWidth(1024)
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
-
+const userInfo = ref<UserType>()
 const dataCardAuction = ref<lotType[]>([])
 const dataArtCards = ref<ArtType[]>([])
 async function getArts() {
   try {
-    const response = await fetch(`${config.url}/api/art/${user.value?.id}`, {
-      method: 'GET',
-    })
+    let response
+    if (route.params.id == user.value?.id) {
+      response = await fetch(`${config.url}/api/art/${user.value?.id}`, {
+        method: 'GET',
+      })
+    } else {
+      response = await fetch(`${config.url}/api/art/${route.params.id}`, {
+        method: 'GET',
+      })
+    }
 
     if (!response.ok) {
       console.log('Не удалось получить арты')
@@ -37,29 +49,60 @@ async function getArts() {
     throw console.log(error)
   }
 }
+async function getUser() {
+  try {
+    let response
+    if (route.params.id == user.value?.id) {
+      response = await fetch(`${config.url}/api/users/${user.value?.id}`, {
+        method: 'GET',
+      })
+    } else {
+      response = await fetch(`${config.url}/api/users/${route.params.id}`, {
+        method: 'GET',
+      })
+    }
+
+    if (!response.ok) {
+      console.log('Не удалось получить арты')
+    } else {
+      userInfo.value = await response.json()
+    }
+  } catch (error) {
+    throw console.log(error)
+  }
+}
 watch(
-  () => user.value?.id,
+  () => route.params.id,
   async (newUserId) => {
     if (newUserId) {
       dataCardAuction.value = await getAuctionCards({ userId: newUserId })
+      getArts()
+      getUser()
       console.log(dataCardAuction.value)
     }
   },
   { immediate: true },
 )
-
-onMounted(getArts)
 </script>
 
 <template>
   <div class="w-full h-[34vh] relative -z-10">
     <img
       class="h-full w-full object-cover"
-      :src="user?.profile_header_photo ? config.url + user?.profile_header_photo : headerImage"
+      :src="
+        userInfo?.profile_header_photo ? config.url + userInfo?.profile_header_photo : headerImage
+      "
     />
     <img
+      v-if="userInfo?.profile_photo"
       class="absolute w-48 h-48 rounded-full bottom-[-90px] laptop:left-[96px] left-[104px] shadow-cardImage object-cover"
-      :src="user?.profile_photo ? config.url + user?.profile_photo : profileImage"
+      :src="userInfo?.profile_photo ? config.url + userInfo?.profile_photo : profileImage"
+    />
+    <AvatarCanvas
+      v-if="userInfo?.firstname && !userInfo.profile_photo"
+      class="absolute w-48 h-48 rounded-full bottom-[-90px] laptop:left-[96px] left-[104px] shadow-cardImage object-cover bg-white"
+      :name="userInfo?.firstname ?? ''"
+      :size="192"
     />
   </div>
 
@@ -75,12 +118,12 @@ onMounted(getArts)
         v-if="!isMobile"
         class="w-4 h-4 bg-white shadow-container rounded-full left-[-64px] top-[-8px] absolute"
       ></div>
-      <IconChat class="absolute top-2 right-[10px]" />
+      <IconChat v-if="user?.id !== route.params.id" class="absolute top-2 right-[10px]" />
       <div class="w-full h-full flex flex-col p-[20px] justify-between">
-        <div class="text-[24px]">{{ user?.firstname }} {{ user?.lastname }}</div>
-        <div class="text-[18px] font-light">{{ user?.special_info }}</div>
+        <div class="text-[24px]">{{ userInfo?.firstname }} {{ userInfo?.lastname }}</div>
+        <div class="text-[18px] font-light">{{ userInfo?.special_info }}</div>
         <div class="font-extralight">
-          Дата регистрации: {{ formatDate(user?.birthday_date ?? '00.00.0000') }}
+          Дата регистрации: {{ formatDate(userInfo?.birthday_date ?? '00.00.0000') }}
         </div>
         <div class="flex justify-between">
           <div class="flex gap-2">
@@ -89,7 +132,7 @@ onMounted(getArts)
           </div>
           <div class="flex">
             <IconStarOutline />
-            <span>{{ user?.rating }}/5</span>
+            <span>{{ userInfo?.rating }}/5</span>
           </div>
         </div>
       </div>
@@ -97,7 +140,7 @@ onMounted(getArts)
     <div
       class="bg-white w-full flex-1 h-[180px] shadow-container rounded-2xl laptop:mt-8 relative p-[20px] text-justify description-text overflow-y-scroll laptop:text-[14px] desktop:text-[18px]"
     >
-      {{ user?.description }}
+      {{ userInfo?.description }}
     </div>
   </div>
   <div class="w-[90%]">
@@ -148,7 +191,6 @@ onMounted(getArts)
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   row-gap: 2em;
   column-gap: 2em;
-  justify-items: center;
 }
 
 .paint-card {
