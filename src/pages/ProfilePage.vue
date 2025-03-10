@@ -144,9 +144,11 @@ watch(
     </div>
   </div>
   <div class="w-[90%]">
-    <div class="text-[20px] mt-[20px]">Выставленные лоты</div>
+    <div v-if="dataCardAuction.length != 0" class="text-[20px] mt-[20px]">Выставленные лоты</div>
     <div class="mt-[20px] auc-card">
-      <RouterLink to="/addLot"><AddCard title="Добавить лот" /></RouterLink>
+      <RouterLink v-if="user?.id == route.params.id" to="/addLot"
+        ><AddCard title="Добавить лот"
+      /></RouterLink>
       <AuctionCard
         class=""
         v-for="(item, index) in dataCardAuction"
@@ -162,9 +164,11 @@ watch(
         :begin-date="formatDate(item.begin_time_date)"
       />
     </div>
-    <div class="text-[20px] mt-[20px]">Работы для демонстрации</div>
+    <div v-if="dataArtCards.length != 0" class="text-[20px] mt-[20px]">Работы для демонстрации</div>
     <div class="gap-3 work mt-[20px] mb-[40px]">
-      <RouterLink to="/addPainting"> <AddCard title="Добавить работу" card="work" /></RouterLink>
+      <RouterLink v-if="user?.id == route.params.id" to="/addPainting">
+        <AddCard title="Добавить работу" card="work"
+      /></RouterLink>
       <div v-for="item in dataArtCards" :key="item.id" class="paint-card">
         <PaintsCard
           :photo="item.image"
