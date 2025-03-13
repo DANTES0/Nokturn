@@ -1,3 +1,4 @@
+import router from '@/router'
 import getCurrentUser from '@/scripts/middlewareAuth'
 import { defineStore } from 'pinia'
 
@@ -50,7 +51,9 @@ export const useUserStore = defineStore('user', {
     },
     logout() {
       this.clearUser()
+
       localStorage.removeItem('token')
+      router.push('/auth')
     },
   },
 })
