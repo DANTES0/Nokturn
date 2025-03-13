@@ -19,6 +19,7 @@ import type { ArtType } from '@/types/ArtTypes'
 import { useRoute } from 'vue-router'
 import type { UserType } from '@/types/UserType'
 import AvatarCanvas from '@/components/AvatarCanvas.vue'
+import router from '@/router'
 
 const route = useRoute()
 const isMobile = useScreenWidth(1024)
@@ -71,6 +72,32 @@ async function getUser() {
     throw console.log(error)
   }
 }
+
+async function goToChat() {
+  const objectBody = {
+    user1Id: user.value?.id,
+    user2Id: userInfo.value?.id,
+  }
+  try {
+    const response = await fetch(`${config.url}/api/chat/createChats`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Добавляем заголовок
+      },
+      body: JSON.stringify(objectBody),
+    })
+
+    if (!response.ok) {
+      console.log('Не удалось создать или открыть чат')
+    } else {
+      console.log(await response.json())
+      router.push('/chat')
+    }
+  } catch (error) {
+    throw console.log(error)
+  }
+}
+
 watch(
   () => route.params.id,
   async (newUserId) => {
@@ -118,7 +145,11 @@ watch(
         v-if="!isMobile"
         class="w-4 h-4 bg-white shadow-container rounded-full left-[-64px] top-[-8px] absolute"
       ></div>
-      <IconChat v-if="user?.id !== route.params.id" class="absolute top-2 right-[10px]" />
+      <IconChat
+        @click="goToChat"
+        v-if="user?.id !== route.params.id"
+        class="absolute top-2 right-[10px] cursor-pointer"
+      />
       <div class="w-full h-full flex flex-col p-[20px] justify-between">
         <div class="text-[24px]">{{ userInfo?.firstname }} {{ userInfo?.lastname }}</div>
         <div class="text-[18px] font-light">{{ userInfo?.special_info }}</div>
