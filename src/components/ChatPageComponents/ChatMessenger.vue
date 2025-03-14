@@ -10,6 +10,7 @@ const props = withDefaults(defineProps<MessageType>(), {
   lastname: '',
   lastDateMessage: '124',
   textMessage: 'ТЕкст ткс',
+  createdAt: '',
 })
 
 function formatDateTimeIntl(dateString: string) {
@@ -29,14 +30,14 @@ function formatDateTimeIntl(dateString: string) {
   <div class="flex">
     <div class="">
       <img
-        :src="config.url + props.sender.profile_photo"
+        :src="config.url + props.sender?.profile_photo"
         class="rounded-full object-cover shadow-cardImage w-[3.8vw] aspect-square"
       />
     </div>
     <div class="flex flex-col flex-1 justify-around ml-4">
       <div class="flex w-full justify-between items-center">
         <div class="font-medium text-[1vw]">
-          {{ props.sender.firstname }} {{ props.sender.lastname }}
+          {{ props.sender?.firstname }} {{ props.sender?.lastname }}
         </div>
         <div class="font-extralight text-[0.7vw]">
           {{ formatDateTimeIntl(props.createdAt).formattedTime }}
