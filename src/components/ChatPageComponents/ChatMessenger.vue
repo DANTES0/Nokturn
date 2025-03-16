@@ -4,8 +4,7 @@ import type { MessageType } from '@/types/MessagesType'
 import IconCheck from '../icons/IconCheck.vue'
 import AvatarCanvas from '../AvatarCanvas.vue'
 import { useUserStore } from '@/stores/userStore'
-import { computed } from 'vue'
-
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
 
@@ -18,7 +17,33 @@ const props = withDefaults(defineProps<MessageType>(), {
   lastDateMessage: '124',
   textMessage: 'ТЕкст ткс',
   createdAt: '',
+  isRead: false,
 })
+
+const pushRout = computed(() => {
+  return `/profile/${props.sender?.id}`
+})
+
+function getTimeAgo(dateString: string) {
+  const now = new Date()
+  const past = new Date(dateString)
+  const diffMs = now.getTime() - past.getTime()
+  const diffMinutes = Math.floor(diffMs / 60000)
+  const diffHours = Math.floor(diffMinutes / 60)
+  const diffDays = Math.floor(diffHours / 24)
+
+  if (diffMinutes < 60) {
+    return `${diffMinutes} мин. назад`
+  } else if (diffHours < 24) {
+    return `${diffHours} ч. назад`
+  } else if (diffDays === 1) {
+    return `Вчера`
+  } else if (diffDays < 7) {
+    return `${diffDays} д. назад`
+  } else {
+    return past.toLocaleDateString('ru-RU')
+  }
+}
 
 function formatDateTimeIntl(dateString: string) {
   const dateObj = new Date(dateString)
@@ -31,6 +56,15 @@ function formatDateTimeIntl(dateString: string) {
 
   return { formattedDate: formattedDate.replace(/\./g, '.'), formattedTime }
 }
+
+const isReadLocal = ref(props.isRead)
+
+watch(
+  () => props.isRead,
+  (newValue) => {
+    isReadLocal.value = newValue
+  },
+)
 </script>
 
 <template>
@@ -49,17 +83,19 @@ function formatDateTimeIntl(dateString: string) {
     </div>
     <div class="flex flex-col flex-1 justify-around ml-4">
       <div class="flex w-full justify-between items-center">
-        <div class="font-medium text-[1vw]">
-          {{ props.sender?.firstname }} {{ props.sender?.lastname }}
-        </div>
-        <div class="flex">
+        <RouterLink :to="pushRout">
+          <div class="font-medium text-[1vw] cursor-pointer hover:text-[#666666]">
+            {{ props.sender?.firstname }} {{ props.sender?.lastname }}
+          </div>
+        </RouterLink>
+        <div class="flex items-center">
           <div v-if="user?.id == props.sender?.id" class="flex relative">
-            <IconCheck></IconCheck>
-            <IconCheck class="absolute left-[-4.2px]"></IconCheck>
+            <IconCheck class=""></IconCheck>
+            <IconCheck v-if="isReadLocal" class="absolute left-[-6px]"></IconCheck>
           </div>
 
-          <div class="font-extralight text-[0.7vw]">
-            {{ formatDateTimeIntl(props.createdAt).formattedTime }}
+          <div class="font-extralight text-[12px]">
+            {{ getTimeAgo(createdAt) }}
           </div>
         </div>
       </div>

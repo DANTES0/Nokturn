@@ -4,6 +4,7 @@ export interface MessageType {
   senderId?: string
   text?: string
   createdAt?: string
+  isRead?: boolean
   sender?: {
     id?: string
     firstname?: string

@@ -30,10 +30,9 @@ async function getChats() {
     } else {
       const chats = await response.json()
 
-      // Добавляем unreadCount в каждый чат
-      chatsArray.value = chats.map((chat) => {
+      chatsArray.value = chats.map((chat: ChatType) => {
         const unreadCount = chat.messages.filter(
-          (msg) => !msg.isRead && msg.senderId !== user.value?.id,
+          (msg: MessageType) => !msg.isRead && msg.senderId !== user.value?.id,
         ).length
         return { ...chat, unreadCount }
       })
@@ -75,34 +74,7 @@ async function sendMessage() {
     return
   }
   socket.emit('sendMessage', messageObject)
-  // Очищаем поле ввода
   modelText.value = ''
-  // setTimeout(scrollToBottom, 100)
-  // scrollToBottom()
-  // try {
-  //   const response = await fetch(`${config.url}/api/chat/createMessage`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(messageObject),
-  //   })
-
-  //   if (!response.ok) {
-  //     console.log('Ошибка отправки сообщения')
-  //   } else {
-  //     console.log(await response.json())
-  //     modelText.value = ''
-  //     socket.on('newMessage', (newMessage) => {
-  //       if (newMessage.chatId === selectedChatId.value) {
-  //         messagesArray.value.push(newMessage)
-  //       }
-  //     })
-  //     getMessages()
-  //   }
-  // } catch (error) {
-  //   throw console.error(error)
-  // }
 }
 
 function handleChatSelect(chatId: string) {
@@ -121,7 +93,12 @@ const scrollToBottom = () => {
 }
 
 onMounted(() => {
-  // socket.emit('joinUserRoom', user.value?.id)
+  socket.on('messagesRead', ({ chatId }) => {
+    console.log(`🔹 Сообщения в чате ${chatId} отмечены как прочитанные`)
+    getMessages()
+    getChats()
+  })
+
   socket.on('updateUnreadCount', ({ chatId, count }) => {
     const chat = chatsArray.value.find((c) => c.id === chatId)
     if (chat) {
@@ -135,21 +112,19 @@ onMounted(() => {
     const chat = chatsArray.value.find((c) => c.id === newMessage.chatId)
 
     if (!chat) {
-      getChats() // Если чата нет в списке, обновляем список чатов
+      getChats()
       return
     }
 
-    // Добавляем сообщение в историю чата
     chat.messages.push(newMessage)
 
-    // Увеличиваем количество непрочитанных, если сообщение не от нас
     if (newMessage.senderId !== user.value?.id) {
       chat.unreadCount++
     }
 
-    // Если это текущий открытый чат
     if (newMessage.chatId === selectedChatId.value) {
       messagesArray.value.push(newMessage)
+      console.log('Обновилось')
       socket.emit('markAsRead', { chatId: newMessage.chatId, userId: user.value?.id })
       chat.unreadCount = 0
       scrollToBottom()
@@ -159,7 +134,6 @@ onMounted(() => {
   socket.on('newMessageNotification', (message) => {
     console.log('Новое сообщение!', message)
 
-    // Обновляем UI (например, показываем иконку нового сообщения)
     getChats()
   })
   getChats()
@@ -185,6 +159,7 @@ watch(selectedChatId, (newChatId, oldChatId) => {
   }
 })
 watch(messagesArray, () => {
+  // getMessages()
   scrollToBottom()
 })
 </script>
@@ -192,7 +167,7 @@ watch(messagesArray, () => {
 <template>
   <div class="w-[90%] h-full flex gap-[30px] mt-[30px]">
     <div
-      class="bg-white w-1/2 h-[85vh] shadow-container rounded-lg py-[20px] flex flex-col gap-4 overflow-y-scroll"
+      class="bg-white w-1/2 h-[85vh] shadow-container rounded-lg pb-[20px] flex flex-col gap-4 overflow-y-scroll"
     >
       <ChatUserCard
         v-for="item in chatsArray"
@@ -201,9 +176,14 @@ watch(messagesArray, () => {
         :profile_photo="item.user2.profile_photo"
         :firstname="item.user2.firstname"
         :lastname="item.user2.lastname"
-        :last-date-message="item.messages.at(-1).createdAt"
-        :text-message="item.messages.at(-1).text"
+        :last-date-message="
+          item.messages.length ? item.messages[item.messages.length - 1].createdAt : null
+        "
+        :text-message="item.messages.length ? item.messages[item.messages.length - 1].text : ''"
+        :sender-id="item.messages.length ? item.messages[item.messages.length - 1].senderId : null"
+        :is-read="item.messages.length ? item.messages[item.messages.length - 1].isRead : false"
         :unread-message="item.unreadCount"
+        :selectedChatId="selectedChatId"
         @selectChat="handleChatSelect"
       />
     </div>
@@ -218,6 +198,7 @@ watch(messagesArray, () => {
           :text="item.text"
           :sender="item.sender"
           :created-at="item.createdAt"
+          :is-read="item.isRead"
         />
       </div>
       <div class="w-full h-[15vh] p-[20px] flex justify-between items-center">
