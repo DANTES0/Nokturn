@@ -10,6 +10,7 @@ interface Props {
   lastname: string
   lastDateMessage?: string
   textMessage?: string
+  unreadMessage?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -42,12 +43,12 @@ const emit = defineEmits<{
 <template>
   <div
     @click="emit('selectChat', props.id)"
-    class="flex relative w-full hover:bg-[#EEEEEE] p-[6px] rounded-2xl cursor-pointer"
+    class="flex relative w-full hover:bg-[#EEEEEE] p-[6px] px-3 cursor-pointer"
   >
     <div
-      class="absolute w-[30px] h-[20px] bg-[#4C4C4C] flex items-center justify-center text-white rounded-xl text-[12px] bottom-[8px] right-[6px]"
+      class="absolute w-[30px] h-[20px] bg-[#4C4C4C] flex items-center justify-center text-white rounded-xl text-[12px] bottom-[8px] right-[8px]"
     >
-      22
+      {{ props.unreadMessage }}
     </div>
     <div class="">
       <img

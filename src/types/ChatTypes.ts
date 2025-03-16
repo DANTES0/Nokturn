@@ -16,4 +16,5 @@ export interface ChatType {
     profile_photo: string
   }
   messages: []
+  unreadCount?: number
 }

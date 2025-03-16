@@ -64,7 +64,8 @@ async function placeBet() {
   })
 
   if (!response.ok) {
-    console.error('Ошибка ставки')
+    const errorData = await response.json().catch(() => null)
+    console.error('Ошибка при размещении ставки:', response.status, errorData)
   } else {
     console.log(response.json())
     socket.emit('placeBet', {

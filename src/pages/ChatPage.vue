@@ -28,7 +28,16 @@ async function getChats() {
     if (!response.ok) {
       console.log('Не удалось получить чаты')
     } else {
-      chatsArray.value = await response.json()
+      const chats = await response.json()
+
+      // Добавляем unreadCount в каждый чат
+      chatsArray.value = chats.map((chat) => {
+        const unreadCount = chat.messages.filter(
+          (msg) => !msg.isRead && msg.senderId !== user.value?.id,
+        ).length
+        return { ...chat, unreadCount }
+      })
+
       console.log(chatsArray.value)
     }
   } catch (error) {
@@ -100,6 +109,7 @@ function handleChatSelect(chatId: string) {
   selectedChatId.value = chatId
   socket.emit('joinChat', chatId)
   console.log('Выбран чат:', chatId)
+  socket.emit('markAsRead', { chatId, userId: user.value?.id })
 }
 
 const scrollToBottom = () => {
@@ -111,21 +121,57 @@ const scrollToBottom = () => {
 }
 
 onMounted(() => {
+  // socket.emit('joinUserRoom', user.value?.id)
+  socket.on('updateUnreadCount', ({ chatId, count }) => {
+    const chat = chatsArray.value.find((c) => c.id === chatId)
+    if (chat) {
+      chat.unreadCount = count
+    }
+  })
+
   socket.on('newMessage', (newMessage) => {
     console.log('Получено новое сообщение через WebSocket:', newMessage)
+
+    const chat = chatsArray.value.find((c) => c.id === newMessage.chatId)
+
+    if (!chat) {
+      getChats() // Если чата нет в списке, обновляем список чатов
+      return
+    }
+
+    // Добавляем сообщение в историю чата
+    chat.messages.push(newMessage)
+
+    // Увеличиваем количество непрочитанных, если сообщение не от нас
+    if (newMessage.senderId !== user.value?.id) {
+      chat.unreadCount++
+    }
+
+    // Если это текущий открытый чат
     if (newMessage.chatId === selectedChatId.value) {
       messagesArray.value.push(newMessage)
+      socket.emit('markAsRead', { chatId: newMessage.chatId, userId: user.value?.id })
+      chat.unreadCount = 0
       scrollToBottom()
     }
   })
 
+  socket.on('newMessageNotification', (message) => {
+    console.log('Новое сообщение!', message)
+
+    // Обновляем UI (например, показываем иконку нового сообщения)
+    getChats()
+  })
   getChats()
 })
 
 watch(
   user,
   (newUser) => {
-    if (newUser?.id) getChats()
+    if (newUser?.id) {
+      socket.emit('joinUserRoom', user.value?.id)
+      getChats()
+    }
   },
   { immediate: true },
 )
@@ -146,7 +192,7 @@ watch(messagesArray, () => {
 <template>
   <div class="w-[90%] h-full flex gap-[30px] mt-[30px]">
     <div
-      class="bg-white w-1/2 h-[85vh] shadow-container rounded-lg p-[20px] flex flex-col gap-7 overflow-y-scroll"
+      class="bg-white w-1/2 h-[85vh] shadow-container rounded-lg py-[20px] flex flex-col gap-4 overflow-y-scroll"
     >
       <ChatUserCard
         v-for="item in chatsArray"
@@ -157,6 +203,7 @@ watch(messagesArray, () => {
         :lastname="item.user2.lastname"
         :last-date-message="item.messages.at(-1).createdAt"
         :text-message="item.messages.at(-1).text"
+        :unread-message="item.unreadCount"
         @selectChat="handleChatSelect"
       />
     </div>
