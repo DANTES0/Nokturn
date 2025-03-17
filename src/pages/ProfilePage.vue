@@ -195,7 +195,12 @@ watch(
         :begin-date="formatDate(item.begin_time_date)"
       />
     </div>
-    <div v-if="dataArtCards.length != 0" class="text-[20px] mt-[20px]">Работы для демонстрации</div>
+    <div
+      v-if="dataArtCards.length != 0 || user?.id == route.params.id"
+      class="text-[20px] mt-[20px]"
+    >
+      Работы для демонстрации
+    </div>
     <div class="gap-3 work mt-[20px] mb-[40px]">
       <RouterLink v-if="user?.id == route.params.id" to="/addPainting">
         <AddCard title="Добавить работу" card="work"

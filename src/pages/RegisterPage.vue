@@ -30,6 +30,7 @@ async function fetchData() {
     return
   }
   if (passwordModel.value != repeatPasswordModel.value) {
+    console.log(repeatPasswordModel.value, passwordModel.value)
     errorRepeatPassword.value = true
     return
   }
@@ -103,6 +104,7 @@ const router = useRouter()
           error-text="Пароли должны совпадать"
           placeholder="Повторите пароль"
           title="Повторите пароль"
+          v-model="repeatPasswordModel"
         />
         <MySecondInput
           :required-error="errorBirthday"

@@ -95,7 +95,7 @@ const emit = defineEmits<{
       <img
         v-if="props.profile_photo"
         :src="config.url + props.profile_photo"
-        class="rounded-full shadow-cardImage w-[70px] aspect-square"
+        class="rounded-full shadow-cardImage w-[70px] aspect-square object-cover"
       />
       <AvatarCanvas v-if="!props.profile_photo" :size="70" :name="props.firstname" />
     </div>

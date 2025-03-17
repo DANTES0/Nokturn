@@ -15,6 +15,7 @@ import type { lotType } from '@/types/lotType'
 import getAuctionCards from '@/scripts/getAuctionCard'
 import { config } from '@/scripts/config'
 import type { ArtType } from '@/types/ArtTypes'
+import type { UserType } from '@/types/UserType'
 
 //КОНЕЦ ВРЕМЕННО ДО СЕРВЕРА
 const carouselConfig = ref({
@@ -79,6 +80,7 @@ const auctionDigitalCards = ref<lotType[]>([])
 const auctionPhysCards = ref<lotType[]>([])
 const auctionCurrentCards = ref<lotType[]>([])
 const dataArtCards = ref<ArtType[]>([])
+const artistsCard = ref<UserType[]>([])
 
 async function getArts() {
   try {
@@ -96,11 +98,27 @@ async function getArts() {
   }
 }
 
+async function getArtists() {
+  try {
+    const response = await fetch(`${config.url}/api/users/withArts`, {
+      method: 'GET',
+    })
+    if (!response.ok) {
+      console.log('Не удалось получить арты')
+    } else {
+      artistsCard.value = await response.json()
+    }
+  } catch (error) {
+    throw console.error(error)
+  }
+}
+
 onMounted(async () => {
   auctionDigitalCards.value = await getAuctionCards({ category: 'Цифровое искусство' })
   auctionPhysCards.value = await getAuctionCards({ category: 'Физическое искусство' })
   auctionCurrentCards.value = await getAuctionCards({ lot_status: 'active' })
   getArts()
+  getArtists()
 })
 </script>
 <template>
@@ -166,7 +184,7 @@ onMounted(async () => {
         Посмотреть все торги</RouterLink
       >
     </div>
-    <div class="flex flex-wrap w-[90%] justify-center gap-x-14 gap-y-8">
+    <div class="auc-card w-[90%] justify-items-center gap-x-14 gap-y-8">
       <AuctionCard
         v-for="item in auctionDigitalCards"
         :key="item.id"
@@ -202,8 +220,14 @@ onMounted(async () => {
       </div>
       <div class="items-center justify-center desktop:w-[85%] laptop:w-[85%] w-[80%]">
         <Carousel ref="carouselRef" v-model="currentSlide" v-bind="carouselConfig">
-          <Slide v-for="slide in 10" :key="slide">
-            <ArtistMainPageCard class="max-h-[300px]"
+          <Slide v-for="slide in artistsCard" :key="slide">
+            <ArtistMainPageCard
+              :firstname="slide.firstname"
+              :profile_photo="slide.profile_photo"
+              :id="slide.id"
+              :arts="slide.arts"
+              :special_info="slide.special_info"
+              class="max-h-[300px]"
           /></Slide>
         </Carousel>
       </div>
@@ -225,7 +249,7 @@ onMounted(async () => {
         Посмотреть все торги</RouterLink
       >
     </div>
-    <div class="flex flex-wrap w-[90%] justify-center gap-x-14 gap-y-8">
+    <div class="w-[90%] justify-items-center gap-x-14 gap-y-8 auc-card">
       <AuctionCard
         v-for="item in auctionPhysCards"
         :key="item.id"
@@ -270,6 +294,12 @@ onMounted(async () => {
   margin: 0 auto;
   columns: 5 200px;
   column-gap: 1em;
+}
+.auc-card {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  row-gap: 2em;
+  column-gap: 2em;
 }
 
 /* .gallery img {

@@ -4,10 +4,12 @@ import { ref, onMounted } from 'vue'
 interface Props {
   name: string
   size?: number
+  style?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size: 100,
+  style: 'normal',
 })
 
 const avatarSrc = ref<string>('')
@@ -26,7 +28,7 @@ const generateAvatar = () => {
 
   const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
   gradient.addColorStop(0, color)
-  gradient.addColorStop(1, '#FFFFFF22') // Полупрозрачный белый
+  gradient.addColorStop(1, '#FFFFFF') // Полупрозрачный белый
   ctx.fillStyle = gradient
   ctx.fillRect(0, 0, canvas.width, canvas.height)
 
@@ -48,6 +50,9 @@ onMounted(generateAvatar)
     :alt="`Avatar of ${name}`"
     :width="size"
     :height="size"
-    class="rounded-full"
+    :class="{
+      'rounded-tl-lg rounded-br-lg': props.style == 'header',
+      'rounded-full': props.style == 'normal',
+    }"
   />
 </template>

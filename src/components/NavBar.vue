@@ -8,6 +8,7 @@ import { ref, computed } from 'vue'
 import ModalProfile from './NavBarComponents/ModalProfile.vue'
 import { useUserStore } from '@/stores/userStore'
 import { config } from '@/scripts/config'
+import AvatarCanvas from './AvatarCanvas.vue'
 
 const activeProfileModal = ref(false)
 
@@ -92,9 +93,16 @@ function logout() {
       >
         <!-- <IconUser /> -->
         <img
-          :src="user?.profile_photo ? config.url + user.profile_photo : profileImage"
-          class="rounded-tl-md rounded-br-lg h-full object-cover"
+          v-if="user?.profile_photo"
+          :src="config.url + user.profile_photo"
+          class="rounded-tl-md rounded-br-lg w-full h-full object-cover"
           alt=""
+        />
+        <AvatarCanvas
+          v-if="!user?.profile_photo"
+          :name="user?.firstname ?? ''"
+          :size="40"
+          :style="'header'"
         />
       </button>
     </div>

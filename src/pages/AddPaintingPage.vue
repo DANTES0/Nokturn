@@ -5,11 +5,13 @@ import { useFileInput } from '@/scripts/useFileInput'
 import { useUserStore } from '@/stores/userStore'
 import { computed, ref } from 'vue'
 import { config } from '@/scripts/config'
+import { useRouter } from 'vue-router'
 
 const artImage = useFileInput()
 const titleModel = ref('')
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
+const router = useRouter()
 
 async function addArts() {
   const formData = new FormData()
@@ -27,9 +29,10 @@ async function addArts() {
     if (!response.ok) {
       console.error('Ошибка загрузки арта', await response.text())
       throw new Error(`Ошибка ${await response.text()}`)
+    } else {
+      console.log('Арт успешно загружен', await response.json())
+      router.back()
     }
-
-    console.log('Арт успешно загружен', await response.json())
   } catch (error) {
     throw console.log('Ошибка при загрузке арта', error)
   }
@@ -86,7 +89,7 @@ async function addArts() {
     />
     <div class="w-full flex gap-4 mt-[20px]">
       <MyButton @click="addArts" title="Выставить работу" class="w-full flex-1 !p-0"></MyButton>
-      <MyButton title="Отменить" class="w-full flex-1 !p-0"></MyButton>
+      <MyButton @click="router.back" title="Отменить" class="w-full flex-1 !p-0"></MyButton>
     </div>
   </div>
 </template>

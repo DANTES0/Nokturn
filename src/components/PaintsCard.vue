@@ -4,6 +4,7 @@ import testPhoto from '../assets/images/test1.jpg'
 import testUserPhoto from '../assets/images/test3.png'
 import ImageModal from './ImageModal.vue'
 import { config } from '@/scripts/config'
+import AvatarCanvas from './AvatarCanvas.vue'
 
 interface Props {
   userId?: string
@@ -19,7 +20,7 @@ const props = withDefaults(defineProps<Props>(), {
   photo: testPhoto,
   username: 'Даниил',
   photoName: 'Осенний лист',
-  userPhoto: testUserPhoto,
+  userPhoto: '',
   styleCard: 'standart',
 })
 
@@ -45,9 +46,11 @@ function openImage() {
     >
       <div class="flex mb-3 items-center w-full justify-center">
         <img
+          v-if="props.userPhoto"
           class="w-[25%] rounded-full aspect-square h-full object-cover"
           :src="config.url + props.userPhoto"
         />
+        <AvatarCanvas v-if="!props.userPhoto" :name="props.username" :size="50" />
         <div class="text-white flex flex-col justify-around ml-[16px]">
           <label class="font-medium">{{ props.username }}</label>
           <label class="font-light">{{ props.photoName }}</label>
