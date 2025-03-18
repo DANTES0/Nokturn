@@ -5,6 +5,9 @@ import IconLeftArrow from '@/components/icons/IconLeftArrow.vue'
 import IconRightArrow from '@/components/icons/IconRightArrow.vue'
 import MagazinBanner from '@/components/MagazinBanner.vue'
 import { RouterLink } from 'vue-router'
+import magazin1 from '../assets/images/Magazin1.png'
+import magazin2 from '../assets/images/Magazin2.png'
+import magazin3 from '../assets/images/Magazin3.png'
 
 import 'vue3-carousel/carousel.css'
 import { Carousel, Slide } from 'vue3-carousel'
@@ -16,6 +19,9 @@ import getAuctionCards from '@/scripts/getAuctionCard'
 import { config } from '@/scripts/config'
 import type { ArtType } from '@/types/ArtTypes'
 import type { UserType } from '@/types/UserType'
+import MainPageMagazinBanner from '@/components/MainPageMagazinBanner.vue'
+
+const MagazinBannerArray = [magazin1, magazin2, magazin3]
 
 //КОНЕЦ ВРЕМЕННО ДО СЕРВЕРА
 const carouselConfig = ref({
@@ -64,6 +70,34 @@ const carouselAuctionConfig = ref({
   },
 })
 
+const carouselMagazinConfig = ref({
+  gap: 10,
+  wrapAround: true,
+  height: 460,
+  breakpointMode: 'viewport',
+  breakpoints: {
+    0: {
+      itemsToShow: 1,
+      snapAlign: 'start',
+    },
+    830: {
+      itemsToShow: 1,
+      snapAlign: 'start',
+    },
+    1240: {
+      itemsToShow: 1,
+      snapAlign: 'start',
+    },
+    1640: {
+      itemsToShow: 1,
+      snapAlign: 'start',
+    },
+  },
+})
+
+const carouselMagazinRef = ref()
+const carouselMagazinSlide = ref(0)
+
 const carouselRef = ref()
 const currentSlide = ref(0)
 
@@ -75,6 +109,9 @@ const prev = () => carouselRef.value.prev()
 
 const nextAuctionCard = () => carouselAuctionRef.value.next()
 const prevAuctionCard = () => carouselAuctionRef.value.prev()
+
+const nextMagazinCard = () => carouselMagazinRef.value.next()
+const prevMagazinCard = () => carouselMagazinRef.value.prev()
 
 const auctionDigitalCards = ref<lotType[]>([])
 const auctionPhysCards = ref<lotType[]>([])
@@ -123,7 +160,32 @@ onMounted(async () => {
 </script>
 <template>
   <div class="flex items-center flex-col w-full max-w-[1728px]">
-    <MagazinBanner />
+    <!-- <MagazinBanner /> -->
+
+    <MainPageMagazinBanner>
+      <div
+        @click="prevMagazinCard"
+        class="z-[1] laptop:w-12 laptop:h-12 w-6 h-6 ml-2 bg-black/25 rounded-full laptop:ml-[30px] flex items-center justify-center hover:scale-110 cursor-pointer absolute left-5"
+      >
+        <IconLeftArrow class="text-white" />
+      </div>
+      <Carousel
+        class="rounded-2xl"
+        v-bind="carouselMagazinConfig"
+        v-model="carouselMagazinSlide"
+        ref="carouselMagazinRef"
+      >
+        <Slide class="rounded-2xl" v-for="item in MagazinBannerArray" :key="item">
+          <img class="w-[96%] h-[460px] object-cover rounded-2xl" :src="item" />
+        </Slide>
+      </Carousel>
+      <div
+        @click="nextMagazinCard"
+        class="laptop:w-12 laptop:h-12 w-6 h-6 ml-2 bg-black/25 rounded-full laptop:ml-[30px] flex items-center justify-center hover:scale-110 cursor-pointer absolute right-12"
+      >
+        <IconRightArrow class="text-white" />
+      </div>
+    </MainPageMagazinBanner>
 
     <div class="mt-[30px] flex w-[90%] justify-between">
       <label class="laptop:text-[24px] text-[18px]"> Активные торги </label>

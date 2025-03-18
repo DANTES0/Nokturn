@@ -99,7 +99,7 @@ watch(
           </div>
         </div>
       </div>
-      <div class="w-full text-[0.8vw] pr-[40px]">
+      <div class="w-full text-[14px] pr-[40px]">
         {{ props.text }}
       </div>
     </div>
