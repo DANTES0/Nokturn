@@ -215,11 +215,13 @@ watch(
       /></RouterLink>
       <div v-for="item in dataArtCards" :key="item.id" class="paint-card">
         <PaintsCard
+          :id="item.id"
           :photo="item.image"
           :user-id="item.userId"
           :photo-name="item.name"
           :user-photo="item.user?.profile_photo"
           :username="item.user?.firstname"
+          :get-arts="getArts"
           styleCard="profile"
           class=""
         />

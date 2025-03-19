@@ -1,18 +1,24 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import testPhoto from '../assets/images/test1.jpg'
 import testUserPhoto from '../assets/images/test3.png'
 import ImageModal from './ImageModal.vue'
 import { config } from '@/scripts/config'
 import AvatarCanvas from './AvatarCanvas.vue'
-
+import { useUserStore } from '@/stores/userStore'
+import { useRoute } from 'vue-router'
+const userStore = useUserStore()
+const user = computed(() => userStore.user)
+const route = useRoute()
 interface Props {
+  id?: number
   userId?: string
   photo?: string
   username?: string
   photoName?: string
   userPhoto?: string
   styleCard?: string
+  getArts?: () => void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -23,6 +29,25 @@ const props = withDefaults(defineProps<Props>(), {
   userPhoto: '',
   styleCard: 'standart',
 })
+
+async function deleteArt() {
+  try {
+    const response = await fetch(`${config.url}/api/art/${props.id}`, {
+      method: 'DELETE',
+    })
+
+    if (response.ok) {
+      console.log(await response.json())
+      props.getArts()
+      return
+    } else {
+      console.log('Ошибка удаления')
+      return
+    }
+  } catch (error) {
+    throw console.error(error)
+  }
+}
 
 const active = ref(false)
 
@@ -40,6 +65,19 @@ function openImage() {
     @mouseleave="() => (active = false)"
     @click="openImage"
   >
+    <button
+      v-if="user?.id == route.params.id && active"
+      @click.stop.prevent="
+        (event: Event) => {
+          event.stopPropagation()
+          event.preventDefault()
+          deleteArt()
+        }
+      "
+      class="z-10 pointer-events-auto absolute top-[-8px] right-[-8px] bg-white text-black text-[20px] hover:text-white shadow-container w-6 h-6 flex items-center justify-center rounded-full hover:bg-red-600"
+    >
+      ×
+    </button>
     <div
       class="w-full h-full absolute bottom-0 transition-all duration-500 gradient rounded-lg flex items-end"
       :class="{ 'opacity-100': active, 'opacity-0': !active }"
