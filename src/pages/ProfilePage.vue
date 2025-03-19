@@ -199,6 +199,7 @@ watch(
         :category="item.category"
         :size="item.size"
         :starting-bet="item.starting_bet.toString()"
+        :current-bet="item.current_bet.toString()"
         :begin-date="formatDate(item.begin_time_date)"
         :profile="isMyProfile"
       />

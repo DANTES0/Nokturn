@@ -223,6 +223,7 @@ onMounted(async () => {
               :category="item.category"
               :size="item.size"
               :starting-bet="item.starting_bet.toString()"
+              :current-bet="item.current_bet.toString()"
               :begin-date="formatDate(item.begin_time_date)"
               :lot-status="item.lot_status"
             />
@@ -256,8 +257,10 @@ onMounted(async () => {
         :author="item.firstname || ''"
         :category="item.category"
         :size="item.size"
+        :current-bet="item.current_bet.toString()"
         :starting-bet="item.starting_bet.toString()"
         :begin-date="formatDate(item.begin_time_date)"
+        :lot-status="item.lot_status"
       />
     </div>
     <div class="mt-[30px] flex w-[90%] justify-between">
@@ -321,8 +324,10 @@ onMounted(async () => {
         :author="item.firstname || ''"
         :category="item.category"
         :size="item.size"
+        :current-bet="item.current_bet.toString()"
         :starting-bet="item.starting_bet.toString()"
         :begin-date="formatDate(item.begin_time_date)"
+        :lot-status="item.lot_status"
       />
     </div>
     <div class="mt-[30px] mb-[30px] flex w-[90%] justify-between">

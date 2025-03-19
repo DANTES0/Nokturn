@@ -22,12 +22,13 @@ const generateAvatar = () => {
   if (!ctx) return
 
   const hash = Array.from(props.name).reduce((acc, char) => acc + char.charCodeAt(0), 0)
-  const color = `hsl(${hash % 360}, 70%, 50%)`
+  // const color = `hsl(${hash % 360}, 70%, 50%)`
   // ctx.fillStyle = color
   // ctx.fillRect(0, 0, canvas.width, canvas.height)
 
   const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
-  gradient.addColorStop(0, color)
+  // gradient.addColorStop(0, color)
+  gradient.addColorStop(0, '#ffffff')
   gradient.addColorStop(1, '#FFFFFF') // Полупрозрачный белый
   ctx.fillStyle = gradient
   ctx.fillRect(0, 0, canvas.width, canvas.height)

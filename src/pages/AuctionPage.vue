@@ -157,6 +157,7 @@ onMounted(() => {
         :category="item.category"
         :size="item.size"
         :starting-bet="item.starting_bet.toString()"
+        :current-bet="item.current_bet.toString()"
         :begin-date="formatDate(item.begin_time_date)"
         :lot-status="item.lot_status"
       />

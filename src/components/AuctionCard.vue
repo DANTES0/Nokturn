@@ -16,6 +16,7 @@ interface Props {
   category: string
   size: string
   startingBet: string
+  currentBet?: string
   beginDate: string
   lotStatus?: string
   profile?: boolean
@@ -32,6 +33,7 @@ const props = withDefaults(defineProps<Props>(), {
   startingBet: '5000',
   beginDate: '10.02.2024',
   lotStatus: 'inactive',
+  currentBet: '6000',
   profile: false,
 })
 const path = computed(() => `/lot/${props.id}`)
@@ -59,7 +61,7 @@ const path = computed(() => `/lot/${props.id}`)
             <div class="font-extralight">{{ props.category }}</div>
             <div class="font-extralight">{{ props.size }}</div>
           </div>
-          <div class="flex">
+          <div v-if="props.lotStatus != 'completed'" class="flex">
             <span
               v-if="props.lotStatus == 'active' || props.lotStatus == 'completed'"
               class="font-extralight text-[14px]"
@@ -68,11 +70,19 @@ const path = computed(() => `/lot/${props.id}`)
             <span v-if="props.lotStatus == 'inactive'" class="font-extralight text-[14px]"
               >Начальная цена:</span
             >
-            <span class="ml-4">{{ props.startingBet }}₽</span>
+            <span class="ml-4"
+              >{{ props.lotStatus == 'active' ? props.currentBet : props.startingBet }}₽</span
+            >
           </div>
-          <div class="flex text-[14px]">
+          <div v-if="props.lotStatus != 'completed'" class="flex text-[14px]">
             <span class="font-extralight">Начало торгов:</span>
             <span class="font-light ml-4">{{ props.beginDate }}</span>
+          </div>
+          <div class="flex flex-col items-center justify-center" v-else>
+            <span class="text-[14px]">Аукцион завершен</span>
+            <span class="font-medium"
+              ><span class="font-light">Конечная цена:</span> {{ props.currentBet }}</span
+            >
           </div>
         </div>
       </div>
