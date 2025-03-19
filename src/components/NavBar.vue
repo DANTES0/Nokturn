@@ -9,8 +9,11 @@ import ModalProfile from './NavBarComponents/ModalProfile.vue'
 import { useUserStore } from '@/stores/userStore'
 import { config } from '@/scripts/config'
 import AvatarCanvas from './AvatarCanvas.vue'
+import IconAuc from './icons/IconAuc.vue'
+import IconPainter from './icons/IconPainter.vue'
 
 const activeProfileModal = ref(false)
+const activeAddModal = ref(false)
 
 const route = useRoute()
 const router = useRouter()
@@ -30,6 +33,26 @@ function logout() {
       :onLogout="logout"
       :onClose="() => (activeProfileModal = false)"
     />
+  </Transition>
+  <Transition name="slide-down" appear>
+    <div
+      v-if="activeAddModal"
+      class="absolute z-10 bg-white w-[250px] h-[76px] shadow-container right-[272px] top-[56px] rounded-xl"
+    >
+      <ul class="text-[14px] flex flex-col justify-between px-[20px] py-[10px] gap-1">
+        <RouterLink to="/addLot" @click="activeAddModal = false"
+          ><li class="pl-1 flex items-center gap-1">
+            <IconAuc class="w-[16px]" />Добавить лот
+          </li></RouterLink
+        >
+        <hr />
+        <RouterLink to="/addPainting" @click="activeAddModal = false"
+          ><li class="pl-1 flex items-center gap-1">
+            <IconPainter class="w-[16px]" />Добавить работу
+          </li></RouterLink
+        >
+      </ul>
+    </div>
   </Transition>
   <div
     :class="[
@@ -57,6 +80,12 @@ function logout() {
     </nav>
     <div class="flex gap-6 items-end">
       <button
+        @click="
+          () => {
+            activeProfileModal = false
+            activeAddModal = !activeAddModal
+          }
+        "
         class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg rounded-bl-lg flex items-center justify-center hover:scale-105"
         :class="{ '!border-[#CCCCCC]': isProfileRoute }"
       >
@@ -87,7 +116,12 @@ function logout() {
       </RouterLink>
 
       <button
-        @click="activeProfileModal = !activeProfileModal"
+        @click="
+          () => {
+            activeAddModal = false
+            activeProfileModal = !activeProfileModal
+          }
+        "
         class="w-[40px] h-[40px] border-2 border-black rounded-tl-lg rounded-br-lg flex items-center justify-center"
         :class="{ '!border-[#CCCCCC]': isProfileRoute }"
       >
@@ -109,6 +143,11 @@ function logout() {
   </div>
 </template>
 <style scoped>
+ul li:hover {
+  background-color: #ededed;
+  cursor: pointer;
+  border-radius: 4px;
+}
 nav > *:hover {
   color: #4c4c4c;
 }
