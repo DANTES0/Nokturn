@@ -5,6 +5,7 @@ import { useRoute } from 'vue-router'
 interface Props {
   title: string
   placeholder: string
+  modelValue: string | number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -28,7 +29,8 @@ watch(inputModel, (newValue) => {
 <template>
   <div class="w-full relative">
     <input
-      v-model="inputModel"
+      :value="modelValue"
+      @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       type="text"
       class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] focus:outline-black focus:outline focus:outline-1 placeholder:text-[14px]"
       :placeholder="props.placeholder"

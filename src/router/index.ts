@@ -45,6 +45,11 @@ const router = createRouter({
       component: () => import('@/pages/AddAuctionLotPage.vue'),
     },
     {
+      path: '/editLot/:lotId',
+      name: 'editLot',
+      component: () => import('@/pages/EditAuctionLotPage.vue'),
+    },
+    {
       path: '/profileSettings',
       name: 'ProfileSettingsPage',
       component: () => import('@/pages/ProfileSettingsPage.vue'),

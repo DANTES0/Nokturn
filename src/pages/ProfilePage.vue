@@ -28,6 +28,13 @@ const user = computed(() => userStore.user)
 const userInfo = ref<UserType>()
 const dataCardAuction = ref<lotType[]>([])
 const dataArtCards = ref<ArtType[]>([])
+const isMyProfile = computed(() => {
+  if (user.value?.id == userInfo.value?.id) {
+    return true
+  } else {
+    return false
+  }
+})
 async function getArts() {
   try {
     let response
@@ -82,7 +89,7 @@ async function goToChat() {
     const response = await fetch(`${config.url}/api/chat/createChats`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json', // Добавляем заголовок
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(objectBody),
     })
@@ -193,6 +200,7 @@ watch(
         :size="item.size"
         :starting-bet="item.starting_bet.toString()"
         :begin-date="formatDate(item.begin_time_date)"
+        :profile="isMyProfile"
       />
     </div>
     <div

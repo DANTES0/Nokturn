@@ -4,6 +4,7 @@ import IconGear from '@/components/icons/IconGear.vue'
 import IconLogout from '@/components/icons/IconLogout.vue'
 import { useUserStore } from '@/stores/userStore'
 import { computed } from 'vue'
+import IconHistory from '../icons/IconHistory.vue'
 const userStore = useUserStore()
 const user = userStore.user
 
@@ -29,6 +30,12 @@ defineProps({
       <RouterLink :to="link" @click="onClose"
         ><li class="pl-1 flex items-center gap-1">
           <IconUser class="w-[16px]" />Профиль
+        </li></RouterLink
+      >
+      <hr />
+      <RouterLink to="/profileSettings" @click="onClose"
+        ><li class="pl-1 flex items-center gap-1">
+          <IconHistory class="w-[16px]" />История лотов
         </li></RouterLink
       >
       <hr />

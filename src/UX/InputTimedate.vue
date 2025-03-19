@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 interface Props {
   title: string
   placeholder: string
+  modelValue: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -13,7 +14,16 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const route = useRoute()
-
+const formattedDate = computed({
+  get: () => {
+    if (!props.modelValue) return ''
+    const date = new Date(props.modelValue)
+    return date.toISOString().slice(0, 16)
+  },
+  set: (newValue) => {
+    emit('update:modelValue', new Date(newValue).toISOString())
+  },
+})
 const inputModel = ref('')
 
 const emit = defineEmits<{
@@ -28,7 +38,8 @@ watch(inputModel, (newValue) => {
 <template>
   <div class="w-full relative">
     <input
-      v-model="inputModel"
+      :value="formattedDate"
+      @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       type="datetime-local"
       class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] focus:outline-black focus:outline focus:outline-1"
       :placeholder="props.placeholder"

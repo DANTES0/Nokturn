@@ -5,7 +5,7 @@ import { useRoute } from 'vue-router'
 interface Props {
   title: string
   placeholder: string
-  model?: string
+  modelValue: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Поиск',
 })
 
-const searchText = ref(props.model || '')
+const searchText = ref(props.modelValue || '')
 const activeDropDown = ref(false)
 const items = ['Физическое искусство', 'Цифровое искусство']
 
@@ -52,7 +52,8 @@ const route = useRoute()
   <div class="w-full relative">
     <div @click.stop="activeDropDown = !activeDropDown">
       <input
-        v-model="searchText"
+        :value="modelValue"
+        @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
         type="text"
         class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] placeholder:text-[14px] pr-[60px] focus:outline-black focus:outline focus:outline-1"
         :placeholder="props.placeholder"

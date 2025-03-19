@@ -3,16 +3,18 @@ import IconCamera from '@/components/icons/IconCamera.vue'
 import { config } from '@/scripts/config'
 import { useFileInput } from '@/scripts/useFileInput'
 import { useUserStore } from '@/stores/userStore'
+import type { lotType } from '@/types/lotType'
 import InputTimedate from '@/UX/InputTimedate.vue'
 import MyButton from '@/UX/MyButton.vue'
 import MyInput from '@/UX/MyInput.vue'
 import MySelectionInput from '@/UX/MySelectionInput.vue'
-import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
 const router = useRouter()
+const route = useRoute()
 
 const mainImage = useFileInput()
 const additionalImages = useFileInput(true)
@@ -24,9 +26,37 @@ const minBidIncrementModel = ref('')
 const beginDateTimeModel = ref('')
 const EndDateTimeModel = ref('')
 const descriptionModel = ref('')
+const allInfoLot = ref<lotType>()
+async function getLot() {
+  try {
+    const response = await fetch(`${config.url}/api/lot/${route.params.lotId}`, {
+      method: 'GET',
+    })
 
-async function addLot() {
+    if (!response.ok) {
+      console.error('Ошибка запроса на редактирование')
+      return
+    } else {
+      allInfoLot.value = await response.json()
+      mainImage.selectedImage.value = allInfoLot.value?.image
+      additionalImages.selectedImagesArray.value = allInfoLot.value?.another_images
+      nameModel.value = allInfoLot.value?.name
+      categoryModel.value = allInfoLot.value?.category
+      sizeModel.value = allInfoLot.value?.size
+      startingBetModel.value = allInfoLot.value?.starting_bet
+      minBidIncrementModel.value = allInfoLot.value?.min_bid_increment
+      beginDateTimeModel.value = allInfoLot.value?.begin_time_date
+      EndDateTimeModel.value = allInfoLot.value?.end_time_date
+      descriptionModel.value = allInfoLot.value?.description
+    }
+  } catch (error) {
+    throw console.error(error)
+  }
+}
+
+async function UpdateLot() {
   const formData = new FormData()
+  console.log(beginDateTimeModel.value)
   formData.append('name', nameModel.value)
   formData.append('userId', user.value?.id ?? '')
   formData.append('category', categoryModel.value)
@@ -34,8 +64,8 @@ async function addLot() {
   formData.append('starting_bet', startingBetModel.value)
   formData.append('min_bid_increment', minBidIncrementModel.value)
   formData.append('description', descriptionModel.value)
-  formData.append('begin_time_date', new Date(`${beginDateTimeModel.value}:00.000`).toISOString())
-  formData.append('end_time_date', new Date(`${EndDateTimeModel.value}:00.000`).toISOString())
+  formData.append('begin_time_date', beginDateTimeModel.value)
+  formData.append('end_time_date', EndDateTimeModel.value)
   formData.append('lot_status', 'inactive')
 
   if (mainImage.selectedFile.value) {
@@ -49,23 +79,30 @@ async function addLot() {
   }
 
   try {
-    const response = await fetch(`${config.url}/api/lot/`, {
-      method: 'POST',
+    const response = await fetch(`${config.url}/api/lot/${route.params.lotId}`, {
+      method: 'PUT',
       body: formData,
     })
 
     if (!response.ok) {
       const errorText = await response.text()
-      console.error('Ошибка загрузки лота', errorText)
+      console.error('Ошибка обновления лота', errorText)
       throw new Error(`Ошибка ${errorText}`)
     }
 
-    console.log('Лот успешно загружен', await response.json())
+    console.log('Лот успешно обновлен', await response.json())
     router.push(`/profile/${user.value?.id}`)
   } catch (error) {
     console.error('Ошибка при загрузке лота', error)
   }
 }
+function removeImage(index: number) {
+  additionalImages.selectedImagesArray.value.splice(index, 1)
+}
+onMounted(() => {
+  console.log(route.params)
+  getLot()
+})
 </script>
 
 <template>
@@ -80,7 +117,11 @@ async function addLot() {
         >
           <img
             v-if="mainImage.selectedImage.value"
-            :src="mainImage.selectedImage.value"
+            :src="
+              !mainImage.selectedFile.value
+                ? config.url + mainImage.selectedImage.value
+                : mainImage.selectedImage.value
+            "
             class="w-full h-full object-cover aspect-square rounded-lg"
           />
           <div v-else class="flex items-center justify-center flex-col gap-2">
@@ -132,12 +173,22 @@ async function addLot() {
         <div
           class="w-[400px] bg-white shadow-card rounded-lg p-[20px] flex justify-between flex-wrap gap-3 mt-[10px]"
         >
-          <img
+          <div
             v-for="(img, index) in additionalImages.selectedImagesArray.value"
             :key="index"
-            :src="img"
-            class="rounded-lg w-[30%] aspect-square object-cover"
-          />
+            class="relative w-[30%] aspect-square"
+          >
+            <img
+              :src="!additionalImages.selectedFilesArray ? img : config.url + img"
+              class="rounded-lg w-full h-full object-cover"
+            />
+            <button
+              @click="removeImage(index)"
+              class="absolute top-0 right-0 bg-red-500 text-white w-6 h-6 flex items-center justify-center rounded-full shadow-md hover:bg-red-600"
+            >
+              ×
+            </button>
+          </div>
           <div
             class="bg-white rounded-lg w-[108px] aspect-square shadow-card flex flex-col items-center justify-center"
             @click="() => $refs.additionalFileImagesModel.click()"
@@ -173,7 +224,7 @@ async function addLot() {
       </div>
     </div>
     <div class="w-full flex justify-between mt-[30px]">
-      <MyButton @click="addLot" title="Выставить лот"></MyButton>
+      <MyButton @click="UpdateLot" title="Выставить лот"></MyButton>
       <MyButton @click="router.back" title="Отменить"></MyButton>
     </div>
   </div>

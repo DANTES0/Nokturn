@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import testImage from '@/assets/images/test1.jpg'
 import { config } from '@/scripts/config'
-import { computed } from 'vue'
-
+import { computed, ref } from 'vue'
+import IconEdit from './icons/IconEdit.vue'
+const router = useRouter()
+const isHoveringEdit = ref(false)
 interface Props {
   id: number
   title: string
@@ -16,6 +18,7 @@ interface Props {
   startingBet: string
   beginDate: string
   lotStatus?: string
+  profile?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -29,13 +32,17 @@ const props = withDefaults(defineProps<Props>(), {
   startingBet: '5000',
   beginDate: '10.02.2024',
   lotStatus: 'inactive',
+  profile: false,
 })
 const path = computed(() => `/lot/${props.id}`)
 </script>
 
 <template>
   <RouterLink class="w-[260px] h-[340px]" :to="path">
-    <div class="bg-white shadow-card w-[260px] h-[340px] rounded-lg hover:scale-105 cursor-pointer">
+    <div
+      class="bg-white group shadow-card w-[260px] h-[340px] rounded-lg cursor-pointer relative"
+      :class="{ 'hover:scale-105': !isHoveringEdit }"
+    >
       <div class="flex flex-col justify-center items-center">
         <div
           class="w-[200px] h-[200px] bg-white shadow-cardImage mt-[10px] flex items-center justify-center"
@@ -68,6 +75,21 @@ const path = computed(() => `/lot/${props.id}`)
             <span class="font-light ml-4">{{ props.beginDate }}</span>
           </div>
         </div>
+      </div>
+      <div
+        v-if="profile"
+        @mouseenter="isHoveringEdit = true"
+        @mouseleave="isHoveringEdit = false"
+        @click.stop.prevent="
+          (event: Event) => {
+            event.stopPropagation()
+            event.preventDefault()
+            router.push(`/editLot/${props.id}`)
+          }
+        "
+        class="w-8 h-8 bg-white shadow-container absolute top-[-12px] right-[-12px] flex items-center justify-center rounded-full hover:bg-[#EEEEEE]"
+      >
+        <IconEdit />
       </div>
     </div>
   </RouterLink>
