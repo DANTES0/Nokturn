@@ -60,7 +60,11 @@ const route = useRoute()
       />
       <div
         class="absolute top-[-14px] left-[20px] bg-[#FAFAFA] px-2 font-light"
-        :class="{ ['!bg-white']: route.path === '/addLot' }"
+        :class="{
+          '!bg-white':
+            ['/addLot', '/profileSettings'].includes(route.path) ||
+            route.path.startsWith('/editLot/'),
+        }"
       >
         {{ props.title }}
       </div>

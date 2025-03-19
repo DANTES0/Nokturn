@@ -54,6 +54,24 @@ async function getLot() {
   }
 }
 
+async function deleteLot() {
+  try {
+    const response = await fetch(`${config.url}/api/lot/${route.params.lotId}`, {
+      method: 'DELETE',
+    })
+
+    if (response.ok) {
+      console.log(await response.json())
+      router.push(`/profile/${user.value?.id}`)
+    } else {
+      console.log('Ошибка удаления')
+      return
+    }
+  } catch (error) {
+    throw console.error(error)
+  }
+}
+
 async function UpdateLot() {
   const formData = new FormData()
   console.log(beginDateTimeModel.value)
@@ -72,11 +90,22 @@ async function UpdateLot() {
     formData.append('image', mainImage.selectedFile.value)
   }
 
-  if (additionalImages.selectedFilesArray.value) {
-    additionalImages.selectedFilesArray.value.forEach((file) => {
-      formData.append('another_images', file)
-    })
-  }
+  await Promise.all(
+    additionalImages.selectedImagesArray.value.map(async (img) => {
+      if (typeof img === 'string') {
+        if (img.startsWith('data:image')) {
+          const blob = await base64ToBlob(img)
+          const filename = `image_${Date.now()}.png`
+          formData.append('another_images', new File([blob], filename, { type: blob.type }))
+        } else {
+          const response = await fetch(config.url + img)
+          const blob = await response.blob()
+          const filename = img.split('/').pop() || 'image.jpg'
+          formData.append('another_images', new File([blob], filename, { type: blob.type }))
+        }
+      }
+    }),
+  )
 
   try {
     const response = await fetch(`${config.url}/api/lot/${route.params.lotId}`, {
@@ -98,6 +127,10 @@ async function UpdateLot() {
 }
 function removeImage(index: number) {
   additionalImages.selectedImagesArray.value.splice(index, 1)
+}
+async function base64ToBlob(base64: string) {
+  const response = await fetch(base64)
+  return await response.blob()
 }
 onMounted(() => {
   console.log(route.params)
@@ -179,12 +212,12 @@ onMounted(() => {
             class="relative w-[30%] aspect-square"
           >
             <img
-              :src="!additionalImages.selectedFilesArray ? img : config.url + img"
+              :src="img.startsWith('data:image') ? img : config.url + img"
               class="rounded-lg w-full h-full object-cover"
             />
             <button
               @click="removeImage(index)"
-              class="absolute top-0 right-0 bg-red-500 text-white w-6 h-6 flex items-center justify-center rounded-full shadow-md hover:bg-red-600"
+              class="absolute top-[-8px] right-[-8px] bg-white text-black text-[20px] hover:text-white shadow-container w-6 h-6 flex items-center justify-center rounded-full hover:bg-red-600"
             >
               ×
             </button>
@@ -224,7 +257,10 @@ onMounted(() => {
       </div>
     </div>
     <div class="w-full flex justify-between mt-[30px]">
-      <MyButton @click="UpdateLot" title="Выставить лот"></MyButton>
+      <div class="flex gap-8">
+        <MyButton @click="UpdateLot" title="Редактировать лот"></MyButton>
+        <MyButton @click="deleteLot" title="Удалить лот"></MyButton>
+      </div>
       <MyButton @click="router.back" title="Отменить"></MyButton>
     </div>
   </div>
