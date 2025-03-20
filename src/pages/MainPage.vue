@@ -26,7 +26,7 @@ const MagazinBannerArray = [magazin1, magazin2, magazin3]
 //КОНЕЦ ВРЕМЕННО ДО СЕРВЕРА
 const carouselConfig = ref({
   gap: 16,
-  wrapAround: false,
+  wrapAround: true,
   height: 340,
   breakpointMode: 'viewport',
   breakpoints: {

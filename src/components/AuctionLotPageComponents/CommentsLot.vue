@@ -76,7 +76,7 @@ onMounted(getComments)
   <div
     class="w-(calc(100%-30px)) h-[450px] bg-white shadow-container rounded-2xl relative flex flex-col text-[18px] mr-[30px] items-center justify-between"
   >
-    <div class="w-[95%] overflow-x-hidden overflow-y-auto scrollingbox">
+    <div v-if="allComments.length" class="w-[95%] overflow-x-hidden overflow-y-auto scrollingbox">
       <MainComments
         v-for="item in allComments"
         :key="item.id"
@@ -92,6 +92,7 @@ onMounted(getComments)
         @reply="handleReply"
       />
     </div>
+    <div class="mt-auto mb-auto" v-else>Комментариев нет</div>
     <div
       v-if="replyingTo.parentId"
       class="flex items-center justify-center text-[14px] text-gray-500 mb-2 mr-auto ml-[80px] shadow-container rounded-2xl px-[10px] py-1 absolute bottom-[50px] left-[16px] bg-white"

@@ -81,7 +81,7 @@ onUnmounted(() => {
           <th scope="col">Дата</th>
         </tr>
       </thead>
-      <tbody class="mt-[10px]">
+      <tbody v-if="dataHistory.length" class="mt-[10px]">
         <tr v-for="item in dataHistory" :key="item.id" class="text-center shadow-card rounded-lg">
           <td>{{ item.userName }}</td>
           <td>{{ item.bet }}₽</td>
@@ -89,6 +89,12 @@ onUnmounted(() => {
           <td>{{ item.date?.formattedDate }}</td>
         </tr>
       </tbody>
+      <div
+        v-else
+        class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center"
+      >
+        На данном лоте нет ставок, будьте первыми!!!
+      </div>
     </table>
   </div>
 </template>
