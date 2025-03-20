@@ -2,14 +2,17 @@
 import IconSearch from '@/components/icons/IconSearch.vue'
 import PaintsCard from '@/components/PaintsCard.vue'
 import type { ArtType } from '@/types/ArtTypes'
-import { onMounted, ref } from 'vue'
+import { ref, watch } from 'vue'
 import { config } from '@/scripts/config'
 
 const dataArtCards = ref<ArtType[]>([])
+const searchQuery = ref('')
 
-async function getArts() {
+let debounceTimer: number | null = null
+
+async function getArts(query: string) {
   try {
-    const response = await fetch(`${config.url}/api/art/`, {
+    const response = await fetch(`${config.url}/api/art/?search=${encodeURIComponent(query)}`, {
       method: 'GET',
     })
 
@@ -19,17 +22,26 @@ async function getArts() {
       dataArtCards.value = await response.json()
     }
   } catch (error) {
-    throw console.log(error)
+    console.error(error)
   }
 }
 
-onMounted(getArts)
-//КОНЕЦ ВРЕМЕННО ДО СЕРВЕРА
+watch(searchQuery, (newQuery) => {
+  if (debounceTimer) clearTimeout(debounceTimer)
+
+  debounceTimer = setTimeout(() => {
+    getArts(newQuery)
+  }, 500)
+})
+
+getArts('')
 </script>
+
 <template>
   <div class="w-[90%] mt-[30px]">
     <div class="relative mr-auto w-full max-w-[400px]">
       <input
+        v-model="searchQuery"
         class="border border-black w-full h-[30px] rounded-bl-lg rounded-tr-lg pl-4 pr-[40px] max-w-[400px]"
         type="text"
         placeholder="Поиск"
@@ -49,6 +61,7 @@ onMounted(getArts)
     />
   </div>
 </template>
+
 <style scoped>
 .gallery {
   width: min(100%, 90%);

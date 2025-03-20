@@ -3,24 +3,43 @@ import ArtistCard from '@/components/ArtistPageComponents/ArtistCard.vue'
 import IconSearch from '@/components/icons/IconSearch.vue'
 import { config } from '@/scripts/config'
 import type { UserType } from '@/types/UserType'
-import { onMounted, ref } from 'vue'
+import { ref, watch, onMounted } from 'vue'
+
 const dataUsers = ref<UserType[]>([])
-async function getUsers() {
+const searchQuery = ref('')
+
+let debounceTimer: number | null = null
+
+async function getUsers(query: string = '') {
   try {
-    const response = await fetch(`${config.url}/api/users/`, {
-      method: 'GET',
-    })
+    const url = query
+      ? `${config.url}/api/users/?search=${encodeURIComponent(query)}`
+      : `${config.url}/api/users`
+    const response = await fetch(url, { method: 'GET' })
     dataUsers.value = await response.json()
   } catch (error) {
-    throw console.error(error)
+    console.error(error)
   }
 }
-onMounted(getUsers)
+
+onMounted(() => {
+  getUsers()
+})
+
+watch(searchQuery, (newQuery) => {
+  if (debounceTimer) clearTimeout(debounceTimer)
+
+  debounceTimer = setTimeout(() => {
+    getUsers(newQuery)
+  }, 500)
+})
 </script>
+
 <template>
   <div class="w-[90%] mt-[30px]">
     <div class="relative mr-auto w-full max-w-[400px]">
       <input
+        v-model="searchQuery"
         class="border border-black w-full h-[30px] rounded-bl-lg rounded-tr-lg pl-4 pr-[40px] max-w-[400px]"
         type="text"
         placeholder="Поиск"
@@ -43,4 +62,3 @@ onMounted(getUsers)
     />
   </div>
 </template>
-<style scoped></style>

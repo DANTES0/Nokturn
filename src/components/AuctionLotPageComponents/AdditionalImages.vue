@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { config } from '@/scripts/config'
+import { ref } from 'vue'
+import ImageModal from '../ImageModal.vue'
 
 defineProps({
   additionlImage: {
-    type: Array as () => string[], // Правильный способ указать массив строк
-    default: () => [], // `default` должен быть функцией
+    type: Array as () => string[],
+    default: () => [],
   },
 })
+const modalRef = ref<InstanceType<typeof ImageModal> | null>(null)
 </script>
 
 <template>
@@ -23,9 +26,11 @@ defineProps({
         :key="index"
         class="w-[110px] h-[110px] rounded-lg object-cover"
         :src="config.url + item"
+        @click="modalRef?.open(config.url + item)"
       />
     </div>
   </div>
+  <ImageModal ref="modalRef" />
 </template>
 
 <style scoped></style>

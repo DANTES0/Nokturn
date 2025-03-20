@@ -202,6 +202,7 @@ watch(
         :current-bet="item.current_bet.toString()"
         :begin-date="formatDate(item.begin_time_date)"
         :profile="isMyProfile"
+        :lot-status="item.lot_status"
       />
     </div>
     <div

@@ -137,7 +137,7 @@ onUnmounted(() => {
       <label class="font-[InterItalic]">Осталось до конца:</label>
       <label class="ml-[30px] text-[16px]">{{ remainingTime }}</label>
     </div>
-    <div class="mt-[20px] ml-[20px] flex">
+    <div v-if="remainingTime !== 'Аукцион завершен'" class="mt-[20px] ml-[20px] flex">
       <label class="font-[InterItalic]">Предложить ставку</label>
       <div class="relative">
         <input
@@ -166,7 +166,10 @@ onUnmounted(() => {
         </Transition>
       </div>
     </div>
-    <div class="flex items-center justify-center mt-[20px]">
+    <div
+      v-if="remainingTime !== 'Аукцион завершен'"
+      class="flex items-center justify-center mt-[20px]"
+    >
       <MyButton @click="placeBet" title="Подтвердить ставку" class="w-[90%]" />
     </div>
   </div>

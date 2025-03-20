@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<UserType>(), {})
   >
     <div class="w-full h-[55%] bg-black flex rounded-tl-2xl rounded-tr-2xl bro">
       <img
-        v-for="item in arts"
+        v-for="item in arts?.slice(0, 3)"
         :key="item.id"
         class="object-cover w-1/3 flex-1"
         :src="config.url + item.image"

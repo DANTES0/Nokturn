@@ -88,8 +88,8 @@ async function addArts() {
       placeholder="Введите название картины"
     />
     <div class="w-full flex gap-4 mt-[20px]">
-      <MyButton @click="addArts" title="Выставить работу" class="w-full flex-1 !p-0"></MyButton>
-      <MyButton @click="router.back" title="Отменить" class="w-full flex-1 !p-0"></MyButton>
+      <MyButton @click="addArts" title="Выставить работу" class="w-full flex-1 !p-1"></MyButton>
+      <MyButton @click="router.back" title="Отменить" class="w-full flex-1 !p-1"></MyButton>
     </div>
   </div>
 </template>
