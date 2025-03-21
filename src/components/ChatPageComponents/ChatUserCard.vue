@@ -42,6 +42,8 @@ interface Props {
   unreadMessage?: number
   senderId?: string
   isRead?: boolean
+  user1?: object
+  user2?: object
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -94,14 +96,25 @@ const emit = defineEmits<{
     <div class="">
       <img
         v-if="props.profile_photo"
-        :src="config.url + props.profile_photo"
+        :src="
+          senderId == user?.id
+            ? config.url + props.profile_photo
+            : config.url + props.user1.profile_photo
+        "
         class="rounded-full shadow-cardImage w-[70px] aspect-square object-cover"
       />
-      <AvatarCanvas v-if="!props.profile_photo" :size="70" :name="props.firstname" />
+      <AvatarCanvas
+        v-if="!props.profile_photo"
+        :size="70"
+        :name="props.firstname == user?.firstname ? props.user1.firstname : props.firstname"
+      />
     </div>
     <div class="flex flex-col flex-1 justify-around ml-4">
       <div class="flex w-full justify-between items-center">
-        <div class="font-medium text-[1.2vw]">{{ props.firstname }} {{ props.lastname }}</div>
+        <div class="font-medium text-[1.2vw]">
+          {{ props.firstname == user?.firstname ? props.user1.firstname : props.firstname }}
+          {{ props.lastname == user?.lastname ? props.user1.lastname : props.lastname }}
+        </div>
         <div class="font-extralight text-[0.8vw]">
           {{ getTimeAgo(props.lastDateMessage) }}
         </div>

@@ -230,6 +230,8 @@ watch(messagesArray, () => {
         :is-read="item.messages.length ? item.messages[item.messages.length - 1].isRead : false"
         :unread-message="item.unreadCount"
         :selectedChatId="selectedChatId"
+        :user1="item.user1"
+        :user2="item.user2"
         @selectChat="handleChatSelect"
       />
     </div>
