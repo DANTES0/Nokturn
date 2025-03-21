@@ -104,6 +104,7 @@ const emit = defineEmits<{
         class="rounded-full shadow-cardImage w-[70px] aspect-square object-cover"
       />
       <AvatarCanvas
+        class="shadow-cardImage"
         v-if="!props.profile_photo"
         :size="70"
         :name="props.firstname == user?.firstname ? props.user1.firstname : props.firstname"
