@@ -102,6 +102,14 @@ watch(
       <div class="w-full text-[14px] pr-[40px]">
         {{ props.text }}
       </div>
+      <div v-if="props.imageUrls">
+        <img
+          v-for="(item, index) in props.imageUrls"
+          :key="index"
+          :src="config.url + item"
+          class="w-[120px] h-[120px] object-cover"
+        />
+      </div>
     </div>
   </div>
 </template>

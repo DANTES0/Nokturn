@@ -4,6 +4,7 @@ import ChatUserCard from '@/components/ChatPageComponents/ChatUserCard.vue'
 import IconPaperClip from '@/components/icons/IconPaperClip.vue'
 import { config } from '@/scripts/config'
 import { getSocket } from '@/scripts/socket'
+import { useFileInput } from '@/scripts/useFileInput'
 import { useUserStore } from '@/stores/userStore'
 import type { ChatType } from '@/types/ChatTypes'
 import type { MessageType } from '@/types/MessagesType'
@@ -12,6 +13,13 @@ import { computed, nextTick, onMounted, ref, watch } from 'vue'
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
 
+const additionalImages = useFileInput(true)
+function removeImage(index: number) {
+  console.log(additionalImages.selectedFilesArray, additionalImages.selectedImagesArray)
+  additionalImages.selectedImagesArray.value.splice(index, 1)
+  additionalImages.selectedFilesArray.value.splice(index, 1)
+  console.log(additionalImages.selectedFilesArray, additionalImages.selectedImagesArray)
+}
 const chatsArray = ref<ChatType[]>([])
 const messagesArray = ref<MessageType[]>([])
 const selectedChatId = ref<string | null>(null)
@@ -62,19 +70,57 @@ async function getMessages() {
 }
 
 async function sendMessage() {
-  const messageObject = {
-    chatId: selectedChatId.value,
-    senderId: user.value?.id,
-    text: modelText.value,
-  }
-  if (!modelText.value) {
+  if (!modelText.value && additionalImages.selectedFilesArray.value.length === 0) {
     return
   }
   if (!selectedChatId.value) {
     return
   }
+
+  let imageUrls: string[] = []
+  let messageId: string | null = null
+  if (additionalImages.selectedFilesArray.value.length > 0) {
+    const formData = new FormData()
+    additionalImages.selectedFilesArray.value.forEach((file) => {
+      formData.append('images', file)
+    })
+    formData.append('chatId', selectedChatId.value)
+    formData.append('senderId', user.value?.id)
+
+    try {
+      const response = await fetch(`${config.url}/api/chat/createMessage`, {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!response.ok) {
+        console.log('Ошибка загрузки изображений')
+        return
+      }
+
+      const uploadedImages = await response.json()
+      imageUrls = uploadedImages.urls
+      messageId = uploadedImages.id
+      console.log(messageId)
+    } catch (error) {
+      console.error('Ошибка при отправке изображений:', error)
+      return
+    }
+  }
+
+  const messageObject = {
+    chatId: selectedChatId.value,
+    senderId: user.value?.id,
+    text: modelText.value,
+    images: imageUrls,
+    messageId: messageId,
+  }
+
   socket.emit('sendMessage', messageObject)
+
   modelText.value = ''
+  additionalImages.selectedImagesArray.value = []
+  additionalImages.selectedFilesArray.value = []
 }
 
 function handleChatSelect(chatId: string) {
@@ -199,7 +245,21 @@ watch(messagesArray, () => {
           :sender="item.sender"
           :created-at="item.createdAt"
           :is-read="item.isRead"
+          :image-urls="item.imageUrls"
         />
+      </div>
+      <div
+        v-for="(img, index) in additionalImages.selectedImagesArray.value"
+        :key="index"
+        class="relative w-[30%] aspect-square"
+      >
+        <img :src="img" class="rounded-lg w-full h-full object-cover" />
+        <button
+          @click="removeImage(index)"
+          class="absolute top-[-8px] right-[-8px] bg-white text-black text-[20px] hover:text-white shadow-container w-6 h-6 flex items-center justify-center rounded-full hover:bg-red-600"
+        >
+          ×
+        </button>
       </div>
       <div class="w-full h-[15vh] p-[20px] flex justify-between items-center">
         <div class="w-[70%] relative">
@@ -208,7 +268,18 @@ watch(messagesArray, () => {
             class="w-full border-b border-black h-[40px] pl-[10px] outline-none pr-[40px] text-[1vw]"
             placeholder="Написать сообщение"
           />
-          <IconPaperClip class="absolute right-0 top-[6px] cursor-pointer hover:text-[#444444]" />
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            @change="additionalImages.handleFileChange"
+            ref="additionalFileImagesModel"
+            class="hidden"
+          />
+          <IconPaperClip
+            @click="() => $refs.additionalFileImagesModel.click()"
+            class="absolute right-0 top-[6px] cursor-pointer hover:text-[#444444]"
+          />
         </div>
         <MyButton @click="sendMessage" title="Отправить" class="text-[0.8vw]" />
       </div>

@@ -5,6 +5,7 @@ export interface MessageType {
   text?: string
   createdAt?: string
   isRead?: boolean
+  imageUrls?: string
   sender?: {
     id?: string
     firstname?: string
