@@ -4,9 +4,11 @@ import type { MessageType } from '@/types/MessagesType'
 import IconCheck from '../icons/IconCheck.vue'
 import AvatarCanvas from '../AvatarCanvas.vue'
 import { useUserStore } from '@/stores/userStore'
+import ImageModal from '../ImageModal.vue'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
+const modalRef = ref<InstanceType<typeof ImageModal> | null>(null)
 
 const props = withDefaults(defineProps<MessageType>(), {
   id: '0',
@@ -106,12 +108,14 @@ watch(
         <img
           v-for="(item, index) in props.imageUrls"
           :key="index"
+          @click="modalRef.open(config.url + item)"
           :src="config.url + item"
-          class="w-[120px] h-[120px] object-cover"
+          class="w-[120px] h-[120px] object-cover rounded-xl cursor-pointer"
         />
       </div>
     </div>
   </div>
+  <ImageModal ref="modalRef" />
 </template>
 
 <style scoped></style>

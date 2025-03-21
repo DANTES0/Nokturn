@@ -248,20 +248,23 @@ watch(messagesArray, () => {
           :image-urls="item.imageUrls"
         />
       </div>
-      <div
-        v-for="(img, index) in additionalImages.selectedImagesArray.value"
-        :key="index"
-        class="relative w-[30%] aspect-square"
-      >
-        <img :src="img" class="rounded-lg w-full h-full object-cover" />
-        <button
-          @click="removeImage(index)"
-          class="absolute top-[-8px] right-[-8px] bg-white text-black text-[20px] hover:text-white shadow-container w-6 h-6 flex items-center justify-center rounded-full hover:bg-red-600"
-        >
-          ×
-        </button>
-      </div>
-      <div class="w-full h-[15vh] p-[20px] flex justify-between items-center">
+
+      <div class="w-full h-[15vh] p-[20px] flex justify-between items-center relative">
+        <div class="absolute top-[-100px] flex gap-3">
+          <div
+            v-for="(img, index) in additionalImages.selectedImagesArray.value"
+            :key="index"
+            class="relative w-[120px] h-[120px] aspect-square"
+          >
+            <img :src="img" class="rounded-lg w-full h-full object-cover" />
+            <button
+              @click="removeImage(index)"
+              class="absolute top-[-8px] right-[-8px] bg-white text-black text-[20px] hover:text-white shadow-container w-6 h-6 flex items-center justify-center rounded-full hover:bg-red-600"
+            >
+              ×
+            </button>
+          </div>
+        </div>
         <div class="w-[70%] relative">
           <input
             v-model="modelText"
