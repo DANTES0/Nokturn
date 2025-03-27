@@ -4,7 +4,7 @@ import IconPlus from './icons/IconPlus.vue'
 import IconBell from './icons/IconBell.vue'
 import IconMail from './icons/IconMail.vue'
 import profileImage from '../assets/images/test2.jpg'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import ModalProfile from './NavBarComponents/ModalProfile.vue'
 import { useUserStore } from '@/stores/userStore'
 import { config } from '@/scripts/config'
@@ -25,6 +25,10 @@ function logout() {
   userStore.logout()
   router.push('/auth')
 }
+
+onMounted(() => {
+  console.log(user)
+})
 </script>
 <template>
   <Transition name="slide-down" appear>

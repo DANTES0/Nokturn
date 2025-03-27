@@ -3,7 +3,9 @@ import { config } from '@/scripts/config'
 import AvatarCanvas from '../AvatarCanvas.vue'
 import IconCheck from '../icons/IconCheck.vue'
 import { useUserStore } from '@/stores/userStore'
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import getUserById from '@/scripts/getUser'
+import type { UserType } from '@/types/UserType'
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
 
@@ -71,6 +73,18 @@ function formatDateTimeIntl(dateString: string) {
 const emit = defineEmits<{
   (event: 'selectChat', chatId: string): void
 }>()
+const imgRef = ref<UserType>()
+async function isUser() {
+  if (user.value?.id == props.user1.id) {
+    imgRef.value = await getUserById(props.user2.id)
+  } else {
+    imgRef.value = await getUserById(props.user1.id)
+  }
+}
+onMounted(async () => {
+  console.log(await getUserById(props.senderId))
+  isUser()
+})
 </script>
 
 <template>
@@ -95,17 +109,13 @@ const emit = defineEmits<{
 
     <div class="">
       <img
-        v-if="props.profile_photo"
-        :src="
-          senderId == user?.id
-            ? config.url + props.profile_photo
-            : config.url + props.user1.profile_photo
-        "
+        v-if="imgRef?.profile_photo"
+        :src="config.url + imgRef.profile_photo"
         class="rounded-full shadow-cardImage w-[70px] aspect-square object-cover"
       />
       <AvatarCanvas
         class="shadow-cardImage"
-        v-if="!props.profile_photo"
+        v-else
         :size="70"
         :name="props.firstname == user?.firstname ? props.user1.firstname : props.firstname"
       />

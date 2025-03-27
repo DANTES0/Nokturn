@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 
 interface Props {
   name: string
@@ -43,6 +43,7 @@ const generateAvatar = () => {
 }
 
 onMounted(generateAvatar)
+watch(() => props.name, generateAvatar)
 </script>
 
 <template>
