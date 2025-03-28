@@ -12,9 +12,11 @@ import AvatarCanvas from './AvatarCanvas.vue'
 import IconAuc from './icons/IconAuc.vue'
 import IconPainter from './icons/IconPainter.vue'
 import { getSocket } from '@/scripts/socket'
+import ModalNotification from './NavBarComponents/ModalNotification.vue'
 
 const activeProfileModal = ref(false)
 const activeAddModal = ref(false)
+const activeNotificationModal = ref(false)
 
 const route = useRoute()
 const router = useRouter()
@@ -76,6 +78,9 @@ onUnmounted(() => {
     />
   </Transition>
   <Transition name="slide-down" appear>
+    <ModalNotification v-if="activeNotificationModal" />
+  </Transition>
+  <Transition name="slide-down" appear>
     <div
       v-if="activeAddModal"
       class="absolute z-10 bg-white w-[250px] h-[76px] shadow-container right-[272px] top-[56px] rounded-xl"
@@ -124,6 +129,7 @@ onUnmounted(() => {
         @click="
           () => {
             activeProfileModal = false
+            activeNotificationModal = false
             activeAddModal = !activeAddModal
           }
         "
@@ -136,6 +142,13 @@ onUnmounted(() => {
       <button
         class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg rounded-bl-lg flex items-center justify-center hover:scale-105 relative"
         :class="{ '!border-[#CCCCCC]': isProfileRoute }"
+        @click="
+          () => {
+            activeProfileModal = false
+            activeAddModal = false
+            activeNotificationModal = !activeNotificationModal
+          }
+        "
       >
         <div
           class="w-[12px] h-[12px] bg-red-600 border border-black absolute rounded-full top-[-6px] right-[-6px]"
@@ -161,6 +174,7 @@ onUnmounted(() => {
         @click="
           () => {
             activeAddModal = false
+            activeNotificationModal = false
             activeProfileModal = !activeProfileModal
           }
         "
