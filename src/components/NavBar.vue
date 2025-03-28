@@ -4,13 +4,14 @@ import IconPlus from './icons/IconPlus.vue'
 import IconBell from './icons/IconBell.vue'
 import IconMail from './icons/IconMail.vue'
 import profileImage from '../assets/images/test2.jpg'
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import ModalProfile from './NavBarComponents/ModalProfile.vue'
 import { useUserStore } from '@/stores/userStore'
 import { config } from '@/scripts/config'
 import AvatarCanvas from './AvatarCanvas.vue'
 import IconAuc from './icons/IconAuc.vue'
 import IconPainter from './icons/IconPainter.vue'
+import { getSocket } from '@/scripts/socket'
 
 const activeProfileModal = ref(false)
 const activeAddModal = ref(false)
@@ -28,6 +29,42 @@ function logout() {
 
 onMounted(() => {
   console.log(user)
+})
+
+const unreadMessages = ref(0)
+// const userStore = useUserStore()
+// const user = computed(() => userStore.user)
+const socket = getSocket()
+// const socket = io('http://localhost:3000') // Укажи свой адрес сервера
+
+onMounted(() => {
+  const unsubscribe = watch(
+    () => user.value,
+    (newUser) => {
+      if (user.value?.id) {
+        console.log('User id exists:', newUser.id)
+
+        socket.emit('joinUserRoom', newUser.id)
+
+        console.log('Отправка события requestUnreadCount с id:', user.value.id)
+        socket.emit('requestUnreadCount', newUser.id)
+        socket.on('updateTotalUnreadCount', (count) => {
+          console.log('Обновлено количество всех непрочитанных сообщений:', count)
+          unreadMessages.value = count
+        })
+        unsubscribe()
+      } else {
+        console.log('User id не найден')
+      }
+    },
+  )
+})
+
+onUnmounted(() => {
+  if (user.value?.id) {
+    socket.emit('leaveUserRoom', user.value.id)
+  }
+  socket.off('updateTotalUnreadCount')
 })
 </script>
 <template>
@@ -111,9 +148,10 @@ onMounted(() => {
           :class="{ '!border-[#CCCCCC]': isProfileRoute }"
         >
           <div
+            v-if="unreadMessages > 0"
             class="w-[14px] h-[14px] border border-black bg-white absolute top-[-6px] right-[-8px] flex items-center justify-center rounded-tr-[4px] rounded-bl-[4px]"
           >
-            <div class="text-[9px] font-bold text-black">22</div>
+            <div class="text-[9px] font-bold text-black">{{ unreadMessages }}</div>
           </div>
           <IconMail />
         </button>
