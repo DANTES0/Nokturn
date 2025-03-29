@@ -81,6 +81,7 @@ watch(
         v-if="!props.sender?.profile_photo"
         :name="props.sender?.firstname ?? ''"
         :size="60"
+        class="shadow-cardImage"
       />
     </div>
     <div class="flex flex-col flex-1 justify-around ml-4">

@@ -34,12 +34,22 @@ onMounted(() => {
 })
 
 const unreadMessages = ref(0)
+const notificationRead = ref(0) // Добавим флаг для отображения круга
+const unreadNotifications = ref<any[]>([])
 // const userStore = useUserStore()
 // const user = computed(() => userStore.user)
 const socket = getSocket()
 // const socket = io('http://localhost:3000') // Укажи свой адрес сервера
-
+const betNotifications = ref<{ lotId: number; newBid: number; timestamp: string }[]>([])
 onMounted(() => {
+  socket.on('notificationsReadConfirmed', (userId) => {
+    console.log(`Все уведомления для пользователя ${userId} помечены как прочитанные`)
+
+    // Обновляем локальное состояние
+    unreadNotifications.value = []
+    notificationRead.value = 0
+  })
+
   const unsubscribe = watch(
     () => user.value,
     (newUser) => {
@@ -54,6 +64,38 @@ onMounted(() => {
           console.log('Обновлено количество всех непрочитанных сообщений:', count)
           unreadMessages.value = count
         })
+
+        socket.on('newNotification', (notification) => {
+          console.log('⚠️ Получено уведомление о перебитой ставке:', notification)
+          console.log('Уведомление о ставке', notification)
+          betNotifications.value.unshift(notification)
+          notificationRead.value = 1
+        })
+
+        console.log('Запрашиваем непрочитанные уведомления')
+        socket.emit('requestAllNotifications', newUser.id)
+
+        socket.on('allNotifications', (notifications) => {
+          console.log('✅ Получены непрочитанные уведомления:', notifications)
+          unreadNotifications.value = notifications.filter((notification) => !notification.isRead)
+
+          notificationRead.value = unreadNotifications.value.length
+          const { newBidNotifications, otherNotifications } = notifications.reduce(
+            (acc, notification) => {
+              if (notification.type === 'new_bid') {
+                acc.newBidNotifications.push(notification)
+              } else {
+                acc.otherNotifications.push(notification)
+              }
+              return acc
+            },
+            { newBidNotifications: [], otherNotifications: [] },
+          )
+          betNotifications.value = newBidNotifications
+          console.log('New Bid Notifications:', newBidNotifications)
+          console.log('Other Notifications:', otherNotifications)
+        })
+
         unsubscribe()
       } else {
         console.log('User id не найден')
@@ -67,7 +109,17 @@ onUnmounted(() => {
     socket.emit('leaveUserRoom', user.value.id)
   }
   socket.off('updateTotalUnreadCount')
+  socket.off('newNotification')
 })
+
+const markNotificationsAsRead = () => {
+  // Отправляем запрос на сервер для пометки всех уведомлений как прочитанных
+  socket.emit('markNotificationsAsRead', user.value?.id)
+
+  // Обновляем локальное состояние: очищаем список непрочитанных уведомлений
+  unreadNotifications.value = []
+  unreadMessages.value = 0
+}
 </script>
 <template>
   <Transition name="slide-down" appear>
@@ -78,7 +130,7 @@ onUnmounted(() => {
     />
   </Transition>
   <Transition name="slide-down" appear>
-    <ModalNotification v-if="activeNotificationModal" />
+    <ModalNotification v-if="activeNotificationModal" :betInfo="betNotifications" />
   </Transition>
   <Transition name="slide-down" appear>
     <div
@@ -138,7 +190,6 @@ onUnmounted(() => {
       >
         <IconPlus />
       </button>
-
       <button
         class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg rounded-bl-lg flex items-center justify-center hover:scale-105 relative"
         :class="{ '!border-[#CCCCCC]': isProfileRoute }"
@@ -147,10 +198,12 @@ onUnmounted(() => {
             activeProfileModal = false
             activeAddModal = false
             activeNotificationModal = !activeNotificationModal
+            markNotificationsAsRead()
           }
         "
       >
         <div
+          v-if="notificationRead > 0"
           class="w-[12px] h-[12px] bg-red-600 border border-black absolute rounded-full top-[-6px] right-[-6px]"
         ></div>
         <IconBell />
