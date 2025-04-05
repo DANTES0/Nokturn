@@ -25,7 +25,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="absolute w-[300px] h-[140px] max-h-[140px] flex items-center bg-white right-[216px] top-[54px] shadow-container z-20 rounded-lg cursor-default overflow-y-auto"
+    class="absolute w-[300px] h-[140px] max-h-[140px] flex items-center bg-white dark:bg-[#232323] dark:text-[#CCCCCC] right-[216px] top-[54px] shadow-container dark:shadow-containerDark z-20 rounded-lg cursor-default overflow-y-auto"
   >
     <ul class="text-[14px] flex flex-col pl-[10px] pr-[20px] py-[10px] gap-1 h-full w-full">
       <!-- <MessageNotification />

@@ -159,7 +159,7 @@ onMounted(async () => {
 })
 </script>
 <template>
-  <div class="flex items-center flex-col w-full max-w-[1728px]">
+  <div class="flex items-center flex-col w-full max-w-[1728px] dark:text-[#CCCCCC]">
     <!-- <MagazinBanner /> -->
 
     <MainPageMagazinBanner>
@@ -198,11 +198,11 @@ onMounted(async () => {
       >
     </div>
     <div
-      class="laptop:w-[90%] w-full h-[400px] bg-white mt-[30px] shadow-container rounded-[32px] relative max-h-[80vh] flex items-center justify-between"
+      class="laptop:w-[90%] w-full h-[400px] bg-white dark:bg-[#232323] mt-[30px] shadow-container dark:shadow-containerDark rounded-[32px] relative max-h-[80vh] flex items-center justify-between"
     >
       <div
         @click="prevAuctionCard"
-        class="laptop:w-12 laptop:h-12 w-6 h-6 bg-[#F5F5F5] rounded-full laptop:ml-[30px] ml-4 flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
+        class="laptop:w-12 laptop:h-12 w-6 h-6 bg-[#F5F5F5] dark:bg-[#1C1C1C] rounded-full laptop:ml-[30px] ml-4 flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
       >
         <IconLeftArrow />
       </div>
@@ -232,7 +232,7 @@ onMounted(async () => {
       </div>
       <div
         @click="nextAuctionCard"
-        class="laptop:w-12 laptop:h-12 w-6 h-6 bg-[#F5F5F5] rounded-full mr-[30px] flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
+        class="laptop:w-12 laptop:h-12 w-6 h-6 bg-[#F5F5F5] dark:bg-[#1C1C1C] rounded-full mr-[30px] flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
       >
         <IconRightArrow />
       </div>
@@ -275,11 +275,11 @@ onMounted(async () => {
     </div>
 
     <div
-      class="laptop:w-[90%] w-full h-[400px] bg-white mt-[30px] shadow-container rounded-[32px] relative max-h-[80vh] flex items-center justify-between"
+      class="laptop:w-[90%] w-full h-[400px] bg-white dark:bg-[#232323] mt-[30px] shadow-container dark:shadow-containerDark rounded-[32px] relative max-h-[80vh] flex items-center justify-between"
     >
       <div
         @click="prev"
-        class="laptop:w-12 laptop:h-12 w-6 h-6 bg-[#F5F5F5] rounded-full laptop:ml-[30px] ml-4 flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
+        class="laptop:w-12 laptop:h-12 w-6 h-6 bg-[#F5F5F5] dark:bg-[#1C1C1C] rounded-full laptop:ml-[30px] ml-4 flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
       >
         <IconLeftArrow />
       </div>
@@ -299,7 +299,7 @@ onMounted(async () => {
 
       <div
         @click="next"
-        class="laptop:w-12 laptop:h-12 w-6 h-6 bg-[#F5F5F5] rounded-full laptop:mr-[30px] mr-4 flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
+        class="laptop:w-12 laptop:h-12 w-6 h-6 bg-[#F5F5F5] dark:bg-[#1C1C1C] rounded-full laptop:mr-[30px] mr-4 flex items-center justify-center hover:scale-110 cursor-pointer shadow-cardImage"
       >
         <IconRightArrow />
       </div>

@@ -3,13 +3,17 @@ import { RouterView, useRoute } from 'vue-router'
 import NavBar from './components/NavBar.vue'
 import MobileNavBar from './components/MobileNavBar.vue'
 import { useScreenWidth } from './scripts/ScriptWindowSize'
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useUserStore } from './stores/userStore'
 import { disconnectSocket } from '@/scripts/socket'
+import { useThemeStore } from './stores/themeStore'
 const route = useRoute()
 const isMobile = useScreenWidth(800)
 const userStore = useUserStore()
+const themeStore = useThemeStore()
+
 onMounted(async () => {
+  themeStore.initTheme()
   userStore.fetchUser()
   window.addEventListener('beforeunload', disconnectSocket)
 })
@@ -19,7 +23,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="flex items-center justify-center flex-col">
+  <div class="flex items-center justify-center flex-col dark:bg-[#1C1C1C]">
     <NavBar v-if="!isMobile && route.path !== '/register' && route.path !== '/auth'"></NavBar>
     <div></div>
     <MobileNavBar v-if="route.path !== '/register' && route.path !== '/auth' && isMobile" />

@@ -135,17 +135,17 @@ const markNotificationsAsRead = () => {
   <Transition name="slide-down" appear>
     <div
       v-if="activeAddModal"
-      class="absolute z-10 bg-white w-[250px] h-[76px] shadow-container right-[272px] top-[56px] rounded-xl"
+      class="absolute z-10 bg-white dark:bg-[#232323] dark:text-[#CCCCCC] w-[250px] h-[76px] shadow-container dark:shadow-containerDark right-[272px] top-[56px] rounded-xl"
     >
       <ul class="text-[14px] flex flex-col justify-between px-[20px] py-[10px] gap-1">
         <RouterLink to="/addLot" @click="activeAddModal = false"
-          ><li class="pl-1 flex items-center gap-1">
+          ><li class="pl-1 flex items-center gap-1 hover:bg-[#ededed] dark:hover:bg-[#3C3C3C]">
             <IconAuc class="w-[16px]" />Добавить лот
           </li></RouterLink
         >
-        <hr />
+        <hr class="dark:bg-[#3C3C3C] dark:border-none h-[1px]" />
         <RouterLink to="/addPainting" @click="activeAddModal = false"
-          ><li class="pl-1 flex items-center gap-1">
+          ><li class="pl-1 flex items-center gap-1 hover:bg-[#ededed] dark:hover:bg-[#3C3C3C]">
             <IconPainter class="w-[16px]" />Добавить работу
           </li></RouterLink
         >
@@ -154,13 +154,13 @@ const markNotificationsAsRead = () => {
   </Transition>
   <div
     :class="[
-      'w-full laptop:px-24 mobile:px-4 items-center h-[48px] border-b border-[#7A7A7A] flex justify-between',
+      'w-full laptop:px-24 mobile:px-4 items-center h-[48px] border-b border-[#7A7A7A] flex justify-between dark:text-[#CCCCCC]',
       { 'absolute top-0 bg-[rgba(0,0,0,0.35)] text-white': isProfileRoute },
     ]"
   >
     <RouterLink
       to="/"
-      class="font-[LeviBrushRus] text-[24px] hover:text-[#4C4C4C] cursor-pointer mt-auto"
+      class="font-[LeviBrushRus] text-[24px] hover:text-[#4C4C4C] dark:hover:text-white cursor-pointer mt-auto"
       :class="{ 'hover:text-[#DDDDDD]': isProfileRoute }"
       >Ноктюрн</RouterLink
     >
@@ -185,13 +185,13 @@ const markNotificationsAsRead = () => {
             activeAddModal = !activeAddModal
           }
         "
-        class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg rounded-bl-lg flex items-center justify-center hover:scale-105"
+        class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg dark:border-[#CCCCCC] rounded-bl-lg flex items-center justify-center hover:scale-105"
         :class="{ '!border-[#CCCCCC]': isProfileRoute }"
       >
         <IconPlus />
       </button>
       <button
-        class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg rounded-bl-lg flex items-center justify-center hover:scale-105 relative"
+        class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg dark:border-[#CCCCCC] rounded-bl-lg flex items-center justify-center hover:scale-105 relative"
         :class="{ '!border-[#CCCCCC]': isProfileRoute }"
         @click="
           () => {
@@ -210,7 +210,7 @@ const markNotificationsAsRead = () => {
       </button>
       <RouterLink to="/chat">
         <button
-          class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg rounded-bl-lg flex items-center justify-center hover:scale-105 relative"
+          class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg dark:border-[#CCCCCC] rounded-bl-lg flex items-center justify-center hover:scale-105 relative"
           :class="{ '!border-[#CCCCCC]': isProfileRoute }"
         >
           <div
@@ -231,7 +231,7 @@ const markNotificationsAsRead = () => {
             activeProfileModal = !activeProfileModal
           }
         "
-        class="w-[40px] h-[40px] border-2 border-black rounded-tl-lg rounded-br-lg flex items-center justify-center"
+        class="w-[40px] h-[40px] border-2 border-black dark:border-[#CCCCCC] rounded-tl-lg rounded-br-lg flex items-center justify-center"
         :class="{ '!border-[#CCCCCC]': isProfileRoute }"
       >
         <!-- <IconUser /> -->
@@ -253,7 +253,7 @@ const markNotificationsAsRead = () => {
 </template>
 <style scoped>
 ul li:hover {
-  background-color: #ededed;
+  /* background-color: #ededed; */
   cursor: pointer;
   border-radius: 4px;
 }
@@ -275,6 +275,13 @@ nav a.router-link-exact-active::after {
   left: 50%;
   transform: translateX(-50%);
   animation: growFromCenter 0.5s ease forwards;
+}
+
+html.dark nav a.router-link-exact-active::after {
+  background-color: #cccccc;
+}
+html.dark nav > *:hover {
+  color: white;
 }
 
 @keyframes growFromCenter {

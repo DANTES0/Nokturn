@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<UserType>(), {})
 <template>
   <div
     @click="router.push(`/profile/${props.id}`)"
-    class="w-full cursor-pointer h-[320px] shadow-card rounded-3xl hover:scale-105 relative flex flex-col items-center max-w-[400px] ml-[20px] mr-[20px]"
+    class="w-full cursor-pointer h-[320px] shadow-card dark:shadow-none dark:border-[#4b4b4b] dark:border rounded-3xl hover:scale-105 relative flex flex-col items-center max-w-[400px] ml-[20px] mr-[20px] dark:bg-[#1c1c1c]"
   >
     <div class="w-full h-[55%] bg-black flex rounded-tl-2xl rounded-tr-2xl bro">
       <img

@@ -37,20 +37,22 @@ defineProps({
 </script>
 
 <template>
-  <li class="flex items-center gap-3">
+  <li class="flex items-center gap-3 hover:bg-[#ededed] dark:hover:bg-[#3C3C3C]">
     <div
       class="w-[10px] h-[10px] border-black rounded-full bg-red-700 border"
-      :class="{ 'bg-white': isRead }"
+      :class="{ 'bg-white dark:bg-[#CCCCCC]': isRead }"
     ></div>
     <div class="flex flex-col">
       <div class="text-[12px] font-extralight">{{ getTimeAgo(timeStamp) }}</div>
       <div class="flex">
-        <div class="underline hover:text-[#444444] cursor-pointer">Лот №{{ lotId }}</div>
+        <div class="underline hover:text-[#444444] dark:hover:text-[#ffffff] cursor-pointer">
+          Лот №{{ lotId }}
+        </div>
         <div class="">- Вашу ставку перебили</div>
       </div>
     </div>
   </li>
-  <hr />
+  <hr class="dark:bg-[#3C3C3C] dark:border-none h-[1px]" />
 </template>
 
 <style scoped></style>

@@ -40,14 +40,14 @@ const path = computed(() => `/lot/${props.id}`)
 </script>
 
 <template>
-  <RouterLink class="w-[260px] h-[340px]" :to="path">
+  <RouterLink class="w-[260px] h-[340px] dark:text-[#CCCCCC]" :to="path">
     <div
-      class="bg-white group shadow-card w-[260px] h-[340px] rounded-lg cursor-pointer relative"
+      class="bg-white dark:bg-[#1C1C1C] group shadow-card dark:shadow-none dark:border-[#383838] dark:border w-[260px] h-[340px] rounded-lg cursor-pointer relative"
       :class="{ 'hover:scale-105': !isHoveringEdit }"
     >
       <div class="flex flex-col justify-center items-center">
         <div
-          class="w-[200px] h-[200px] bg-white shadow-cardImage mt-[10px] flex items-center justify-center"
+          class="w-[200px] h-[200px] bg-white dark:bg-[#232323] shadow-cardImage dark:shadow-containerCard mt-[10px] flex items-center justify-center"
         >
           <img
             class="w-[170px] h-[170px] object-cover rounded-sm pointer-events-none"
