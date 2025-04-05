@@ -165,8 +165,12 @@ watch(
         </div>
         <div class="flex justify-between">
           <div class="flex gap-2">
-            <IconTg />
-            <IconVk />
+            <a :href="`https://t.me/${userInfo?.tg_link}`"
+              ><IconTg class="hover:text-[#4d6eff] cursor-pointer transition-colors duration-200"
+            /></a>
+            <a :href="`https://vk.com/${userInfo?.vk_link}`"
+              ><IconVk class="hover:text-[#4d6eff] cursor-pointer transition-colors duration-200"
+            /></a>
           </div>
           <div class="flex">
             <IconStarOutline />

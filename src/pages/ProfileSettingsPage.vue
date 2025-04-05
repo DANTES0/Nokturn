@@ -6,25 +6,28 @@ import { useUserStore } from '@/stores/userStore'
 import MyButton from '@/UX/MyButton.vue'
 import MyCheckBox from '@/UX/MyCheckBox.vue'
 import MyInput from '@/UX/MyInput.vue'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import formatDate from '@/scripts/formatDate'
 
 const userStore = useUserStore()
 const user = computed(() => userStore.user)
 
 const active = ref(false)
-const firstnameModel = ref('')
-const lastnameModel = ref('')
-const mailModel = ref('')
-const birthdayModel = ref('')
-const vkLinkModel = ref('')
-const tgLinkModel = ref('')
-const descriptionModel = ref('')
-const specialInfoModel = ref('')
-const checkboxModel = ref('')
+const activeProfilePhoto = ref(false)
+const firstnameModel = ref(user.value?.firstname)
+const lastnameModel = ref(user.value?.lastname)
+const mailModel = ref(user.value?.mail)
+const birthdayModel = ref(user.value?.birthday_date)
+const vkLinkModel = ref(user.value?.vk_link)
+const tgLinkModel = ref(user.value?.tg_link)
+const descriptionModel = ref(user.value?.description)
+const specialInfoModel = ref(user.value?.special_info)
+const checkboxModel = ref(user.value?.name_visible)
 
 const headerFileInput = useFileInput()
 const profileFileInput = useFileInput()
-
+const router = useRouter()
 async function UpdateUser() {
   const formData = new FormData()
 
@@ -58,10 +61,20 @@ async function UpdateUser() {
     }
 
     console.log('Профиль успешно обновлен', await response.json())
+
+    router.push(`/profile/${user.value?.id}`)
   } catch (error) {
     console.error('Ошибка при обновлении профиля:', error)
   }
 }
+
+onMounted(() => {
+  if (user.value) {
+    headerFileInput.selectedImage.value = user.value.profile_header_photo
+    profileFileInput.selectedImage.value = user.value.profile_photo
+  }
+  birthdayModel.value = formatDate(birthdayModel.value)
+})
 </script>
 
 <template>
@@ -89,7 +102,11 @@ async function UpdateUser() {
       </div>
       <img
         v-if="headerFileInput.selectedImage.value"
-        :src="headerFileInput.selectedImage.value"
+        :src="
+          !headerFileInput.selectedFile.value
+            ? config.url + headerFileInput.selectedImage.value
+            : headerFileInput.selectedImage.value
+        "
         class="w-full h-full object-cover rounded-2xl shadow-cardImage"
       />
       <img
@@ -117,11 +134,26 @@ async function UpdateUser() {
               $refs.profilePhotoFileInput.click()
             }
           "
-          class="w-[80%] aspect-square bg-[#FAFAFA] shadow-cardImage rounded-full flex flex-col items-center justify-center cursor-pointer"
+          @mouseover="() => (activeProfilePhoto = true)"
+          @mouseleave="() => (activeProfilePhoto = false)"
+          class="w-[80%] aspect-square relative bg-[#FAFAFA] shadow-cardImage rounded-full flex flex-col items-center justify-center cursor-pointer"
         >
+          <div
+            class="absolute w-full aspect-square rounded-full gradient transition-all duration-500"
+            :class="{ 'opacity-100': activeProfilePhoto, 'opacity-0': !activeProfilePhoto }"
+          >
+            <div class="flex w-full h-full items-center justify-center flex-col text-[#ffffff]">
+              <IconCamera class="mt-[64px]" />
+              <div>Изменить фото</div>
+            </div>
+          </div>
           <img
             v-if="profileFileInput.selectedImage.value"
-            :src="profileFileInput.selectedImage.value"
+            :src="
+              !profileFileInput.selectedFile.value
+                ? config.url + profileFileInput.selectedImage.value
+                : profileFileInput.selectedImage.value
+            "
             alt="Selected"
             class="w-full aspect-square shadow-cardImage rounded-full object-cover"
           />
@@ -182,7 +214,7 @@ async function UpdateUser() {
     </div>
     <div class="w-full mt-[20px] flex justify-between">
       <MyButton title="Сохранить изменения" @click="UpdateUser" />
-      <MyButton title="Перейти в профиль" />
+      <MyButton title="Перейти в профиль" @click="router.back" />
     </div>
   </div>
 </template>
