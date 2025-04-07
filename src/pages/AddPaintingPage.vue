@@ -54,7 +54,7 @@ async function addArts() {
 
 <template>
   <div
-    class="bg-white shadow-container w-[30%] rounded-2xl flex flex-col justify-center items-center p-[30px] mt-[30px] max-w-[500px]"
+    class="bg-white dark:text-[#CCCCCC] dark:bg-[#232323] dark:shadow-none dark:border dark:border-[#383838] shadow-container w-[30%] rounded-2xl flex flex-col justify-center items-center p-[30px] mt-[30px] max-w-[500px]"
   >
     <div
       class="w-[90%] h-auto aspect-square shadow-card rounded-2xl flex flex-col items-center justify-center gap-4 cursor-pointer hover:bg-[#F6F6F6] relative overflow-hidden"
@@ -84,7 +84,7 @@ async function addArts() {
     <input
       type="text"
       v-model="titleModel"
-      class="border border-black rounded-tl-lg rounded-br-lg w-[80%] h-8 text-[16px] pl-4 mt-[6px]"
+      class="border border-black dark:border-[#CCCCCC] bg-[#232323] rounded-tl-lg rounded-br-lg w-[80%] h-8 text-[16px] pl-4 mt-[6px]"
       placeholder="Введите название картины"
     />
     <div class="w-full flex gap-4 mt-[20px]">

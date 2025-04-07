@@ -134,23 +134,23 @@ watch(
     />
     <AvatarCanvas
       v-if="userInfo?.firstname && !userInfo.profile_photo"
-      class="absolute w-48 h-48 rounded-full bottom-[-90px] laptop:left-[96px] left-[104px] shadow-cardImage object-cover bg-white"
+      class="absolute w-48 h-48 rounded-full bottom-[-90px] laptop:left-[96px] left-[104px] shadow-cardImage dark:shadow-none dark:border dark:border-[#383838] object-cover bg-white"
       :name="userInfo?.firstname ?? ''"
       :size="192"
     />
   </div>
 
-  <div class="w-[90%] flex gap-8 laptop:flex-row flex-col">
+  <div class="w-[90%] flex gap-8 laptop:flex-row flex-col dark:text-[#CCCCCC]">
     <div
-      class="bg-white laptop:w-[25%] laptop:max-w-[350px] w-full h-[180px] shadow-container rounded-2xl laptop:mt-8 mt-[120px] laptop:ml-[300px] relative"
+      class="bg-white dark:bg-[#232323] laptop:w-[25%] laptop:max-w-[350px] w-full h-[180px] shadow-container dark:shadow-none dark:border dark:border-[#383838] rounded-2xl laptop:mt-8 mt-[120px] laptop:ml-[300px] relative"
     >
       <div
         v-if="!isMobile"
-        class="w-6 h-6 bg-white shadow-container rounded-full left-[-36px] absolute"
+        class="w-6 h-6 bg-white shadow-container dark:bg-[#232323] dark:shadow-none dark:border dark:border-[#383838] rounded-full left-[-36px] absolute"
       ></div>
       <div
         v-if="!isMobile"
-        class="w-4 h-4 bg-white shadow-container rounded-full left-[-64px] top-[-8px] absolute"
+        class="w-4 h-4 bg-white shadow-container dark:bg-[#232323] dark:shadow-none dark:border dark:border-[#383838] rounded-full left-[-64px] top-[-8px] absolute"
       ></div>
       <IconChat
         @click="goToChat"
@@ -180,12 +180,12 @@ watch(
       </div>
     </div>
     <div
-      class="bg-white w-full flex-1 h-[180px] shadow-container rounded-2xl laptop:mt-8 relative p-[20px] text-justify description-text overflow-y-scroll laptop:text-[14px] desktop:text-[18px]"
+      class="bg-white w-full flex-1 h-[180px] shadow-container dark:bg-[#232323] dark:shadow-none dark:border dark:border-[#383838] rounded-2xl laptop:mt-8 relative p-[20px] text-justify description-text overflow-y-scroll laptop:text-[14px] desktop:text-[18px]"
     >
       {{ userInfo?.description }}
     </div>
   </div>
-  <div class="w-[90%]">
+  <div class="w-[90%] dark:text-[#CCCCCC]">
     <div v-if="dataCardAuction.length != 0" class="text-[20px] mt-[20px]">Выставленные лоты</div>
     <div class="mt-[20px] auc-card">
       <RouterLink v-if="user?.id == route.params.id" to="/addLot"

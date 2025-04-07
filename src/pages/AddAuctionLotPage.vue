@@ -90,12 +90,12 @@ function removeImage(index: number) {
 
 <template>
   <div
-    class="bg-white shadow-container w-[90%] rounded-2xl mt-[30px] p-[30px] flex flex-col mb-[30px]"
+    class="bg-white shadow-container dark:text-[#CCCCCC] dark:bg-[#232323] dark:shadow-none dark:border dark:border-[#383838] w-[90%] rounded-2xl mt-[30px] p-[30px] flex flex-col mb-[30px]"
   >
     <div class="w-full flex gap-5">
       <div class="w-full max-w-[400px]">
         <div
-          class="w-full bg-white rounded-lg shadow-card aspect-square flex items-center justify-center flex-col gap-2"
+          class="w-full bg-white dark:bg-[#232323] dark:shadow-none dark:border dark:border-[#383838] rounded-lg shadow-card aspect-square flex items-center justify-center flex-col gap-2"
           @click="() => $refs.mainImageInput.click()"
         >
           <img
@@ -118,7 +118,7 @@ function removeImage(index: number) {
       </div>
       <div class="w-full flex-1 flex">
         <div
-          class="w-full bg-white rounded-lg shadow-card grid grid-cols-2 gap-x-8 p-[30px] items-center"
+          class="w-full bg-white dark:bg-[#1c1c1c] dark:shadow-none dark:border dark:border-[#383838] rounded-lg shadow-card grid grid-cols-2 gap-x-8 p-[30px] items-center"
         >
           <MyInput v-model="nameModel" title="Название" placeholder="Название картины" />
           <MyInput
@@ -150,7 +150,7 @@ function removeImage(index: number) {
       <div>
         <div>Дополнительные изображения</div>
         <div
-          class="w-[400px] bg-white shadow-card rounded-lg p-[20px] flex justify-between flex-wrap gap-3 mt-[10px]"
+          class="w-[400px] bg-white dark:bg-[#232323] dark:shadow-none dark:border dark:border-[#383838] shadow-card rounded-lg p-[20px] flex justify-between flex-wrap gap-3 mt-[10px]"
         >
           <div
             v-for="(img, index) in additionalImages.selectedImagesArray.value"
@@ -169,7 +169,7 @@ function removeImage(index: number) {
             </button>
           </div>
           <div
-            class="bg-white rounded-lg w-[108px] aspect-square shadow-card flex flex-col items-center justify-center"
+            class="bg-white dark:bg-[#232323] dark:shadow-none dark:border dark:border-[#383838] rounded-lg w-[108px] aspect-square shadow-card flex flex-col items-center justify-center"
             @click="() => $refs.additionalFileImagesModel.click()"
             v-if="additionalImages.selectedImagesArray.value.length != 6"
           >
@@ -192,11 +192,11 @@ function removeImage(index: number) {
         <div>Описание</div>
         <div class="w-full flex-1 flex mt-[10px]">
           <div
-            class="w-full bg-white rounded-lg shadow-card flex items-center justify-center flex-col gap-2 p-[30px] h-full min-h-[268px]"
+            class="w-full bg-white dark:bg-[#232323] dark:shadow-none dark:border dark:border-[#383838] rounded-lg shadow-card flex items-center justify-center flex-col gap-2 p-[30px] h-full min-h-[268px]"
           >
             <textarea
               v-model="descriptionModel"
-              class="border border-black rounded-br-lg rounded-tl-lg w-full min-h-[200px] p-[10px]"
+              class="border border-black dark:border-[#383838] dark:bg-[#1c1c1c] rounded-br-lg rounded-tl-lg w-full min-h-[200px] p-[10px]"
             ></textarea>
           </div>
         </div>

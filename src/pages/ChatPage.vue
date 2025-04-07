@@ -213,7 +213,7 @@ watch(messagesArray, () => {
 <template>
   <div class="w-[90%] h-full flex gap-[30px] mt-[30px]">
     <div
-      class="bg-white w-1/2 h-[85vh] shadow-container rounded-lg pb-[20px] flex flex-col gap-4 overflow-y-scroll"
+      class="bg-white dark:text-[#CCCCCC] dark:bg-[#232323] dark:shadow-none dark:border dark:border-[#383838] w-1/2 h-[85vh] shadow-container rounded-lg pb-[20px] flex flex-col gap-4 overflow-y-scroll"
     >
       <ChatUserCard
         v-for="item in chatsArray"
@@ -235,7 +235,9 @@ watch(messagesArray, () => {
         @selectChat="handleChatSelect"
       />
     </div>
-    <div class="bg-white w-1/2 h-[85vh] shadow-container rounded-lg">
+    <div
+      class="bg-white dark:bg-[#232323] dark:shadow-none dark:border dark:border-[#383838] dark:text-[#CCCCCC] w-1/2 h-[85vh] shadow-container rounded-lg"
+    >
       <div
         ref="messagesContainer"
         class="flex flex-col gap-6 overflow-y-scroll h-[72vh] w-full p-[20px]"
@@ -270,7 +272,7 @@ watch(messagesArray, () => {
         <div class="w-[70%] relative">
           <input
             v-model="modelText"
-            class="w-full border-b border-black h-[40px] pl-[10px] outline-none pr-[40px] text-[1vw]"
+            class="w-full border-b border-black dark:border-[#CCCCCC] dark:bg-[#232323] h-[40px] pl-[10px] outline-none pr-[40px] text-[1vw]"
             placeholder="Написать сообщение"
           />
           <input

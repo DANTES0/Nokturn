@@ -58,7 +58,11 @@ onMounted(() => {
         />
       </RouterLink>
       <RouterLink :to="linkProfile" class="w-24 h-24" v-else>
-        <AvatarCanvas class="rounded-full shadow-card" :size="96" :name="props.firstname" />
+        <AvatarCanvas
+          class="rounded-full shadow-card dark:shadow-none dark:border dark:border-[#383838]"
+          :size="96"
+          :name="props.firstname"
+        />
       </RouterLink>
       <div
         class="flex flex-col mobile:ml-[20px] mobile:max-w-[300px] max-w-[200px] w-[200px] gap-3 mobile:border-r mobile:border-black dark:mobile:border-[#383838] mobile:pr-[10px]"

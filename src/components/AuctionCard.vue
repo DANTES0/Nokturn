@@ -97,7 +97,7 @@ const path = computed(() => `/lot/${props.id}`)
             router.push(`/editLot/${props.id}`)
           }
         "
-        class="w-8 h-8 bg-white shadow-container absolute top-[-12px] right-[-12px] flex items-center justify-center rounded-full hover:bg-[#EEEEEE]"
+        class="w-8 h-8 bg-white shadow-container dark:bg-[#232323] dark:shadow-none dark:border dark:border-[#383838] absolute top-[-12px] right-[-12px] flex items-center justify-center rounded-full hover:bg-[#EEEEEE] dark:hover:bg-[#383838] hover:scale-110 cursor-pointer"
       >
         <IconEdit />
       </div>

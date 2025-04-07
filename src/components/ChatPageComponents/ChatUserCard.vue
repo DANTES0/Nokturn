@@ -90,7 +90,7 @@ onMounted(async () => {
 <template>
   <div
     @click="emit('selectChat', props.id)"
-    class="flex relative w-full hover:bg-[#EEEEEE] p-[6px] py-[8px] px-3 cursor-pointer"
+    class="flex relative w-full hover:bg-[#EEEEEE] dark:hover:bg-[#3C3C3C] p-[6px] py-[8px] px-3 cursor-pointer"
     :class="{ 'selected-chat': isSelected }"
   >
     <div
@@ -114,7 +114,7 @@ onMounted(async () => {
         class="rounded-full shadow-cardImage w-[70px] aspect-square object-cover"
       />
       <AvatarCanvas
-        class="shadow-cardImage"
+        class="shadow-cardImage dark:shadow-none dark:border dark:border-[#383838]"
         v-else
         :size="70"
         :name="props.firstname == user?.firstname ? props.user1.firstname : props.firstname"
@@ -140,6 +140,10 @@ onMounted(async () => {
 <style scoped>
 .selected-chat {
   background: linear-gradient(135deg, #cccccc, #ffffff, #cccccc, #ffffff);
+  transition: background 0.5s ease-in-out;
+}
+html.dark .selected-chat {
+  background: linear-gradient(135deg, #383838, #3f3f3f, #383838, #3f3f3f);
   transition: background 0.5s ease-in-out;
 }
 </style>

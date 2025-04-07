@@ -41,13 +41,13 @@ watch(inputModel, (newValue) => {
       :value="formattedDate"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       type="datetime-local"
-      class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] focus:outline-black focus:outline focus:outline-1"
+      class="border border-black dark:border-[#CCCCCC] h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] focus:outline-black focus:outline focus:outline-1"
       :placeholder="props.placeholder"
     />
     <div
-      class="absolute top-[-14px] left-[20px] bg-[#FAFAFA] px-2 font-light"
+      class="absolute top-[-14px] left-[20px] bg-[#FAFAFA] dark:bg-[#1c1c1c] px-2 font-light"
       :class="{
-        '!bg-white':
+        '!bg-white dark:!bg-[#1c1c1c]':
           ['/addLot', '/profileSettings'].includes(route.path) ||
           route.path.startsWith('/editLot/'),
       }"

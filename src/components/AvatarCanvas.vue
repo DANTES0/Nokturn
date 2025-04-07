@@ -28,13 +28,23 @@ const generateAvatar = () => {
 
   const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
   // gradient.addColorStop(0, color)
-  gradient.addColorStop(0, '#ffffff')
-  gradient.addColorStop(1, '#FFFFFF') // Полупрозрачный белый
+  if (localStorage.getItem('theme') == 'dark') {
+    gradient.addColorStop(0, '#1c1c1c')
+    gradient.addColorStop(1, '#1c1c1c')
+  } else {
+    gradient.addColorStop(0, '#ffffff')
+    gradient.addColorStop(1, '#FFFFFF') // Полупрозрачный белый
+  }
   ctx.fillStyle = gradient
   ctx.fillRect(0, 0, canvas.width, canvas.height)
 
   ctx.font = `${canvas.width / 2}px Arial`
-  ctx.fillStyle = '#000000'
+  if (localStorage.getItem('theme') == 'dark') {
+    ctx.fillStyle = '#ffffff'
+  } else {
+    ctx.fillStyle = '#000000'
+  }
+
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
   ctx.fillText(props.name.charAt(0).toUpperCase(), canvas.width / 2, canvas.height / 2)

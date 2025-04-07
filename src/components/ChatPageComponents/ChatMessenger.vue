@@ -81,7 +81,7 @@ watch(
         v-if="!props.sender?.profile_photo"
         :name="props.sender?.firstname ?? ''"
         :size="60"
-        class="shadow-cardImage"
+        class="shadow-cardImage dark:shadow-none dark:border dark:border-[#383838]"
       />
     </div>
     <div class="flex flex-col flex-1 justify-around ml-4">

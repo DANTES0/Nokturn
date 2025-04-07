@@ -61,7 +61,7 @@ const route = useRoute()
       <div
         class="absolute top-[-14px] left-[20px] bg-[#FAFAFA] dark:bg-[#232323] px-2 font-light"
         :class="{
-          '!bg-white':
+          '!bg-white  dark:!bg-[#1c1c1c]':
             ['/addLot', '/profileSettings'].includes(route.path) ||
             route.path.startsWith('/editLot/'),
         }"

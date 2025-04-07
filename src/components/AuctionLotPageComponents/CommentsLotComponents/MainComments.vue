@@ -45,7 +45,7 @@ function handleReply() {
       :src="config.url + props.user?.profile_photo"
     />
     <AvatarCanvas
-      class="shadow-cardImage"
+      class="shadow-cardImage dark:shadow-none dark:border dark:border-[#383838]"
       :name="props.user?.firstname ?? 'Аноним'"
       :size="56"
       v-else
