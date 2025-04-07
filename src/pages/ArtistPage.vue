@@ -40,15 +40,15 @@ watch(searchQuery, (newQuery) => {
     <div class="relative mr-auto w-full max-w-[400px]">
       <input
         v-model="searchQuery"
-        class="border border-black w-full h-[30px] rounded-bl-lg rounded-tr-lg pl-4 pr-[40px] max-w-[400px]"
+        class="border border-black dark:border-[#CCCCCC] w-full h-[30px] dark:bg-[#1c1c1c] rounded-bl-lg rounded-tr-lg pl-4 pr-[40px] max-w-[400px] focus:outline-black dark:focus:outline-[#CCCCCC] focus:outline dark:text-[#CCCCCC] dark:placeholder:text-[#7a7a7a]"
         type="text"
         placeholder="Поиск"
       />
-      <IconSearch class="absolute right-[8px] top-[4px]" />
+      <IconSearch class="absolute right-[8px] top-[4px] dark:text-[#CCCCCC]" />
     </div>
   </div>
   <div
-    class="w-[90%] bg-white mt-[30px] shadow-container rounded-[32px] relative flex mb-[30px] gap-[30px] flex-col px-[30px] py-[30px] text-center items-center"
+    class="w-[90%] bg-white dark:bg-[#232323] mt-[30px] shadow-container dark:shadow-none dark:border dark:border-[#383838] rounded-[32px] relative flex mb-[30px] gap-[30px] flex-col px-[30px] py-[30px] text-center items-center"
   >
     <ArtistCard
       v-for="item in dataUsers"

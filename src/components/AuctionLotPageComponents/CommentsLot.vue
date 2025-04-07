@@ -5,6 +5,7 @@ import { computed, onMounted, ref } from 'vue'
 import type { CommentType } from '@/types/CommentType'
 import { useUserStore } from '@/stores/userStore'
 import IconReply from '../icons/IconReply.vue'
+import MyButton from '@/UX/MyButton.vue'
 interface Props {
   id: number
 }
@@ -74,7 +75,7 @@ onMounted(getComments)
 
 <template>
   <div
-    class="w-(calc(100%-30px)) h-[450px] bg-white shadow-container rounded-2xl relative flex flex-col text-[18px] mr-[30px] items-center justify-between"
+    class="w-(calc(100%-30px)) h-[450px] bg-white dark:bg-[#1c1c1c] shadow-container rounded-2xl relative flex flex-col text-[18px] mr-[30px] items-center justify-between"
   >
     <div v-if="allComments.length" class="w-[95%] overflow-x-hidden overflow-y-auto scrollingbox">
       <MainComments
@@ -95,28 +96,25 @@ onMounted(getComments)
     <div class="mt-auto mb-auto" v-else>Комментариев нет</div>
     <div
       v-if="replyingTo.parentId"
-      class="flex items-center justify-center text-[14px] text-gray-500 mb-2 mr-auto ml-[80px] shadow-container rounded-2xl px-[10px] py-1 absolute bottom-[50px] left-[16px] bg-white"
+      class="flex items-center justify-center text-[14px] text-gray-500 dark:text-[#CCCCCC] mb-2 mr-auto ml-[80px] shadow-container dark:shadow-none dark:border dark:border-[#383838] rounded-2xl px-[10px] py-1 absolute bottom-[50px] left-[16px] bg-white dark:bg-[#1c1c1c]"
     >
       <IconReply />
       <span>Ответ на комментарий от: {{ replyingTo.firstname }} {{ replyingTo.lastname }}</span>
-      <button @click="cancelReply" class="ml-2 text-gray-600 hover:text-black">✖</button>
+      <button @click="cancelReply" class="ml-2 text-gray-600 hover:text-black hover:text-white">
+        ✖
+      </button>
     </div>
     <div
-      class="flex w-[100%] px-[40px] py-[10px] rounded-2xl items-end justify-between border-t shadow-card"
+      class="flex w-[100%] px-[40px] py-[10px] rounded-2xl items-end justify-between border-t shadow-card dark:shadow-none dark:border dark:border-[#383838] dark:bg-[#1c1c1c]"
     >
       <img class="w-14 h-14 rounded-full object-cover" :src="config.url + user?.profile_photo" />
       <input
-        class="w-[70%] border-b border-black h-[30px] text-[14px] pl-2 outline-none mr-[20px] ml-[20px]"
+        class="w-[70%] border-b border-black dark:border-[#CCCCCC] dark:bg-[#1c1c1c] h-[30px] text-[14px] pl-2 outline-none mr-[20px] ml-[20px]"
         type="text"
         placeholder="Написать сообщение"
         v-model="textCommentModel"
       />
-      <button
-        @click="addComments"
-        class="border border-black rounded-tl-lg rounded-br-lg w-[140px] h-[40px] shadow-cardImage"
-      >
-        Отправить
-      </button>
+      <MyButton @click="addComments" title="Отправить" />
     </div>
   </div>
 </template>

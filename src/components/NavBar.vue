@@ -135,7 +135,7 @@ const markNotificationsAsRead = () => {
   <Transition name="slide-down" appear>
     <div
       v-if="activeAddModal"
-      class="absolute z-10 bg-white dark:bg-[#232323] dark:text-[#CCCCCC] w-[250px] h-[76px] shadow-container dark:shadow-containerDark right-[272px] top-[56px] rounded-xl"
+      class="absolute z-10 bg-white dark:bg-[#232323] dark:text-[#CCCCCC] w-[250px] h-[76px] shadow-container dark:shadow-none dark:border dark:border-[#CCCCCC] right-[272px] top-[56px] rounded-xl"
     >
       <ul class="text-[14px] flex flex-col justify-between px-[20px] py-[10px] gap-1">
         <RouterLink to="/addLot" @click="activeAddModal = false"
@@ -154,7 +154,7 @@ const markNotificationsAsRead = () => {
   </Transition>
   <div
     :class="[
-      'w-full laptop:px-24 mobile:px-4 items-center h-[48px] border-b border-[#7A7A7A] flex justify-between dark:text-[#CCCCCC]',
+      'w-full laptop:px-24 mobile:px-4 items-center z-[2] h-[48px] border-b border-[#7A7A7A] flex justify-between dark:text-[#CCCCCC]',
       { 'absolute top-0 bg-[rgba(0,0,0,0.35)] text-white': isProfileRoute },
     ]"
   >

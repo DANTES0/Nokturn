@@ -18,7 +18,7 @@ const onChange = (event: Event) => {
 
 <template>
   <input
-    class="border border-black absolute -z-10 opacity-0 custom-checkbox w-[1.6vw] aspect-square"
+    class="border border-black dark:border-[#CCCCCC] absolute -z-10 opacity-0 custom-checkbox w-[1.6vw] aspect-square"
     type="checkbox"
     name="checkbox"
     id="checkbox"
@@ -40,6 +40,10 @@ const onChange = (event: Event) => {
   border-top-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
+
+html.dark .custom-checkbox + label {
+  background-color: #1c1c1c;
+}
 .custom-checkbox + label::before {
   content: '';
   display: inline-block;
@@ -55,6 +59,9 @@ const onChange = (event: Event) => {
   background-position: center center;
   background-size: 50% 50%;
 }
+html.dark .custom-checkbox + label {
+  border: 1px solid #cccccc;
+}
 
 .custom-checkbox:checked + label::before {
   background-image: url('../assets/images/check.svg');
@@ -62,6 +69,17 @@ const onChange = (event: Event) => {
 }
 .custom-checkbox:checked + label:hover::before {
   background-color: #eeeeee;
+}
+html.dark .custom-checkbox:checked + label::before {
+  filter: invert(1);
+}
+
+html.dark .custom-checkbox:checked + label:hover::before {
+  background-color: #3c3c3c;
+}
+
+html.dark .custom-checkbox:not(:disabled):not(:checked) + label:hover::before {
+  background-color: #3c3c3c;
 }
 
 .custom-checkbox:not(:disabled):not(:checked) + label:hover::before {

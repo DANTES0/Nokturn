@@ -70,7 +70,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="w-(calc(100%-30px)) h-[260px] bg-white shadow-container rounded-2xl relative flex flex-col text-[18px] mr-[30px] items-center overflow-x-hidden overflow-y-auto scrollingbox"
+    class="w-(calc(100%-30px)) h-[260px] bg-white dark:bg-[#1c1c1c] shadow-container dark:shadow-none dark:border dark:border-[#383838] rounded-2xl relative flex flex-col text-[18px] mr-[30px] items-center overflow-x-hidden overflow-y-auto scrollingbox"
   >
     <table class="w-[90%] border-separate border-spacing-y-3">
       <thead>
@@ -82,7 +82,11 @@ onUnmounted(() => {
         </tr>
       </thead>
       <tbody v-if="dataHistory.length" class="mt-[10px]">
-        <tr v-for="item in dataHistory" :key="item.id" class="text-center shadow-card rounded-lg">
+        <tr
+          v-for="item in dataHistory"
+          :key="item.id"
+          class="text-center shadow-card dark:shadow-cardDark rounded-lg"
+        >
           <td>{{ item.userName }}</td>
           <td>{{ item.bet }}₽</td>
           <td>{{ item.date?.formattedTime }}</td>

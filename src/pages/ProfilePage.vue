@@ -120,7 +120,7 @@ watch(
 </script>
 
 <template>
-  <div class="w-full h-[34vh] relative -z-10">
+  <div class="w-full h-[34vh] relative z-1">
     <img
       class="h-full w-full object-cover"
       :src="

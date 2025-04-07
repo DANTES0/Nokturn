@@ -66,14 +66,14 @@ onMounted(() => {
     <div
       v-if="isMobile && !activeButtonFilter"
       @click="activeButtonFilter = !activeButtonFilter"
-      class="flex items-center justify-center bg-white w-12 h-12 rounded-tr-2xl rounded-br-2xl shadow-container fixed z-40 left-0 top-16"
+      class="flex items-center justify-center bg-white w-12 h-12 rounded-tr-2xl rounded-br-2xl shadow-container dark:shadow-containerDark fixed z-40 left-0 top-16"
     >
       <IconRightArrow />
     </div>
     <Transition name="slide-right">
       <div
         v-if="activeButtonFilter || !isMobile"
-        class="max-w-[350px] bg-[#FAFAFA] mt-[30px] shadow-container mb-[30px] top-[30px] flex flex-col overflow-y-scroll"
+        class="max-w-[350px] bg-[#FAFAFA] dark:bg-[#232323] dark:text-[#CCCCCC] text-black mt-[30px] shadow-container dark:shadow-none dark:border dark:border-[#383838] mb-[30px] top-[30px] flex flex-col overflow-y-scroll"
         :class="[
           { 'fixed w-full z-10  h-[75vh] left-0 rounded-tr-[32px] rounded-br-[32px]': isMobile },
           { 'sticky w-[25%] h-[90vh] rounded-[32px]': !isMobile },
@@ -84,7 +84,7 @@ onMounted(() => {
             <label class="text-[20px]">Фильтры</label>
             <div
               v-if="isMobile"
-              class="bg-[#FAFAFA] w-10 h-10 rounded-full shadow-container absolute right-3 flex items-center justify-center"
+              class="bg-[#FAFAFA] dark:bg-[#232323] w-10 h-10 rounded-full shadow-container absolute right-3 flex items-center justify-center"
             >
               <IconLeftArrow class="w-8 h-8" @click="activeButtonFilter = false" />
             </div>
@@ -144,7 +144,7 @@ onMounted(() => {
       </div>
     </Transition>
     <div
-      class="w-full bg-[#FAFAFA] mt-[30px] shadow-container rounded-[32px] relative mb-[30px] auc-card py-[30px] px-[30px]"
+      class="w-full bg-[#FAFAFA] dark:bg-[#232323] mt-[30px] shadow-container dark:shadow-none dark:border dark:border-[#383838] rounded-[32px] relative mb-[30px] auc-card py-[30px] px-[30px]"
     >
       <AuctionCard
         v-for="item in allLots"

@@ -27,3 +27,7 @@
 html {
   scroll-behavior: smooth;
 }
+
+html.dark {
+  background-color: #1c1c1c;
+}

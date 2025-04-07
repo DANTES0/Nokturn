@@ -30,7 +30,7 @@ defineProps({
 
 <template>
   <div
-    class="absolute w-[250px] bg-white dark:bg-[#232323] dark:text-[#CCCCCC] right-[96px] top-[54px] shadow-container dark:shadow-containerDark z-20 rounded-lg"
+    class="absolute w-[250px] bg-white dark:bg-[#232323] dark:text-[#CCCCCC] right-[96px] top-[54px] shadow-container dark:shadow-none dark:border dark:border-[#CCCCCC] z-20 rounded-lg"
   >
     <ul class="text-[14px] flex flex-col justify-between px-[20px] py-[10px] gap-1">
       <RouterLink :to="link" @click="onClose"

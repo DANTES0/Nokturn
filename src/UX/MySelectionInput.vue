@@ -55,11 +55,11 @@ const route = useRoute()
         :value="modelValue"
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
         type="text"
-        class="border border-black h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] placeholder:text-[14px] pr-[60px] focus:outline-black focus:outline focus:outline-1"
+        class="border border-black dark:border-[#CCCCCC] h-[40px] rounded-tr-2xl rounded-bl-2xl bg-transparent w-full pl-[10px] placeholder:text-[14px] pr-[60px] focus:outline-black dark:focus:outline-[#CCCCCC] focus:outline focus:outline-1 dark:placeholder:text-[#7a7a7a]"
         :placeholder="props.placeholder"
       />
       <div
-        class="absolute top-[-14px] left-[20px] bg-[#FAFAFA] px-2 font-light"
+        class="absolute top-[-14px] left-[20px] bg-[#FAFAFA] dark:bg-[#232323] px-2 font-light"
         :class="{
           '!bg-white':
             ['/addLot', '/profileSettings'].includes(route.path) ||
@@ -73,18 +73,18 @@ const route = useRoute()
     </div>
     <div
       v-if="activeDropDown"
-      class="absolute w-full shadow-card mt-2 rounded-lg px-[20px] py-[10px] dropdown-container bg-[#FAFAFA] z-10"
+      class="absolute w-full dark:text-[#CCCCCC] shadow-card dark:border dark:border-[#CCCCCC] dark:shadow-none mt-2 rounded-lg px-[20px] py-[10px] dropdown-container bg-[#FAFAFA] dark:bg-[#232323] z-10"
     >
       <div
         @click="selectedItem(items[0])"
-        class="hover:bg-[#ececec] rounded-lg pl-[10px] py-[2px] cursor-pointer"
+        class="hover:bg-[#ececec] dark:hover:bg-[#3C3C3C] rounded-lg pl-[10px] py-[2px] cursor-pointer"
       >
         {{ items[0] }}
       </div>
       <hr class="my-[4px]" />
       <div
         @click="selectedItem(items[1])"
-        class="hover:bg-[#ececec] rounded-lg pl-[10px] py-[2px] cursor-pointer"
+        class="hover:bg-[#ececec] dark:hover:bg-[#3C3C3C] rounded-lg pl-[10px] py-[2px] cursor-pointer"
       >
         {{ items[1] }}
       </div>

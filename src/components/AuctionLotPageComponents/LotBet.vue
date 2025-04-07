@@ -109,7 +109,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="w-[400px] h-full bg-white shadow-container rounded-2xl relative flex flex-col text-[18px] mr-[30px]"
+    class="w-[400px] h-full bg-white dark:bg-[#1c1c1c] shadow-container dark:shadow-none dark:border dark:border-[#383838] rounded-2xl relative flex flex-col text-[18px] mr-[30px]"
   >
     <div class="mt-[20px] ml-[20px]">
       <label class="font-[InterItalic]">Начальная ставка:</label>
@@ -142,14 +142,14 @@ onUnmounted(() => {
       <div class="relative">
         <input
           v-model="modelBet"
-          class="ml-[30px] w-[80px] h-full border border-black rounded-bl-xl rounded-tr-xl text-center text-[14px]"
+          class="ml-[30px] w-[80px] h-full border border-black dark:border-[#CCCCCC] dark:bg-[#1c1c1c] rounded-bl-xl rounded-tr-xl text-center text-[14px] placeholder:text-[#787878] focus:outline-none"
           :placeholder="(Number(props.currentBet) + props.minBidIncrement).toString()"
           type="text"
         />
         <Transition name="popUpWarning">
           <div
             v-if="activePopUpWarning"
-            class="absolute w-[300px] h-[40px] bg-white shadow-container top-[-50px] left-[-160px] text-[16px] text-red-700 flex items-center justify-around rounded-2xl"
+            class="absolute w-[300px] h-[40px] bg-white dark:bg-[#1c1c1c] shadow-container dark:shadow-none dark:border dark:border-[#383838] top-[-50px] left-[-160px] text-[16px] text-red-700 flex items-center justify-around rounded-2xl"
           >
             <div>Минимальная ставка: {{ Number(props.currentBet) + props.minBidIncrement }}</div>
             <button
@@ -158,7 +158,7 @@ onUnmounted(() => {
                   activePopUpWarning = false
                 }
               "
-              class="ml-2 text-gray-600 hover:text-black"
+              class="ml-2 text-gray-600 dark:text-[#CCCCCC] hover:text-black dark:hover:text-white"
             >
               ✖
             </button>

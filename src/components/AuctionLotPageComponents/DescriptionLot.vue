@@ -2,7 +2,7 @@
 
 <template>
   <div
-    class="w-[450px] h-auto bg-white mt-[20px] shadow-container rounded-2xl relative flex items-center justify-center gap-8 mb-[30px]"
+    class="w-[450px] h-auto bg-white dark:bg-[#1c1c1c] mt-[20px] shadow-container dark:shadow-none dark:border dark:border-[#383838] rounded-2xl relative flex items-center justify-center gap-8 mb-[30px]"
   >
     <div class="m-8 text-justify">
       Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться.

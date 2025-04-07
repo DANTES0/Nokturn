@@ -14,7 +14,7 @@ const modalRef = ref<InstanceType<typeof ImageModal> | null>(null)
 
 <template>
   <div
-    class="w-[450px] min-h-[160px] bg-white mt-[20px] shadow-container rounded-2xl relative flex items-center justify-center gap-8"
+    class="w-[450px] min-h-[160px] bg-white dark:bg-[#1c1c1c] mt-[20px] shadow-container dark:shadow-none dark:border dark:border-[#383838] rounded-2xl relative flex items-center justify-center gap-8"
   >
     <div class="text-[18px]" v-if="additionlImage.length == 0">Изображения отсутствуют</div>
     <div

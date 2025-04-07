@@ -13,6 +13,7 @@ export default {
         container: '0 0 4px 2px rgba(0,0,0,0.25)',
         containerDark: '0 0 1px 1px rgba(255,255,255,0.25)',
         card: '0 0 4px 1px rgba(0,0,0,0.25)',
+        cardDark: '0 0 0 1px rgba(204,204,204,0.25)',
         cardImage: '0 4px 4px 1px rgba(0,0,0,0.25)',
         cardImageDark: '0 4px 4px 1px rgba(100,100,100,0.25)',
       },

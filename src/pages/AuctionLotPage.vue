@@ -73,7 +73,7 @@ onUnmounted(() => {
 <template>
   <div
     v-if="lotData"
-    class="w-[90%] bg-white mt-[30px] shadow-container rounded-[32px] relative flex mb-[30px] gap-[30px]"
+    class="w-[90%] bg-white dark:bg-[#232323] mt-[30px] shadow-container dark:shadow-none dark:border dark:border-[#383838] dark:text-[#CCCCCC] rounded-[32px] relative flex mb-[30px] gap-[30px]"
   >
     <div class="ml-[30px] mt-[30px]">
       <img
@@ -117,5 +117,9 @@ onUnmounted(() => {
 .scrollingbox {
   scrollbar-color: rgb(0, 0, 0) transparent;
   scrollbar-width: thin;
+}
+
+html.dark .scrollingbox {
+  scrollbar-color: rgb(204, 204, 204) transparent;
 }
 </style>

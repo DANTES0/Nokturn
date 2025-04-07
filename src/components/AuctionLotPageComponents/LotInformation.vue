@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
   <div
-    class="w-[400px] h-full bg-white shadow-container rounded-2xl relative flex flex-col text-[18px]"
+    class="w-[400px] h-full bg-white dark:bg-[#1c1c1c] shadow-container dark:shadow-none dark:border dark:border-[#383838] rounded-2xl relative flex flex-col text-[18px]"
   >
     <div class="mt-[20px] ml-[20px]">
       <label class="font-[InterItalic]">Название:</label>
@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<Props>(), {
     </div>
     <div class="mt-[20px] ml-[20px]">
       <label class="font-[InterItalic]">Автор:</label>
-      <label class="ml-[30px] border-b border-black font-[InterItalic]"
+      <label class="ml-[30px] border-b border-black dark:border-[#CCCCCC] font-[InterItalic]"
         >{{ props.author }} {{ props.lastname }}</label
       >
     </div>
@@ -46,9 +46,9 @@ const props = withDefaults(defineProps<Props>(), {
       <label class="font-[InterItalic]">Размеры:</label>
       <label class="ml-[30px] text-[16px]">{{ props.size }}</label>
     </div>
-    <div class="mt-[20px] ml-[20px]">
+    <!-- <div class="mt-[20px] ml-[20px]">
       <label class="font-extralight font-[InterItalic]">живопись</label>
-    </div>
+    </div> -->
   </div>
 </template>
 

@@ -47,7 +47,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-white shadow-card p-[30px] rounded-2xl flex w-full">
+  <div
+    class="bg-white dark:text-[#CCCCCC] dark:bg-[#1c1c1c] shadow-card dark:shadow-none dark:border dark:border-[#383838] p-[30px] rounded-2xl flex w-full"
+  >
     <div class="flex items-center mobile:flex-row flex-col">
       <RouterLink :to="linkProfile" class="w-24 h-24" v-if="props.photo">
         <img
@@ -59,7 +61,7 @@ onMounted(() => {
         <AvatarCanvas class="rounded-full shadow-card" :size="96" :name="props.firstname" />
       </RouterLink>
       <div
-        class="flex flex-col mobile:ml-[20px] mobile:max-w-[300px] max-w-[200px] w-[200px] gap-3 mobile:border-r mobile:border-black mobile:pr-[10px]"
+        class="flex flex-col mobile:ml-[20px] mobile:max-w-[300px] max-w-[200px] w-[200px] gap-3 mobile:border-r mobile:border-black dark:mobile:border-[#383838] mobile:pr-[10px]"
       >
         <span class="mt-[10px] text-[18px] mobile:text-start text-center"
           >{{ props.firstname }} {{ props.lastname }}</span
