@@ -66,20 +66,20 @@ onBeforeUnmount(() => {
       <button
         class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg rounded-bl-lg flex items-center justify-center hover:scale-105 relative"
       >
-        <div
+        <!-- <div
           class="w-[12px] h-[12px] bg-red-600 border border-black absolute rounded-full top-[-6px] right-[-6px]"
-        ></div>
+        ></div> -->
         <IconBell />
       </button>
       <RouterLink to="/chat">
         <button
           class="w-[32px] h-[32px] border-2 border-black rounded-tr-lg rounded-bl-lg flex items-center justify-center hover:scale-105 relative"
         >
-          <div
+          <!-- <div
             class="w-[14px] h-[14px] border border-black bg-white absolute top-[-6px] right-[-8px] flex items-center justify-center rounded-tr-[4px] rounded-bl-[4px]"
           >
             <div class="text-[9px] font-bold text-black">22</div>
-          </div>
+          </div> -->
           <IconMail />
         </button>
       </RouterLink>
