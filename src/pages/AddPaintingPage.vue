@@ -84,7 +84,7 @@ async function addArts() {
     <input
       type="text"
       v-model="titleModel"
-      class="border border-black dark:border-[#CCCCCC] bg-[#232323] rounded-tl-lg rounded-br-lg w-[80%] h-8 text-[16px] pl-4 mt-[6px]"
+      class="border border-black dark:border-[#CCCCCC] dark:bg-[#232323] rounded-tl-lg rounded-br-lg w-[80%] h-8 text-[16px] pl-4 mt-[6px]"
       placeholder="Введите название картины"
     />
     <div class="w-full flex gap-4 mt-[20px]">

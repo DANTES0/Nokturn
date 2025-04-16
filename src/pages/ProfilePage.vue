@@ -20,14 +20,23 @@ import { useRoute } from 'vue-router'
 import type { UserType } from '@/types/UserType'
 import AvatarCanvas from '@/components/AvatarCanvas.vue'
 import router from '@/router'
+import IconStarFill from '@/components/icons/IconStarFill.vue'
 
 const route = useRoute()
 const isMobile = useScreenWidth(1024)
 const userStore = useUserStore()
+const activeRate = ref(false)
+const currentRating = ref(0)
+const hoverRating = ref(0)
 const user = computed(() => userStore.user)
 const userInfo = ref<UserType>()
 const dataCardAuction = ref<lotType[]>([])
 const dataArtCards = ref<ArtType[]>([])
+
+const setRating = (value: number) => {
+  currentRating.value = value
+}
+
 const isMyProfile = computed(() => {
   if (user.value?.id == userInfo.value?.id) {
     return true
@@ -172,9 +181,41 @@ watch(
               ><IconVk class="hover:text-[#4d6eff] cursor-pointer transition-colors duration-200"
             /></a>
           </div>
-          <div class="flex">
-            <IconStarOutline />
-            <span>{{ userInfo?.rating }}/5</span>
+          <div class="flex items-center relative">
+            <IconStarOutline
+              v-if="!activeRate"
+              @click="activeRate = true"
+              class="hover:text-yellow-400 cursor-pointer"
+            />
+
+            <button
+              v-if="activeRate"
+              @click="activeRate = false"
+              class="text-[24px] absolute right-0 bottom-5"
+            >
+              ×
+            </button>
+
+            <div v-if="activeRate" class="flex space-x-1">
+              <component
+                v-for="(i, index) in 5"
+                :is="
+                  hoverRating >= index + 1 || currentRating >= index + 1
+                    ? IconStarFill
+                    : IconStarOutline
+                "
+                :key="index"
+                class="cursor-pointer transition-all duration-150 text-yellow-400"
+                @mouseenter="hoverRating = index + 1"
+                @mouseleave="hoverRating = 0"
+                @click="setRating(index + 1)"
+              />
+            </div>
+
+            <span v-if="activeRate" class="ml-2">{{ currentRating }}/5</span>
+            <span v-else-if="!activeRate" class="ml-2"
+              >{{ currentRating ? currentRating : userInfo?.rating }}/5</span
+            >
           </div>
         </div>
       </div>

@@ -140,7 +140,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="bg-white shadow-container dark:bg-[#232323] dark:shadow-none dark:border dark:border-[#383838] text-[#CCCCCC] w-[90%] rounded-2xl mt-[30px] p-[30px] flex flex-col mb-[30px]"
+    class="bg-white shadow-container text-black dark:bg-[#232323] dark:shadow-none dark:border dark:border-[#383838] text-[#CCCCCC] w-[90%] rounded-2xl mt-[30px] p-[30px] flex flex-col mb-[30px]"
   >
     <div class="w-full flex gap-5">
       <div class="w-full max-w-[400px]">
