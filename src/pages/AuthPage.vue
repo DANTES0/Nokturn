@@ -26,12 +26,12 @@ async function fetchData() {
       await userStore.fetchUser()
       router.push('/')
     } else {
+      errorMail.value = true
+      errorPassword.value = true
       console.log(errorMail.value)
       if (!emailModel.value) {
-        errorMail.value = true
       }
       if (!passwordModel.value) {
-        errorPassword.value = true
       }
     }
   } catch (error) {
@@ -70,6 +70,9 @@ const passwordModel = ref('')
           v-model="passwordModel"
         />
         <div class="flex gap-3 items-center mt-auto w-full justify-center flex-col">
+          <div v-if="errorMail || errorPassword" class="text-red-600 font-light">
+            Неверное имя пользователя или пароль
+          </div>
           <MyButton class="w-[80%]" title="Войти" @click="fetchData" />
           <div class="w-[80%] text-[10px] text-center">
             У вас нет аккаунта?
